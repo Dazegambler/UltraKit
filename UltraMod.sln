@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UltraMod", "UltraMod\UltraMod.csproj", "{479B8D4B-5159-42C1-BCFE-7B5D91DDB46D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UltraMod", "UltraMod\UltraMod.csproj", "{F4533D37-4C9B-4499-B429-15D20EC6E639}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{479B8D4B-5159-42C1-BCFE-7B5D91DDB46D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{479B8D4B-5159-42C1-BCFE-7B5D91DDB46D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{479B8D4B-5159-42C1-BCFE-7B5D91DDB46D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{479B8D4B-5159-42C1-BCFE-7B5D91DDB46D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4533D37-4C9B-4499-B429-15D20EC6E639}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4533D37-4C9B-4499-B429-15D20EC6E639}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4533D37-4C9B-4499-B429-15D20EC6E639}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4533D37-4C9B-4499-B429-15D20EC6E639}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {B386E184-5273-4226-9E44-74221C8F98A3}
+		SolutionGuid = {26395AF5-2066-4C97-B29B-9CE20A79FCC4}
 	EndGlobalSection
 EndGlobal

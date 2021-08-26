@@ -132,7 +132,7 @@ namespace UltraMod
                     switch (toggle)
                     {
                         case true:
-                            GUI.Window(0, new Rect(ratio+0 + (Screen.width / 5), ratio+0 + (Screen.height / 10),450, Screen.height / 1.5f), TabBundles, "");
+                            GUI.Window(0, new Rect(ratio+0 + (Screen.width / 5), ratio+0 + (Screen.height / 10),590, Screen.height / 1.5f), TabBundles, "");
                             break;
                     }
                     switch (TractorObj)
