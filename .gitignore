@@ -1,4 +1,4 @@
-bin/*
-obj/*
-.vs/
-/lib/Assembly-CSharp.dll
+bin
+obj
+.vs
+lib/Assembly-CSharp.dll
