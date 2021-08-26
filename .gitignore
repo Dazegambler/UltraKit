@@ -1,3 +1,4 @@
 bin
+.vs
 obj
 lib/Assembly-CSharp.dll
