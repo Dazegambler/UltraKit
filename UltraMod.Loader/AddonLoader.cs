@@ -35,18 +35,20 @@ namespace UltraMod.Loader
 
             // Loop over all folders at FilePath
             // Call LoadAddon on every folder
+            Debug.LogWarning("LOADING ADDONS...");
             if (!Directory.Exists(FilePath))
             {
                 Debug.LogWarning($"Addons Directory Not Found...Creating Directory at {FilePath}");
                 Directory.CreateDirectory(FilePath);
             }
 
-            var files = Directory.GetFiles(FilePath, "*.UKMod", SearchOption.TopDirectoryOnly);
+            var files = Directory.GetFiles(FilePath, "*.*", SearchOption.AllDirectories);
             foreach (string file in files)
             {
                 Debug.LogWarning($"LOADING ADDON:{file}");
                 addons.Add(LoadAddon(file));
             }
+            Debug.LogWarning("...FINISHED LOADING ADDONS");
 
         }
 
