@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace UltraMod.Data
 {
-    [CreateAssetMenu(fileName = "UltraModItem", menuName = "UltraMod/ModData")]
+    [CreateAssetMenu(fileName = "ModData", menuName = "UltraMod/ModData")]
     public class UltraModData : ScriptableObject
     {
         public string ModName;
