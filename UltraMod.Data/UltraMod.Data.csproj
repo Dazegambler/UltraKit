@@ -7,8 +7,8 @@
     <ProjectGuid>{217F1312-B984-4739-A96F-34BCBE601735}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UltraMod.Test</RootNamespace>
-    <AssemblyName>UltraMod.Test</AssemblyName>
+    <RootNamespace>UltraMod.Data</RootNamespace>
+    <AssemblyName>UltraMod.Data</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
