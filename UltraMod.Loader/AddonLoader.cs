@@ -11,7 +11,7 @@ namespace UltraMod.Loader
 {
     public static class AddonLoader
     {
-        public static List<Addon> addons;
+        public static List<Addon> addons = new List<Addon>();
         
         //TEMP TO MAKE SPAWNMENU WORK DELETE AFTER INTEGRATION INTO SPAWNER ARM
         public static List<AssetBundle> assetBundles {
