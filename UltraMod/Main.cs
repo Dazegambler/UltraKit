@@ -22,7 +22,7 @@ namespace UltraMod
 
         public void Start()
         {
-
+            
             Bindings.Initialize(Config);
             AddonLoader.Initialize(BundlePath);
 

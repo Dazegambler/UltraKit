@@ -14,6 +14,8 @@ namespace UltraMod.Loader
 
         public static void Initialize(string FilePath)
         {
+            Debug.Log(typeof(UltraModItem).Name);
+
             if (!Directory.Exists(FilePath))
             {
                 Debug.LogWarning("Asset Bundle Directory Not Found...Creating Directory at " + FilePath);

@@ -196,13 +196,4 @@ namespace UltraMod.Core
             }
         }
     }
-    public class UltraModItem : ScriptableObject
-    {
-        public GameObject Prefab;
-        public Texture2D Icon;
-        public int type;
-        public string Name;
-        [TextArea]
-        public string Desc;
-    }
 }

@@ -72,7 +72,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource1.resx</DependentUpon>
     </Compile>
-    <Compile Include="UltraModItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resource1.resx">
@@ -91,6 +90,10 @@
     <ProjectReference Include="..\UltraMod.Loader\UltraMod.Loader.csproj">
       <Project>{DDF3583F-8893-464A-858F-264F2A6A469A}</Project>
       <Name>UltraMod.Loader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UltraMod.Test\UltraMod.Test.csproj">
+      <Project>{217f1312-b984-4739-a96f-34bcbe601735}</Project>
+      <Name>UltraMod.Test</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
