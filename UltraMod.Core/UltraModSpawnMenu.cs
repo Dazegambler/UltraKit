@@ -108,7 +108,7 @@ namespace UltraMod.Core
                             GUI.Label(new Rect(300, 0, 140, 30), $"<i>PROPS:{_items.Count}</i>");
                             for (int i = 0; i < _items.Count; i++)
                             {
-                                switch (GUI.Button(new Rect(300, 35 + (35 * i), 140, 30), items[i].name))
+                                switch (GUI.Button(new Rect(300, 35 + (35 * i), 140, 30), _items[i].Name))
                                 {
                                     case true:
                                         trgt = _items[i].Prefab;
