@@ -20,9 +20,17 @@ namespace UltraMod.Loader
             // Call LoadAddon on every folder
 
 
-
-
-
+            if (!Directory.Exists(FilePath))
+            {
+                Debug.LogWarning($"Addons Directory Not Found...Creating Directory at {FilePath}");
+                Directory.CreateDirectory(FilePath);
+            }
+            var files = Directory.GetFiles(FilePath, "*.UKMod", SearchOption.TopDirectoryOnly);
+            foreach (string file in files)
+            {
+                Debug.LogWarning($"LOADING ADDON:{file}");
+                addons.Add(LoadAddon(file));
+            }
 
             // OLD CODE
             /*Debug.Log(typeof(UltraModItem).Name);
@@ -41,14 +49,36 @@ namespace UltraMod.Loader
                 assetBundles.Add(AssetBundle.LoadFromFile(file));
             }
             Debug.LogWarning("FINISHED LOADING ASSETBUNDLES");*/
-            
+
         }
 
         public static Addon LoadAddon(string FilePath)
         {
             //Filepath = individual addon folder (has assetbundles & lua scripts inside)
 
+            UltraModData Data = null;
             var a = new Addon();
+
+            a.path = FilePath;
+
+            a.bundles = new List<AssetBundle>();
+            a.bundles.Add(AssetBundle.LoadFromFile(FilePath));
+
+            Data = FindData(Data,a.bundles);
+
+            a.Name = Data.ModName;
+            a.Description = Data.ModDesc;
+            a.Author = Data.Author;
+
+            a.loadedContent = new List<UltraModItem>();
+            foreach (AssetBundle bundle in a.bundles)
+            {
+                List<UltraModItem> content = new List<UltraModItem>(bundle.LoadAllAssets<UltraModItem>());
+                foreach(UltraModItem item in content)
+                {
+                    a.loadedContent.Add(item);
+                }
+            }
             //TODO
             // Load all asset bundles in folder
             // Fill all fields of 'a' variable
@@ -57,6 +87,25 @@ namespace UltraMod.Loader
 
 
             return new Addon();
+        }
+        public static UltraModData FindData(UltraModData Data, List<AssetBundle> Bundles)
+        {
+            switch(Data)
+            {
+                case null:
+                foreach (AssetBundle bundle in Bundles)
+                {
+                        try
+                        {
+                            Data = bundle.LoadAsset<UltraModData>("ModData");
+                        }
+                        catch (NullReferenceException)
+                        {
+                        }
+                }
+                break;
+            }
+            return new UltraModData();
         }
     }
 }

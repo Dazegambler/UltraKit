@@ -67,7 +67,8 @@ namespace UltraMod.Core
 
         public void TabBundles(int id)
         {
-            switch (id)
+            //Currently Not Working and might not be needed in the future
+            /*switch (id)
             {
                 case 0:
 
@@ -130,7 +131,7 @@ namespace UltraMod.Core
                             break;
                     }
                     break;
-            }
+            }*/
         }
 
         void ListObjects()

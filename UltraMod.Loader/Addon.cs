@@ -11,8 +11,8 @@ namespace UltraMod.Loader
     {
         public string Name;
         public string Description;
-
-        string path;
+        public string Author;
+        public string path;
 
         public List<AssetBundle> bundles;
         public List<UltraModItem> loadedContent;
