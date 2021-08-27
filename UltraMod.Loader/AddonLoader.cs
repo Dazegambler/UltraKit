@@ -52,6 +52,8 @@ namespace UltraMod.Loader
         public static Addon LoadAddon(string FilePath)
         {
             //Filepath = individual addon folder (has assetbundles & lua scripts inside)
+            // Load all asset bundles in folder
+            // Fill all fields of 'a' variable
 
             UltraModData Data = null;
             var a = new Addon();
@@ -76,14 +78,8 @@ namespace UltraMod.Loader
                     a.LoadedContent.Add(item);
                 }
             }
-            //TODO
-            // Load all asset bundles in folder
-            // Fill all fields of 'a' variable
-            // May need scriptableobject for mod name and description in assetbundle, UltraModData?
 
-
-
-            return new Addon();
+            return a;
         }
         public static UltraModData FindData(UltraModData Data, List<AssetBundle> Bundles)
         {
