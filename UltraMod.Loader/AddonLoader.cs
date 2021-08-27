@@ -40,6 +40,7 @@ namespace UltraMod.Loader
                 Debug.LogWarning($"Addons Directory Not Found...Creating Directory at {FilePath}");
                 Directory.CreateDirectory(FilePath);
             }
+
             var files = Directory.GetFiles(FilePath, "*.UKMod", SearchOption.TopDirectoryOnly);
             foreach (string file in files)
             {
@@ -54,8 +55,6 @@ namespace UltraMod.Loader
             //Filepath = individual addon folder (has assetbundles & lua scripts inside)
             // Load all asset bundles in folder
             // Fill all fields of 'a' variable
-
-            UltraModData Data = null;
             var a = new Addon();
 
             a.Path = FilePath;
@@ -63,11 +62,7 @@ namespace UltraMod.Loader
             a.Bundles = new List<AssetBundle>();
             a.Bundles.Add(AssetBundle.LoadFromFile(FilePath));
 
-            Data = FindData(Data,a.Bundles);
-
-            a.Name = Data.ModName;
-            a.Description = Data.ModDesc;
-            a.Author = Data.Author;
+            a.Data = FindData(a.Bundles);
 
             a.LoadedContent = new List<UltraModItem>();
             foreach (AssetBundle bundle in a.Bundles)
@@ -83,21 +78,23 @@ namespace UltraMod.Loader
         }
 
         //is this necessary?
-        public static UltraModData FindData(UltraModData Data, List<AssetBundle> Bundles)
+        public static UltraModData FindData(List<AssetBundle> Bundles)
         {
-            if(Data == null) { 
+            UltraModData data = null;
+            if(data == null) { 
                 foreach (AssetBundle bundle in Bundles)
                 {
                     try
                     {
-                        Data = bundle.LoadAsset<UltraModData>("ModData");
+                        data = bundle.LoadAsset<UltraModData>("ModData");
                     }
                     catch (NullReferenceException)
                     {
                     }
                 }
             }
-            return new UltraModData();
+
+            return data;
         }
     }
 }

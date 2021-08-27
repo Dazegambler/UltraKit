@@ -12,6 +12,7 @@ namespace UltraMod.Data
     {
         public string ModName;
         public string Author;
+
         [TextArea]
         public string ModDesc;
     }

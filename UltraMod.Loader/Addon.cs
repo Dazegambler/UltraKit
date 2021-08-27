@@ -10,11 +10,9 @@ namespace UltraMod.Loader
 {
     public class Addon
     {
-        public string Name;
-        public string Description;
-        public string Author;
-        public string Path;
+        public UltraModData Data;
 
+        public string Path;
         public List<AssetBundle> Bundles;
         public List<UltraModItem> LoadedContent;
     }
