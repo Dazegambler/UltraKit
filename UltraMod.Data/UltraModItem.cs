@@ -10,7 +10,7 @@ namespace UltraMod.Data
         Weapon
     }
 
-    [CreateAssetMenu(fileName = "UltraModItem", menuName = "UltraMod/UltraModItem")]
+    [CreateAssetMenu(fileName = "UltraModItem", menuName = "UltraMod/ModItem")]
     public class UltraModItem : ScriptableObject
     {
         public ContentType type;

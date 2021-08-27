@@ -30,8 +30,8 @@ namespace UltraMod
                 {
                     if(CameraController.Instance != null)
                     {
-                        CameraController.Instance.gameObject.AddComponent<UltraModSpawnMenu>();
-                        CameraController.Instance.gameObject.GetComponent<UltraModSpawnMenu>().skin = UIBundle.LoadAsset<GUISkin>("UIUltraMod");
+                        //CameraController.Instance.gameObject.AddComponent<UltraModSpawnMenu>();
+                        //CameraController.Instance.gameObject.GetComponent<UltraModSpawnMenu>().skin = UIBundle.LoadAsset<GUISkin>("UIUltraMod");
                         CameraController.Instance.gameObject.AddComponent<TractorBeam>();
                     }
                 }

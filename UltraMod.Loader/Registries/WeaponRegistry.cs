@@ -74,6 +74,7 @@ namespace UltraMod.Loader.Registries
                     __instance.gunc.slots.Add(slot);
                     foreach (var obj in slot)
                     {
+                        obj.SetActive(false);
                         __instance.gunc.allWeapons.Add(obj);
                     }
                 }
@@ -82,17 +83,19 @@ namespace UltraMod.Loader.Registries
 
                 modSlots.Add(slot);
             }
-
-            
         }
     }
     
     [HarmonyPatch(typeof(GunControl), "Start")]
     class GunControlPatch
     {
-        static void Prefix()
+        static void Prefix(GunControl __instance)
         {
-            Debug.Log("GUNC START");
+            // Important to avoid semi-permanently breaking weapon script lol
+            if (PlayerPrefs.GetInt("CurSlo", 1) > __instance.slots.Count)
+            {
+                PlayerPrefs.SetInt("CurSlo", 1);
+            }
         }
     }
 
