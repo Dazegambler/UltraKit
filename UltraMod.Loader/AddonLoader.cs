@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UltraMod.Data;
 using UnityEngine;
 
 namespace UltraMod.Loader
@@ -18,8 +19,6 @@ namespace UltraMod.Loader
 
             // Loop over all folders at FilePath
             // Call LoadAddon on every folder
-
-
             if (!Directory.Exists(FilePath))
             {
                 Debug.LogWarning($"Addons Directory Not Found...Creating Directory at {FilePath}");
@@ -31,24 +30,6 @@ namespace UltraMod.Loader
                 Debug.LogWarning($"LOADING ADDON:{file}");
                 addons.Add(LoadAddon(file));
             }
-
-            // OLD CODE
-            /*Debug.Log(typeof(UltraModItem).Name);
-
-            if (!Directory.Exists(FilePath))
-            {
-                Debug.LogWarning("Asset Bundle Directory Not Found...Creating Directory at " + FilePath);
-                Directory.CreateDirectory(FilePath);
-            }
-
-            Debug.LogWarning("LOADING ASSETBUNDLES");
-            var files = Directory.GetFiles(FilePath, "*.*", SearchOption.TopDirectoryOnly);
-            foreach (string file in files)
-            {
-                Debug.LogWarning($"Loading {file}");
-                assetBundles.Add(AssetBundle.LoadFromFile(file));
-            }
-            Debug.LogWarning("FINISHED LOADING ASSETBUNDLES");*/
 
         }
 

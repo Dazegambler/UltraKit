@@ -80,12 +80,6 @@
     <Compile Include="Registries\WeaponRegistry.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UltraMod.Test\UltraMod.Test.csproj">
-      <Project>{217f1312-b984-4739-a96f-34bcbe601735}</Project>
-      <Name>UltraMod.Test</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\UltraMod.Test\UltraMod.Data.csproj">
       <Project>{217f1312-b984-4739-a96f-34bcbe601735}</Project>
       <Name>UltraMod.Data</Name>
