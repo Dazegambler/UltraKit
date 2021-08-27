@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Collections.Generic;
 using System.IO;
 using BepInEx;
@@ -19,7 +20,7 @@ namespace UltraMod
 
         public void Start()
         {
-
+            
             Bindings.Initialize(Config);
             AddonLoader.Initialize(BundlePath);
 

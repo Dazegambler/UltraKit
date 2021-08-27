@@ -15,12 +15,13 @@ namespace UltraMod.Core
 
         float ratio = Screen.width / 1920;
 
-        List<GameObject>
-            props = new List<GameObject>(),
-            items = new List<GameObject>(),
-            enemies = new List<GameObject>();
+        List<UltraModItem>
+            _props = new List<UltraModItem>(),
+            _items = new List<UltraModItem>(),
+            _weapons = new List<UltraModItem>(),
+            _enemies = new List<UltraModItem>();
 
-        GameObject[] list;
+        UltraModItem[] _list;
 
         AssetBundle active;
         GameObject trgt;
@@ -57,7 +58,7 @@ namespace UltraMod.Core
                 switch (toggle)
                 {
                     case true:
-                        GUI.Window(0, new Rect(ratio + 0 + (Screen.width / 5), ratio + 0 + (Screen.height / 10), 590, Screen.height / 1.5f), TabBundles, "");
+                        GUI.Window(0, new Rect(ratio + 0 + (Screen.width / 5), ratio + 0 + (Screen.height / 10), 735, Screen.height / 1.5f), TabBundles, "");
                         break;
                 }
                 
@@ -66,7 +67,8 @@ namespace UltraMod.Core
 
         public void TabBundles(int id)
         {
-            switch (id)
+            //Currently Not Working and might not be needed in the future
+            /*switch (id)
             {
                 case 0:
 
@@ -86,84 +88,92 @@ namespace UltraMod.Core
                         case null:
                             break;
                         default:
-                            if (list != active.LoadAllAssets<GameObject>()) ListObjects();
-                            GUI.Label(new Rect(155, 0, 140, 30), $"<i>MAPOBJECTS:{props.Count}</i>");
-                            for (int p = 0; p < props.Count; p++)
+                            if (_list != active.LoadAllAssets<UltraModItem>()) ListObjects();
+                            GUI.Label(new Rect(155, 0, 140, 30), $"<i>MAPOBJECTS:{_props.Count}</i>");
+                            for (int p = 0; p < _props.Count; p++)
                             {
-                                switch (GUI.Button(new Rect(155, 35 + (35 * p), 140, 30), props[p].name))
+                                switch (GUI.Button(new Rect(155, 35 + (35 * p), 140, 30), _props[p].Name))
                                 {
                                     case true:
-                                        trgt = props[p];
+                                        trgt = _props[p].Prefab;
                                         break;
                                 }
                             }
-                            GUI.Label(new Rect(300, 0, 140, 30), $"<i>PROPS:{items.Count}</i>");
-                            for (int i = 0; i < items.Count; i++)
+                            GUI.Label(new Rect(300, 0, 140, 30), $"<i>PROPS:{_items.Count}</i>");
+                            for (int i = 0; i < _items.Count; i++)
                             {
-                                switch (GUI.Button(new Rect(300, 35 + (35 * i), 140, 30), items[i].name))
+                                switch (GUI.Button(new Rect(300, 35 + (35 * i), 140, 30), _items[i].Name))
                                 {
                                     case true:
-                                        trgt = items[i];
+                                        trgt = _items[i].Prefab;
                                         break;
                                 }
                             }
-                            GUI.Label(new Rect(445, 0, 140, 30), $"<i>ENEMIES:{enemies.Count}</i>");
-                            for (int e = 0; e < enemies.Count; e++)
+                            GUI.Label(new Rect(445, 0, 140, 30), $"<i>ENEMIES:{_enemies.Count}</i>");
+                            for (int e = 0; e < _enemies.Count; e++)
                             {
-                                switch (GUI.Button(new Rect(445, 35 + (35 * e), 140, 30), enemies[e].name))
+                                switch (GUI.Button(new Rect(445, 35 + (35 * e), 140, 30), _enemies[e].Name))
                                 {
                                     case true:
-                                        trgt = enemies[e];
+                                        trgt = _enemies[e].Prefab;
+                                        break;
+                                }
+                            }
+                            GUI.Label(new Rect(590,0,140,30),$"<i>WEAPONS:{_weapons.Count}</i>");
+                            for (int w = 0;w < _weapons.Count; w++)
+                            {
+                                switch(GUI.Button(new Rect(590,35+(35*w),140,30), _weapons[w].Name))
+                                {
+                                    case true:
                                         break;
                                 }
                             }
                             break;
                     }
                     break;
-            }
+            }*/
         }
 
         void ListObjects()
         {
-            list = active.LoadAllAssets<GameObject>();
-            props = new List<GameObject>();
-            items = new List<GameObject>();
-            enemies = new List<GameObject>();
-            for (int i = 0; i < list.Length; i++)
+            _list = active.LoadAllAssets<UltraModItem>();
+            _props = new List<UltraModItem>();
+            _items = new List<UltraModItem>();
+            _enemies = new List<UltraModItem>();
+            _weapons = new List<UltraModItem>();
+            for(int i = 0; i < _list.Length; i++)
             {
-                switch (list[i].layer)
+                switch (_list[i].type)
                 {
-                    case 24://MAP
-                        //Debug.LogWarning($"ADDING {list[i].name} TO PROPS");
-                        if (list[i].tag != "Floor") list[i].tag = "Floor";
-                        props.Add(list[i]);
+                    case 0://PROP
+                        _props.Add(_list[i]);
                         break;
-                    case 22://PROP
-                        //Debug.LogWarning($"ADDING {list[i].name} TO ITEMS");
-                        items.Add(list[i]);
-                        switch (list[i].TryGetComponent<ItemIdentifier>(out ItemIdentifier iid))
+                    case 1://ITEM
+                        _items.Add(_list[i]);
+                        switch (_list[i].Prefab.TryGetComponent<ItemIdentifier>(out ItemIdentifier iid))
                         {
                             case false:
-                                list[i].AddComponent<ItemIdentifier>().itemType = ItemType.Soap;
+                                _list[i].Prefab.AddComponent<ItemIdentifier>().itemType = ItemType.Soap;
                                 break;
                         }
                         break;
-                    case 12://ENEMY
-                        //Debug.LogWarning($"ADDING {list[i].name} TO ENEMIES");
-                        switch (list[i].TryGetComponent<EnemyIdentifier>(out EnemyIdentifier eid))
+                    case 2://WEAPONS
+                        _weapons.Add(_list[i]);
+                        break;
+                    case 3://ENEMIES
+                        switch (_list[i].Prefab.TryGetComponent<EnemyIdentifier>(out EnemyIdentifier eid))
                         {
                             case false:
-                                list[i].AddComponent<EnemyIdentifier>();
+                                _list[i].Prefab.AddComponent<EnemyIdentifier>();
                                 break;
                         }
-                        enemies.Add(list[i]);
+                        _enemies.Add(_list[i]);
                         break;
                     default:
-                        //Debug.LogWarning($"COULD NOT FIND TAG FOR {list[i].name} IN BUNDLE {active.name}...PLEASE CONTACT BUNDLE MAKER ABOUT SAID BUNDLE");
+                        Debug.LogWarning($"FAILED TO FIND SUITABLE TYPE FOR {_list[i].Name} PLEASE CONTACT THE BUNDLE CREATOR");
                         break;
                 }
             }
-
         }
 
         void Inst()

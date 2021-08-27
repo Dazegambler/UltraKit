@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName ="UltraModItem",menuName = "MenuItem/MenuItem")]
+[CreateAssetMenu(fileName ="UltraModItem",menuName = "Menu/MenuItem")]
 public class UltraModItem : ScriptableObject
 {
     public GameObject Prefab;
