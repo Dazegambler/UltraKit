@@ -10,11 +10,22 @@ namespace UltraMod.Loader
 {
     public static class AddonLoader
     {
-        public static List<AssetBundle> assetBundles = new List<AssetBundle>();
+        public static List<Addon> addons;
 
         public static void Initialize(string FilePath)
         {
-            Debug.Log(typeof(UltraModItem).Name);
+            // FilePath = addon folder (has folders for each addon inside)
+
+            // Loop over all folders at FilePath
+            // Call LoadAddon on every folder
+
+
+
+
+
+
+            // OLD CODE
+            /*Debug.Log(typeof(UltraModItem).Name);
 
             if (!Directory.Exists(FilePath))
             {
@@ -29,8 +40,23 @@ namespace UltraMod.Loader
                 Debug.LogWarning($"Loading {file}");
                 assetBundles.Add(AssetBundle.LoadFromFile(file));
             }
-            Debug.LogWarning("FINISHED LOADING ASSETBUNDLES");
+            Debug.LogWarning("FINISHED LOADING ASSETBUNDLES");*/
             
+        }
+
+        public static Addon LoadAddon(string FilePath)
+        {
+            //Filepath = individual addon folder (has assetbundles & lua scripts inside)
+
+            var a = new Addon();
+            //TODO
+            // Load all asset bundles in folder
+            // Fill all fields of 'a' variable
+            // May need scriptableobject for mod name and description in assetbundle, UltraModData?
+
+
+
+            return new Addon();
         }
     }
 }
