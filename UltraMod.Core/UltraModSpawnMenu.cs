@@ -15,18 +15,11 @@ namespace UltraMod.Core
 
         float ratio = Screen.width / 1920;
 
-        List<GameObject>
-            props = new List<GameObject>(),
-            items = new List<GameObject>(),
-            enemies = new List<GameObject>();
-
         List<UltraModItem>
             _props = new List<UltraModItem>(),
             _items = new List<UltraModItem>(),
             _weapons = new List<UltraModItem>(),
             _enemies = new List<UltraModItem>();
-
-        GameObject[] list;
 
         UltraModItem[] _list;
 
@@ -94,7 +87,7 @@ namespace UltraMod.Core
                         case null:
                             break;
                         default:
-                            if (list != active.LoadAllAssets<GameObject>()) ListObjects();
+                            if (_list != active.LoadAllAssets<UltraModItem>()) ListObjects();
                             GUI.Label(new Rect(155, 0, 140, 30), $"<i>MAPOBJECTS:{_props.Count}</i>");
                             for (int p = 0; p < _props.Count; p++)
                             {
@@ -156,10 +149,10 @@ namespace UltraMod.Core
                         break;
                     case 1://ITEM
                         _items.Add(_list[i]);
-                        switch (list[i].TryGetComponent<ItemIdentifier>(out ItemIdentifier iid))
+                        switch (_list[i].Prefab.TryGetComponent<ItemIdentifier>(out ItemIdentifier iid))
                         {
                             case false:
-                                list[i].AddComponent<ItemIdentifier>().itemType = ItemType.Soap;
+                                _list[i].Prefab.AddComponent<ItemIdentifier>().itemType = ItemType.Soap;
                                 break;
                         }
                         break;
