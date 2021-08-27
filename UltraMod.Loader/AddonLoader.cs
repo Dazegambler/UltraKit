@@ -12,6 +12,22 @@ namespace UltraMod.Loader
     public static class AddonLoader
     {
         public static List<Addon> addons;
+        
+        //TEMP TO MAKE SPAWNMENU WORK DELETE AFTER INTEGRATION INTO SPAWNER ARM
+        public static List<AssetBundle> assetBundles {
+            get
+            {
+                var l = new List<AssetBundle>();
+                foreach(var addon in addons)
+                {
+                    l.AddRange(addon.Bundles);
+                }
+
+                return l;
+            }
+
+
+        }
 
         public static void Initialize(string FilePath)
         {
@@ -40,24 +56,24 @@ namespace UltraMod.Loader
             UltraModData Data = null;
             var a = new Addon();
 
-            a.path = FilePath;
+            a.Path = FilePath;
 
-            a.bundles = new List<AssetBundle>();
-            a.bundles.Add(AssetBundle.LoadFromFile(FilePath));
+            a.Bundles = new List<AssetBundle>();
+            a.Bundles.Add(AssetBundle.LoadFromFile(FilePath));
 
-            Data = FindData(Data,a.bundles);
+            Data = FindData(Data,a.Bundles);
 
             a.Name = Data.ModName;
             a.Description = Data.ModDesc;
             a.Author = Data.Author;
 
-            a.loadedContent = new List<UltraModItem>();
-            foreach (AssetBundle bundle in a.bundles)
+            a.LoadedContent = new List<UltraModItem>();
+            foreach (AssetBundle bundle in a.Bundles)
             {
                 List<UltraModItem> content = new List<UltraModItem>(bundle.LoadAllAssets<UltraModItem>());
                 foreach(UltraModItem item in content)
                 {
-                    a.loadedContent.Add(item);
+                    a.LoadedContent.Add(item);
                 }
             }
             //TODO

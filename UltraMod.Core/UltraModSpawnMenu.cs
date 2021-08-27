@@ -69,14 +69,14 @@ namespace UltraMod.Core
         public void TabBundles(int id)
         {
             //Currently Not Working and might not be needed in the future
-            /*switch (id)
+            switch (id)
             {
                 case 0:
 
                     GUI.Label(new Rect(5, 0, 140, 30), $"<i>BUNDLES:</i>{AddonLoader.assetBundles.Count}");
                     for (int i = 0; i < AddonLoader.assetBundles.Count; i++)
                     {
-                        
+
                         switch (GUI.Button(new Rect(5, 35 + (35 * i), 140, 30), AddonLoader.assetBundles[i].name))
                         {
                             case true:
@@ -120,10 +120,10 @@ namespace UltraMod.Core
                                         break;
                                 }
                             }
-                            GUI.Label(new Rect(590,0,140,30),$"<i>WEAPONS:{_weapons.Count}</i>");
-                            for (int w = 0;w < _weapons.Count; w++)
+                            GUI.Label(new Rect(590, 0, 140, 30), $"<i>WEAPONS:{_weapons.Count}</i>");
+                            for (int w = 0; w < _weapons.Count; w++)
                             {
-                                switch(GUI.Button(new Rect(590,35+(35*w),140,30), _weapons[w].Name))
+                                switch (GUI.Button(new Rect(590, 35 + (35 * w), 140, 30), _weapons[w].Name))
                                 {
                                     case true:
                                         break;
@@ -132,7 +132,7 @@ namespace UltraMod.Core
                             break;
                     }
                     break;
-            }*/
+            }
         }
 
         void ListObjects()
