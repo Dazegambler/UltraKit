@@ -81,22 +81,21 @@ namespace UltraMod.Loader
 
             return a;
         }
+
+        //is this necessary?
         public static UltraModData FindData(UltraModData Data, List<AssetBundle> Bundles)
         {
-            switch(Data)
-            {
-                case null:
+            if(Data == null) { 
                 foreach (AssetBundle bundle in Bundles)
                 {
-                        try
-                        {
-                            Data = bundle.LoadAsset<UltraModData>("ModData");
-                        }
-                        catch (NullReferenceException)
-                        {
-                        }
+                    try
+                    {
+                        Data = bundle.LoadAsset<UltraModData>("ModData");
+                    }
+                    catch (NullReferenceException)
+                    {
+                    }
                 }
-                break;
             }
             return new UltraModData();
         }
