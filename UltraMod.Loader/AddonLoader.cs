@@ -1,10 +1,12 @@
-﻿using System;
+﻿using HarmonyLib;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UltraMod.Data;
+using UltraMod.Loader.Registries;
 using UnityEngine;
 
 namespace UltraMod.Loader
@@ -12,6 +14,7 @@ namespace UltraMod.Loader
     public static class AddonLoader
     {
         public static List<Addon> addons = new List<Addon>();
+        public static Harmony harmony = new Harmony("UltraMod.Loader");
         
         //TEMP TO MAKE SPAWNMENU WORK DELETE AFTER INTEGRATION INTO SPAWNER ARM
         public static List<AssetBundle> assetBundles {
@@ -48,6 +51,18 @@ namespace UltraMod.Loader
                 addons.Add(LoadAddon(file));
             }
 
+            WeaponRegistry.Initialize();
+            addons.ForEach(RegisterContent);
+        }
+
+        public static void RegisterContent(Addon a)
+        {
+            foreach(var content in a.LoadedContent)
+            {
+                //TODO: check the type and call the correct registry
+                Debug.Log("Registering weapon " + content.Name);
+                WeaponRegistry.Register(content);
+            }
         }
 
         public static Addon LoadAddon(string FilePath)
@@ -68,10 +83,7 @@ namespace UltraMod.Loader
             foreach (AssetBundle bundle in a.Bundles)
             {
                 List<UltraModItem> content = new List<UltraModItem>(bundle.LoadAllAssets<UltraModItem>());
-                foreach(UltraModItem item in content)
-                {
-                    a.LoadedContent.Add(item);
-                }
+                a.LoadedContent.AddRange(content);
             }
 
             return a;

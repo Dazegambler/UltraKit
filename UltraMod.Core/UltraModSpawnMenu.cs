@@ -43,15 +43,16 @@ namespace UltraMod.Core
                     break;
             }
 
-            if(Input.GetKeyDown(Bindings.Toggle.Value))
+            if (Input.GetKeyDown(Bindings.Toggle.Value))
             {
-               toggle = !toggle;
+                toggle = !toggle;
             }
         }
 
         public void OnGUI()
         {
-            if(SceneManager.GetActiveScene().name != "Intro" && SceneManager.GetActiveScene().name != "Main Menu") { 
+            if (SceneManager.GetActiveScene().name != "Intro" && SceneManager.GetActiveScene().name != "Main Menu")
+            {
                 if (GUI.skin != skin)
                 {
                     GUI.skin = skin;
@@ -62,7 +63,7 @@ namespace UltraMod.Core
                         GUI.Window(0, new Rect(ratio + 0 + (Screen.width / 5), ratio + 0 + (Screen.height / 10), 735, Screen.height / 1.5f), TabBundles, "");
                         break;
                 }
-                
+
             }
         }
 
@@ -142,7 +143,7 @@ namespace UltraMod.Core
             _items = new List<UltraModItem>();
             _enemies = new List<UltraModItem>();
             _weapons = new List<UltraModItem>();
-            for(int i = 0; i < _list.Length; i++)
+            for (int i = 0; i < _list.Length; i++)
             {
                 switch (_list[i].type)
                 {
