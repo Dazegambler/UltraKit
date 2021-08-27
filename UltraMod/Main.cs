@@ -18,8 +18,6 @@ namespace UltraMod
         static AssetBundle UIBundle = Plugin.LoadAssetBundle(Properties.Resource1.ultramod);
         public static string BundlePath = Directory.GetCurrentDirectory() + "/AssetBundles";
 
-        static Assembly test = Assembly.Load(UltraMod.Properties.Resource1.UltraMod_Test);
-
         public void Start()
         {
             
