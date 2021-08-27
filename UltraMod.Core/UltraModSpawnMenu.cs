@@ -20,7 +20,14 @@ namespace UltraMod.Core
             items = new List<GameObject>(),
             enemies = new List<GameObject>();
 
+        List<UltraModItem>
+            _props = new List<UltraModItem>(),
+            _items = new List<UltraModItem>(),
+            _enemies = new List<UltraModItem>();
+
         GameObject[] list;
+
+        UltraModItem[] _list;
 
         AssetBundle active;
         GameObject trgt;
@@ -87,13 +94,13 @@ namespace UltraMod.Core
                             break;
                         default:
                             if (list != active.LoadAllAssets<GameObject>()) ListObjects();
-                            GUI.Label(new Rect(155, 0, 140, 30), $"<i>MAPOBJECTS:{props.Count}</i>");
-                            for (int p = 0; p < props.Count; p++)
+                            GUI.Label(new Rect(155, 0, 140, 30), $"<i>MAPOBJECTS:{_props.Count}</i>");
+                            for (int p = 0; p < _props.Count; p++)//MODIFIED
                             {
-                                switch (GUI.Button(new Rect(155, 35 + (35 * p), 140, 30), props[p].name))
+                                switch (GUI.Button(new Rect(155, 35 + (35 * p), 140, 30), _props[p].Name))
                                 {
                                     case true:
-                                        trgt = props[p];
+                                        trgt = _props[p].Prefab;
                                         break;
                                 }
                             }
@@ -125,11 +132,24 @@ namespace UltraMod.Core
 
         void ListObjects()
         {
-            list = active.LoadAllAssets<GameObject>();
-            props = new List<GameObject>();
-            items = new List<GameObject>();
-            enemies = new List<GameObject>();
-            for (int i = 0; i < list.Length; i++)
+            //list = active.LoadAllAssets<GameObject>();
+            _list = active.LoadAllAssets<UltraModItem>();
+            //props = new List<GameObject>();
+            _props = new List<UltraModItem>();
+            //items = new List<GameObject>();
+            _items = new List<UltraModItem>();
+            //enemies = new List<GameObject>();
+            _enemies = new List<UltraModItem>();
+            for(int i = 0; i < _list.Length; i++)
+            {
+                switch (_list[i].type)
+                {
+                    case 0://PROP
+                        _props.Add(_list[i]);
+                        break;
+                }
+            }
+            /*for (int i = 0; i < list.Length; i++)
             {
                 switch (list[i].layer)
                 {
@@ -162,8 +182,7 @@ namespace UltraMod.Core
                         //Debug.LogWarning($"COULD NOT FIND TAG FOR {list[i].name} IN BUNDLE {active.name}...PLEASE CONTACT BUNDLE MAKER ABOUT SAID BUNDLE");
                         break;
                 }
-            }
-
+            }*/
         }
 
         void Inst()
@@ -176,5 +195,14 @@ namespace UltraMod.Core
                     break;
             }
         }
+    }
+    public class UltraModItem : ScriptableObject
+    {
+        public GameObject Prefab;
+        public Texture2D Icon;
+        public int type;
+        public string Name;
+        [TextArea]
+        public string Desc;
     }
 }

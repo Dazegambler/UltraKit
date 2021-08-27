@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UltraMod.Loader", "UltraMod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UltraMod.Core", "UltraMod.Core\UltraMod.Core.csproj", "{1E1D1395-958D-4417-A5B2-B0D11BAB5377}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UltraMod.Test", "UltraMod.Test\UltraMod.Test.csproj", "{217F1312-B984-4739-A96F-34BCBE601735}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{1E1D1395-958D-4417-A5B2-B0D11BAB5377}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E1D1395-958D-4417-A5B2-B0D11BAB5377}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E1D1395-958D-4417-A5B2-B0D11BAB5377}.Release|Any CPU.Build.0 = Release|Any CPU
+		{217F1312-B984-4739-A96F-34BCBE601735}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{217F1312-B984-4739-A96F-34BCBE601735}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{217F1312-B984-4739-A96F-34BCBE601735}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{217F1312-B984-4739-A96F-34BCBE601735}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -69,5 +69,15 @@ namespace UltraMod.Properties {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Byte[].
+        /// </summary>
+        internal static byte[] UltraMod_Test {
+            get {
+                object obj = ResourceManager.GetObject("UltraMod_Test", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }
