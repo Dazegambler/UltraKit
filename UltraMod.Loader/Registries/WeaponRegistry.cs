@@ -20,12 +20,6 @@ namespace UltraMod.Loader.Registries
     public static class WeaponRegistry
     {
         public static List<UltraModWeapon> registeredWeapons = new List<UltraModWeapon>();
-        
-        public static void Initialize()
-        {
-            AddonLoader.harmony.PatchAll(typeof(GunSetterPatch));
-            AddonLoader.harmony.PatchAll(typeof(GunControlPatch));
-        }
 
         public static void Register(UltraModItem item)
         {
