@@ -13,7 +13,7 @@ namespace UltraMod.Loader
         public UltraModData Data;
 
         public string Path;
-        public List<AssetBundle> Bundles;
+        public AssetBundle Bundle;
         public List<UltraModItem> LoadedContent;
     }
 }
