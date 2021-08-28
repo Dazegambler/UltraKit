@@ -158,18 +158,29 @@ namespace UltraMod.Loader.Registries
         [HarmonyPrefix]
         public static bool AwakePrefix(SpawnMenu __instance)
         {
-            if (__instance.gameObject.name == "Spawning Menu Wrapper")
+            if (DebugArmPatch.menus[__instance] == null)
             {
+                // This is the default menu, leave as-is
                 return true;
             }
             else
             {
+                // Setup
                 var addon = DebugArmPatch.menus[__instance];
                 var content = SpawnableRegistry.registeredObjects[addon];
 
                 var secRef = __instance.GetPrivate("sectionReference") as SpawnMenuSectionReference;
                 secRef.gameObject.SetActive(false);
 
+                foreach(Transform child in secRef.transform.parent)
+                {
+                    if(child != secRef.transform)
+                    {
+                        GameObject.Destroy(child.gameObject);
+                    }
+                }
+
+                // Addon title
                 var addonNameSec = GameObject.Instantiate(secRef, secRef.transform.parent);
                 addonNameSec.sectionName.text = addon.Data?.name ?? "UNNAMED ADDON";
                 addonNameSec.sectionName.alignment = TextAnchor.MiddleCenter;
@@ -177,6 +188,7 @@ namespace UltraMod.Loader.Registries
                 addonNameSec.gameObject.SetActive(true);
                 addonNameSec.button.gameObject.SetActive(false);
 
+                // New section
                 var newSec = GameObject.Instantiate(secRef, secRef.transform.parent);
                 newSec.sectionName.text = addon.Data?.name ?? "SPAWNABLES";
                 foreach (var spawnable in content)
@@ -192,6 +204,7 @@ namespace UltraMod.Loader.Registries
                 newSec.gameObject.SetActive(true);
                 newSec.button.gameObject.SetActive(false);
 
+                // Skip regular awake call
                 return false;
             }
         }
