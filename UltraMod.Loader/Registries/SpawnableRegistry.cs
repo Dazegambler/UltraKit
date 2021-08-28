@@ -182,7 +182,7 @@ namespace UltraMod.Loader.Registries
 
                 // Addon title
                 var addonNameSec = GameObject.Instantiate(secRef, secRef.transform.parent);
-                addonNameSec.sectionName.text = addon.Data?.name ?? "UNNAMED ADDON";
+                addonNameSec.sectionName.text = addon.Data?.ModName ?? "UNNAMED ADDON";
                 addonNameSec.sectionName.alignment = TextAnchor.MiddleCenter;
                 addonNameSec.sectionName.fontSize = 45;
                 addonNameSec.gameObject.SetActive(true);
@@ -190,7 +190,7 @@ namespace UltraMod.Loader.Registries
 
                 // New section
                 var newSec = GameObject.Instantiate(secRef, secRef.transform.parent);
-                newSec.sectionName.text = addon.Data?.name ?? "SPAWNABLES";
+                newSec.sectionName.text = addon.Data?.ModName ?? "SPAWNABLES";
                 foreach (var spawnable in content)
                 {
                     Button b = MonoBehaviour.Instantiate(newSec.button, newSec.grid.transform, false);
