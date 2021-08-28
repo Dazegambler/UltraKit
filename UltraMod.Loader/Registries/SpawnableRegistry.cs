@@ -30,6 +30,8 @@ namespace UltraMod.Loader.Registries
         {
             SpawnableObject a = new SpawnableObject();
 
+            a.gameObject = item.Prefab;
+
             a.armOffset = Vector3.zero;
             a.armRotationOffset = Vector3.zero;
             a.menuOffset = Vector3.zero;
@@ -45,6 +47,7 @@ namespace UltraMod.Loader.Registries
             a.description = item.Desc;
             a.type = "Custom Spawnable";
             a.preview = new GameObject();
+            GameObject.DontDestroyOnLoad(a.preview);
                 
             
             return a;
@@ -100,9 +103,10 @@ namespace UltraMod.Loader.Registries
             }
         }
 
+
         [HarmonyPatch("Awake")]
-        [HarmonyPostfix]
-        public static void AwakePostfix(DebugArm __instance)
+        [HarmonyPrefix]
+        public static bool AwakePrefix(DebugArm __instance)
         {
             menus.Clear();
 
@@ -111,19 +115,23 @@ namespace UltraMod.Loader.Registries
 
             foreach (var pair in SpawnableRegistry.registeredObjects)
             {
+                __instance.SetPrivate("menu", MonoSingleton<HUDOptions>.Instance.GetComponentInChildren<SpawnMenu>(true));
                 var initMenu = __instance.GetPrivate("menu") as SpawnMenu;
+                initMenu.arm = __instance;
                 menus.Add(initMenu, null);
-                var db = initMenu.GetPrivate("objects") as SpawnableObjectsDatabase;
-
 
                 var go = GameObject.Instantiate(initMenu.gameObject, initMenu.transform.parent);
                 go.SetActive(false);
-                
 
                 // New menu instantiation
                 var newMenu = go.GetComponent<SpawnMenu>();
+                newMenu.arm = __instance;
                 menus.Add(newMenu, pair.Key);
             }
+
+            __instance.SetPrivate("menu", menus.Keys.ToList()[curIndex]);
+
+            return false;
         }
 
         [HarmonyPatch("OnDestroy")]
@@ -138,7 +146,7 @@ namespace UltraMod.Loader.Registries
         [HarmonyPrefix]
         public static void UpdatePrefix(DebugArm __instance)
         {
-            
+
             __instance.SetPrivate("menu", menus.Keys.ToList()[curIndex]);
         }
     }
@@ -177,6 +185,7 @@ namespace UltraMod.Loader.Registries
                     b.onClick.AddListener(delegate
                     {
                         __instance.arm.PreviewObject(spawnable);
+                        __instance.gameObject.SetActive(false);
                     });
 
                 }
