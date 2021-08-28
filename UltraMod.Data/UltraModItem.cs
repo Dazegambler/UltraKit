@@ -17,7 +17,7 @@ namespace UltraMod.Data
 
         public GameObject Prefab;
 
-        public Texture2D Icon;
+        public Sprite Icon;
         public string Name;
         [TextArea]
         public string Desc;
