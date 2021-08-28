@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using UltraMod.Data;
@@ -35,7 +36,6 @@ namespace UltraMod.Loader
         public static void Initialize(string FilePath)
         {
             // FilePath = addon folder (has folders for each addon inside)
-
             // Loop over all folders at FilePath
             // Call LoadAddon on every folder
             Debug.LogWarning("LOADING ADDONS...");
@@ -53,12 +53,15 @@ namespace UltraMod.Loader
             }
             Debug.LogWarning("...FINISHED LOADING ADDONS");
 
-            WeaponRegistry.Initialize();
+            harmony.PatchAll(Assembly.GetExecutingAssembly());
             addons.ForEach(RegisterContent);
         }
 
         public static void RegisterContent(Addon a)
         {
+            //REMOVE
+            SpawnableRegistry.registeredObjects.Add(a, new List<SpawnableObject>());
+
             foreach (var content in a.LoadedContent)
             {
                 switch (content.type) {
@@ -66,7 +69,7 @@ namespace UltraMod.Loader
                         WeaponRegistry.Register(content);
                         break;
                     case ContentType.Spawnable:
-                        SpawnableRegistry.Register(content);
+                        SpawnableRegistry.Register(a, content);
                         break;
                 }
             }

@@ -1,18 +1,29 @@
-﻿using System;
+﻿using HarmonyLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UltraMod.Data;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace UltraMod.Loader.Registries
 {
-    class SpawnableRegistry
+    public static class SpawnableRegistry
     {
-        public static void Register(UltraModItem item)
+        public static Dictionary<Addon, List<SpawnableObject>> registeredObjects = new Dictionary<Addon, List<SpawnableObject>>();
+
+        public static void Register(Addon addon, UltraModItem item)
         {
             var spawnable = ObjFromItem(item);
+
+            if (!registeredObjects.ContainsKey(addon))
+            {
+                registeredObjects.Add(addon, new List<SpawnableObject>());
+            }
+            registeredObjects[addon].Add(spawnable);
         }
 
         public static SpawnableObject ObjFromItem(UltraModItem item)
@@ -37,6 +48,143 @@ namespace UltraMod.Loader.Registries
                 
             
             return a;
+        }
+    }
+
+    
+
+    [HarmonyPatch(typeof(DebugArm))]
+    public static class DebugArmPatch
+    {
+        public static InputAction dotAct = new InputAction("dot"), comAct = new InputAction("comma");
+        static DebugArmPatch()
+        {
+            dotAct.AddBinding("<Keyboard>/period");
+            dotAct.started += (ctx) =>
+            {
+                curIndex += 1;
+            };
+            comAct.AddBinding("<Keyboard>/comma");
+            comAct.performed += (ctx) =>
+            {
+                curIndex -= 1;
+            };
+        }
+
+        public static Dictionary<SpawnMenu, Addon> menus = new Dictionary<SpawnMenu, Addon>();
+        static int _curIndex;
+        
+        public static int curIndex {
+            get
+            {
+                return _curIndex;
+            }
+
+            set
+            {
+                var menuList = menus.Keys.ToList();
+                var prevIndex = curIndex;
+                _curIndex = (int)Mathf.Repeat(value, menus.Count);
+
+                var oldMenu = menuList[prevIndex];
+                var newMenu = menuList[curIndex];
+
+                if (oldMenu.gameObject.activeInHierarchy)
+                {
+                    oldMenu.gameObject.SetActive(false);
+                    newMenu.gameObject.SetActive(true);
+                }
+
+                
+                
+            }
+        }
+
+        [HarmonyPatch("Awake")]
+        [HarmonyPostfix]
+        public static void AwakePostfix(DebugArm __instance)
+        {
+            menus.Clear();
+
+            dotAct.Enable();
+            comAct.Enable();
+
+            foreach (var pair in SpawnableRegistry.registeredObjects)
+            {
+                var initMenu = __instance.GetPrivate("menu") as SpawnMenu;
+                menus.Add(initMenu, null);
+                var db = initMenu.GetPrivate("objects") as SpawnableObjectsDatabase;
+
+
+                var go = GameObject.Instantiate(initMenu.gameObject, initMenu.transform.parent);
+                go.SetActive(false);
+                
+
+                // New menu instantiation
+                var newMenu = go.GetComponent<SpawnMenu>();
+                menus.Add(newMenu, pair.Key);
+            }
+        }
+
+        [HarmonyPatch("OnDestroy")]
+        [HarmonyPrefix]
+        public static void DestroyPrefix()
+        {
+            dotAct.Disable();
+            comAct.Disable();
+        }
+
+        [HarmonyPatch("Update")]
+        [HarmonyPrefix]
+        public static void UpdatePrefix(DebugArm __instance)
+        {
+            
+            __instance.SetPrivate("menu", menus.Keys.ToList()[curIndex]);
+        }
+    }
+
+    [HarmonyPatch(typeof(SpawnMenu))]
+    public static class SpawnMenuPatch
+    {
+        [HarmonyPatch("Awake")]
+        [HarmonyPrefix]
+        public static bool AwakePrefix(SpawnMenu __instance)
+        {
+            if (__instance.gameObject.name == "Spawning Menu Wrapper")
+            {
+                return true;
+            }
+            else
+            {
+                var addon = DebugArmPatch.menus[__instance];
+                var content = SpawnableRegistry.registeredObjects[addon];
+
+                var secRef = __instance.GetPrivate("sectionReference") as SpawnMenuSectionReference;
+                secRef.gameObject.SetActive(false);
+
+                var addonNameSec = GameObject.Instantiate(secRef, secRef.transform.parent);
+                addonNameSec.sectionName.text = addon.Data?.name ?? "UNNAMED ADDON";
+                addonNameSec.sectionName.alignment = TextAnchor.MiddleCenter;
+                addonNameSec.sectionName.fontSize = 45;
+                addonNameSec.gameObject.SetActive(true);
+                addonNameSec.button.gameObject.SetActive(false);
+
+                var newSec = GameObject.Instantiate(secRef, secRef.transform.parent);
+                newSec.sectionName.text = addon.Data?.name ?? "SPAWNABLES";
+                foreach (var spawnable in content)
+                {
+                    Button b = MonoBehaviour.Instantiate(newSec.button, newSec.grid.transform, false);
+                    b.onClick.AddListener(delegate
+                    {
+                        __instance.arm.PreviewObject(spawnable);
+                    });
+
+                }
+                newSec.gameObject.SetActive(true);
+                newSec.button.gameObject.SetActive(false);
+
+                return false;
+            }
         }
     }
 }
