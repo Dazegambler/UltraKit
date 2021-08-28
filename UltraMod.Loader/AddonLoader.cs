@@ -23,7 +23,7 @@ namespace UltraMod.Loader
                 var l = new List<AssetBundle>();
                 foreach(var addon in addons)
                 {
-                    l.AddRange(addon.Bundles);
+                    l.Add(addon.Bundle);
                 }
 
                 return l;
@@ -76,39 +76,17 @@ namespace UltraMod.Loader
 
             a.Path = FilePath;
 
-            a.Bundles = new List<AssetBundle>();
-            a.Bundles.Add(AssetBundle.LoadFromFile(FilePath));
+            a.Bundle = AssetBundle.LoadFromFile(FilePath);
 
-            a.Data = FindData(a.Bundles);
+            a.Data = a.Bundle.LoadAsset<UltraModData>("ModData");
 
             a.LoadedContent = new List<UltraModItem>();
-            foreach (AssetBundle bundle in a.Bundles)
+            foreach (UltraModItem item in a.Bundle.LoadAllAssets<UltraModItem>())
             {
-                List<UltraModItem> content = new List<UltraModItem>(bundle.LoadAllAssets<UltraModItem>());
-                a.LoadedContent.AddRange(content);
+                a.LoadedContent.Add(item);
             }
 
             return a;
-        }
-
-        //is this necessary?
-        public static UltraModData FindData(List<AssetBundle> Bundles)
-        {
-            UltraModData data = null;
-            if(data == null) { 
-                foreach (AssetBundle bundle in Bundles)
-                {
-                    try
-                    {
-                        data = bundle.LoadAsset<UltraModData>("ModData");
-                    }
-                    catch (NullReferenceException)
-                    {
-                    }
-                }
-            }
-
-            return data;
         }
     }
 }
