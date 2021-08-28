@@ -10,7 +10,7 @@ namespace UltraMod.Loader.Registries
 {
     class SpawnableRegistry
     {
-        public static void RegisterSpawnable(UltraModItem item)
+        public static void Register(UltraModItem item)
         {
             var spawnable = ObjFromItem(item);
         }

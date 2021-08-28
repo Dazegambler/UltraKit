@@ -59,11 +59,16 @@ namespace UltraMod.Loader
 
         public static void RegisterContent(Addon a)
         {
-            foreach(var content in a.LoadedContent)
+            foreach (var content in a.LoadedContent)
             {
-                //TODO: check the type and call the correct registry
-                Debug.Log("Registering weapon " + content.Name);
-                WeaponRegistry.Register(content);
+                switch (content.type) {
+                    case ContentType.Weapon:
+                        WeaponRegistry.Register(content);
+                        break;
+                    case ContentType.Spawnable:
+                        SpawnableRegistry.Register(content);
+                        break;
+                }
             }
         }
 
