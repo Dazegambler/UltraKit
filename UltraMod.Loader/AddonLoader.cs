@@ -88,36 +88,6 @@ namespace UltraMod.Loader
 
             return a;
         }
-        public static SpawnableObject AddonToObj(UltraModItem item)
-        {
-            SpawnableObject a = new SpawnableObject();
-
-            a.armOffset = Vector3.zero;
-            a.armRotationOffset = Vector3.zero;
-            a.menuOffset = Vector3.zero;
-            a.backgroundColor = Color.white;
-
-            a.gridIcon = item.Icon;
-
-            a.objectName = item.Name;
-
-            a.strategy = "";
-
-            switch (item.type)
-            {
-                case ContentType.Enemy:
-                    a.enemyType = EnemyType.MinosPrime;
-                    a.description = item.Desc;
-                    a.type = "Custom Enemy";
-                    break;
-                case ContentType.Spawnable:
-                    a.enemyType = EnemyType.MinosPrime;
-                    a.description = item.Desc;
-                    a.type = "Custom Spawnable";
-                    a.preview = new GameObject();
-                    break;
-            }
-            return a;
-        }
+        
     }
 }
