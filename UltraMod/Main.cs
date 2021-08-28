@@ -22,6 +22,7 @@ namespace UltraMod
         {
             
             Bindings.Initialize(Config);
+            CoreContent.Initialize();
             AddonLoader.Initialize(BundlePath);
 
             SceneManager.sceneLoaded += (scene, mode) =>
