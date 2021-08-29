@@ -14,6 +14,7 @@ namespace UltraMod.Loader
 
         public string Path;
         public AssetBundle Bundle;
-        public List<UltraModItem> LoadedContent;
+        public List<UKContentSpawnable> LoadedSpawnables;
+        public List<UKContentWeapon> LoadedWeapons;
     }
 }

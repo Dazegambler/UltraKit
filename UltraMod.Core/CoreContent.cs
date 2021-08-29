@@ -23,9 +23,8 @@ namespace UltraMod.Core
             var phys = new GameObject().AddComponent<PhysgunScript>();
             phys.lr = phys.gameObject.AddComponent<LineRenderer>();
 
-            var physWeap = new UltraModWeapon();
+            var physWeap = new UltraMod.Data.UKContentWeapon();
             physWeap.Name = "Physgun";
-            physWeap.Description = "Move objects around!";
             physWeap.Variants = new List<GameObject>();
             physWeap.Variants.Add(phys.gameObject);
 

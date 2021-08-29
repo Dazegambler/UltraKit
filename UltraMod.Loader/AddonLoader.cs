@@ -62,16 +62,14 @@ namespace UltraMod.Loader
             //REMOVE
             SpawnableRegistry.registeredObjects.Add(a, new List<SpawnableObject>());
 
-            foreach (var content in a.LoadedContent)
+            foreach (var weapon in a.LoadedWeapons)
             {
-                switch (content.type) {
-                    case ContentType.Weapon:
-                        WeaponRegistry.Register(content);
-                        break;
-                    case ContentType.Spawnable:
-                        SpawnableRegistry.Register(a, content);
-                        break;
-                }
+                WeaponRegistry.Register(weapon);
+            }
+
+            foreach (var spawnable in a.LoadedSpawnables)
+            {
+                SpawnableRegistry.Register(a,spawnable);
             }
         }
 
@@ -88,12 +86,17 @@ namespace UltraMod.Loader
 
             a.Data = a.Bundle.LoadAsset<UltraModData>("ModData");
 
-            a.LoadedContent = new List<UltraModItem>();
-            foreach (UltraModItem item in a.Bundle.LoadAllAssets<UltraModItem>())
+            a.LoadedWeapons = new List<UKContentWeapon>();
+            foreach (UKContentWeapon wep in a.Bundle.LoadAllAssets<UKContentWeapon>())
             {
-                a.LoadedContent.Add(item);
+                a.LoadedWeapons.Add(wep);
             }
 
+            a.LoadedSpawnables = new List<UKContentSpawnable>();
+            foreach (UKContentSpawnable spw in a.Bundle.LoadAllAssets<UKContentSpawnable>())
+            {
+                a.LoadedSpawnables.Add(spw);
+            }
             return a;
         }
         
