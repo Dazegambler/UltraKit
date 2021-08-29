@@ -1,15 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace UltraMod.Data
+namespace UltraMod.Data.ScriptableObjects.Registry
 {
     [CreateAssetMenu(fileName = "UKContentWeapon",menuName = "UltraMod/UKContentWeapon")]
-    public class UKContentWeapon : ScriptableObject
+    public class UKContentWeapon : UKContent
     {
-        public string Name;
-
-        public Sprite Icon;
-
         public List<GameObject> Variants;
     }
 }
