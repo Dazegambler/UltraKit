@@ -81,7 +81,6 @@
     <Compile Include="CoreContent.cs" />
     <Compile Include="GUIUtil.cs" />
     <Compile Include="Physgun\PhysgunScript.cs" />
-    <Compile Include="UltraModSpawnMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
