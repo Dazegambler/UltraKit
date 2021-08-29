@@ -75,9 +75,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UKContentSpawnable.cs" />
+    <Compile Include="UKContentWeapon.cs" />
     <Compile Include="UltraModAsset.cs" />
     <Compile Include="UltraModData.cs" />
-    <Compile Include="UltraModItem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
