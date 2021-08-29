@@ -8,7 +8,7 @@ namespace UltraMod.Data
         public string Name;
         public UnityEngine.Object asset;
     }
-    class UltraModAsset : ScriptableObject
+    public class UltraModAsset : ScriptableObject
     {
         List<UltraAsset> Assets;
     }
