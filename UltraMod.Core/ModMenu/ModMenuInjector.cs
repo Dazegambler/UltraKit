@@ -11,7 +11,7 @@ namespace UltraMod.Core.ModMenu
 {
     public static class ModMenuInjector
     {
-        static AssetBundle UIBundle = LoadAssetBundle(Properties.Resource1.ultramod);
+        public static AssetBundle UIBundle = LoadAssetBundle(Properties.Resource1.ultramod);
 
         public static void Initialize()
         {
