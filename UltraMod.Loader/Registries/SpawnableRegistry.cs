@@ -15,7 +15,7 @@ namespace UltraMod.Loader.Registries
     {
         public static Dictionary<Addon, List<SpawnableObject>> registeredObjects = new Dictionary<Addon, List<SpawnableObject>>();
 
-        public static void Register(Addon addon, UltraModItem item)
+        public static void Register(Addon addon, UKContentSpawnable item)
         {
             var spawnable = ObjFromItem(item);
 
@@ -26,7 +26,7 @@ namespace UltraMod.Loader.Registries
             registeredObjects[addon].Add(spawnable);
         }
 
-        public static SpawnableObject ObjFromItem(UltraModItem item)
+        public static SpawnableObject ObjFromItem(UKContentSpawnable item)
         {
             SpawnableObject a = new SpawnableObject();
 
@@ -44,7 +44,6 @@ namespace UltraMod.Loader.Registries
             a.strategy = "";
 
             a.enemyType = EnemyType.MinosPrime;
-            a.description = item.Desc;
             a.type = "Custom Spawnable";
             a.preview = new GameObject();
             GameObject.DontDestroyOnLoad(a.preview);

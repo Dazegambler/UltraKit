@@ -10,30 +10,14 @@ using UnityEngine;
 
 namespace UltraMod.Loader.Registries
 {
-    public class UltraModWeapon
-    {
-        public string Name;
-        public string Description;
-        public List<GameObject> Variants;
-    }
 
     public static class WeaponRegistry
     {
-        public static List<UltraModWeapon> registeredWeapons = new List<UltraModWeapon>();
+        public static List<UKContentWeapon> registeredWeapons = new List<UKContentWeapon>();
 
-        public static void Register(UltraModItem item)
+        public static void Register(UKContentWeapon item)
         {
-            var w = new UltraModWeapon();
-            w.Name = item.Name;
-            w.Description = item.Desc;
-            w.Variants = new List<GameObject>();
-
-            foreach(Transform variant in item.Prefab.transform)
-            {
-                w.Variants.Add(variant.gameObject);
-            }
-
-            registeredWeapons.Add(w);
+            registeredWeapons.Add(item);
         }
 
 
