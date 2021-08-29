@@ -17,7 +17,24 @@ namespace UltraMod.Core.ModMenu
 
         void OnGUI()
         {
-            
+            if (active)
+            {
+                DrawModlist();
+            }
+            else
+            {
+                DrawButton();
+            }
+        }
+
+        void DrawButton()
+        {
+
+        }
+
+        void DrawModlist()
+        {
+
         }
     }
 }
