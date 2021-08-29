@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using UltraMod.Data.ScriptableObjects.Registry;
 using UnityEngine;
 
-namespace UltraMod.Data
+namespace UltraMod.Data.ScriptableObjects.Registry
 {
     public enum Type
     {
@@ -10,13 +11,9 @@ namespace UltraMod.Data
     }
 
     [CreateAssetMenu(fileName = "UKContentWeapon", menuName = "UltraMod/UKContentSpawnable")]
-    public class UKContentSpawnable : ScriptableObject
+    public class UKContentSpawnable : UKContent
     {
         public Type type;
-        public string Name;
-
-        public Sprite Icon;
-
         public GameObject Prefab;
     }
 }

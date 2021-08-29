@@ -6,24 +6,11 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using UltraMod.Data;
+using UltraMod.Data.ScriptableObjects.Registry;
 using UnityEngine;
 
 namespace UltraMod.Loader.Registries
 {
-
-    public static class WeaponRegistry
-    {
-        public static List<UKContentWeapon> registeredWeapons = new List<UKContentWeapon>();
-
-        public static void Register(UKContentWeapon item)
-        {
-            registeredWeapons.Add(item);
-            Debug.Log($"Weapons loaded: {registeredWeapons.Count}");
-        }
-
-
-    }
-
     [HarmonyPatch(typeof(GunSetter), "ResetWeapons")]
     class GunSetterPatch
     {
@@ -32,16 +19,23 @@ namespace UltraMod.Loader.Registries
         static void Postfix(GunSetter __instance)
         {
             modSlots.Clear();
-            
-            foreach(var weap in WeaponRegistry.registeredWeapons)
+            var allWeaps = AddonLoader.GetAll<UKContentWeapon>();
+            Debug.Log($"Loading {allWeaps.Count} weapons");
+
+            foreach (var weap in allWeaps)
             {
 
                 // check if equipped
                 var slot = new List<GameObject>();
+                
                 foreach(var variant in weap.Variants)
                 {
                     var go = GameObject.Instantiate(variant, __instance.transform);
-                    go.SetActive(false);
+                    foreach(var c in go.GetComponentsInChildren<MeshRenderer>())
+                    {
+                        c.gameObject.layer = LayerMask.NameToLayer("AlwaysOnTop");
+                    }
+
                     slot.Add(go);
 
                     var field = typeof(GunControl).GetField("weaponFreshnesses", BindingFlags.NonPublic | BindingFlags.Instance);

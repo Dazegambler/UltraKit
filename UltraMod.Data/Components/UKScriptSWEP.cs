@@ -3,17 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UltraMod.Data;
 using UltraMod.Data.ScriptableObjects.Registry;
 using UnityEngine;
 
-namespace UltraMod.Loader
+namespace UltraMod.Data.Components
 {
-    public class Addon
+    public class UKScriptSWEP : MonoBehaviour
     {
-        public UKAddonData Data;
-        public bool enabled;
-        public string Path;
-        public AssetBundle Bundle;
+        public UKContentWeapon weapon;
+        public TextAsset sourceCode;
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UltraMod.Core.ModMenu;
 using UltraMod.Core.Physgun;
+using UltraMod.Data.ScriptableObjects.Registry;
 using UltraMod.Loader.Registries;
 using UnityEngine;
 
@@ -26,15 +27,13 @@ namespace UltraMod.Core
             var phys = new GameObject().AddComponent<PhysgunScript>();
             phys.lr = phys.gameObject.AddComponent<LineRenderer>();
 
-            var physWeap = new UltraMod.Data.UKContentWeapon();
+            var physWeap = new UKContentWeapon();
             physWeap.Name = "Physgun";
             physWeap.Variants = new List<GameObject>();
             physWeap.Variants.Add(phys.gameObject);
 
             GameObject.DontDestroyOnLoad(phys.gameObject);
             phys.gameObject.SetActive(false);
-
-            WeaponRegistry.registeredWeapons.Add(physWeap);
         }
     }
 }
