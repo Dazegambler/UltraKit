@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UltraMod.Core.ModMenu;
 using UltraMod.Core.Physgun;
 using UltraMod.Loader.Registries;
 using UnityEngine;
@@ -11,12 +12,12 @@ namespace UltraMod.Core
 {
     public static class CoreContent
     {
-        static AssetBundle UIBundle = LoadAssetBundle(Properties.Resource1.ultramod);
+        
 
         public static void Initialize()
         {
             RegisterPhysgun();
-
+            ModMenuInjector.Initialize();
         }
 
         public static void RegisterPhysgun()

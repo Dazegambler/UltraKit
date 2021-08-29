@@ -9,13 +9,13 @@ using UnityEngine;
 
 namespace UltraMod.Core.ModMenu
 {
-    public static class ModMenu
+    public static class ModMenuInjector
     {
         static AssetBundle UIBundle = LoadAssetBundle(Properties.Resource1.ultramod);
 
         public static void Initialize()
         {
-            AddonLoader.harmony.PatchAll(Assembly.GetExecutingAssembly());
+            AddonLoader.harmony.PatchAll(typeof(OptionsMenuToManagerPatch));
         }
 
         static AssetBundle LoadAssetBundle(byte[] Bytes)
