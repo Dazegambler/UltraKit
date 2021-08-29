@@ -10,7 +10,7 @@ namespace UltraMod.Data
     }
 
     [CreateAssetMenu(fileName = "UKContentWeapon", menuName = "UltraMod/UKContentSpawnable")]
-    class UKContentSpawnable : ScriptableObject
+    public class UKContentSpawnable : ScriptableObject
     {
         public Type type;
         public string Name;

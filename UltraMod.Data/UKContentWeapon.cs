@@ -4,7 +4,7 @@ using UnityEngine;
 namespace UltraMod.Data
 {
     [CreateAssetMenu(fileName = "UKContentWeapon",menuName = "UltraMod/UKContentWeapon")]
-    class UKContentWeapon : ScriptableObject
+    public class UKContentWeapon : ScriptableObject
     {
         public string Name;
 
