@@ -26,8 +26,7 @@ namespace UltraMod.Core
             var physWeap = new UltraModWeapon();
             physWeap.Name = "Physgun";
             physWeap.Description = "Move objects around!";
-            physWeap.Variants = new List<GameObject>();
-            physWeap.Variants.Add(phys.gameObject);
+            physWeap.Prefab = phys.gameObject;
 
             GameObject.DontDestroyOnLoad(phys.gameObject);
             phys.gameObject.SetActive(false);
