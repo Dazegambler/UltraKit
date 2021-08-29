@@ -18,12 +18,12 @@ namespace UltraMod.Core.ModMenu
         // Use this to decide whether to show the mod list or not
         public bool active;
 
-        Rect guirect = new Rect(100 / (Screen.width / 1920), 100 / (Screen.height / 1080), 155, 35), wind;
+        Rect guirect = new Rect(100 / (Screen.width / 1920), 100 / (Screen.height / 1080), 155, 55), wind;
 
         void OnGUI()
         {
             GUI.skin = skin;
-            GUI.Window(0,wind,AddonsMenu,"<i>Addons</i>");
+            GUI.Window(0,wind,AddonsMenu,"");
         }
 
         void AddonsMenu(int id)
@@ -35,19 +35,19 @@ namespace UltraMod.Core.ModMenu
                     switch (active)
                     {
                         case true:
-                            if (GUI.Button(new Rect(5, 5, 140, 30), "SHOW ADDONS"))
+                            if (GUI.Button(new Rect(5, 5, 140, 50), "SHOW ADDONS"))
                             {
                                 active = !active;
                             }
                             for(int i = 0; i < list.Count; i++)
                             {
-                                GUI.Button(new Rect(5,70+(35*i),140,30),list.ElementAt(i).Data.ModName);
+                                GUI.Button(new Rect(5,55+(35*i),140,30),list.ElementAt(i).Data.ModName);
                                 wind = new Rect(100 / (Screen.width / 1920), 100 / (Screen.height / 1080),155,35+(30*i));
                             }
                             break;
                         default:
                             wind = guirect;
-                            if(GUI.Button(new Rect(5,5,140,30), "SHOW ADDONS"))
+                            if(GUI.Button(new Rect(5,5,140,50), "SHOW ADDONS"))
                             {
                                 active = !active;
                             }
