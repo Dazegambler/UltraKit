@@ -18,6 +18,7 @@ namespace UltraMod.Loader.Registries
         public static void Register(UKContentWeapon item)
         {
             registeredWeapons.Add(item);
+            Debug.Log($"Weapons loaded: {registeredWeapons.Count}");
         }
 
 

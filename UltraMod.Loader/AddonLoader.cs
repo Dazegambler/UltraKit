@@ -49,7 +49,14 @@ namespace UltraMod.Loader
             foreach (string file in files)
             {
                 Debug.LogWarning($"LOADING ADDON:{file}");
-                addons.Add(LoadAddon(file));
+
+                try
+                {
+                    addons.Add(LoadAddon(file));
+                } catch(Exception e)
+                {
+                    Debug.LogWarning(e.Message);
+                }
             }
             Debug.LogWarning("...FINISHED LOADING ADDONS");
 
@@ -86,17 +93,11 @@ namespace UltraMod.Loader
 
             a.Data = a.Bundle.LoadAsset<UltraModData>("ModData");
 
-            a.LoadedWeapons = new List<UKContentWeapon>();
-            foreach (UKContentWeapon wep in a.Bundle.LoadAllAssets<UKContentWeapon>())
-            {
-                a.LoadedWeapons.Add(wep);
-            }
+            a.LoadedWeapons = a.Bundle.LoadAllAssets<UKContentWeapon>().ToList();
+            
 
-            a.LoadedSpawnables = new List<UKContentSpawnable>();
-            foreach (UKContentSpawnable spw in a.Bundle.LoadAllAssets<UKContentSpawnable>())
-            {
-                a.LoadedSpawnables.Add(spw);
-            }
+            a.LoadedSpawnables = a.Bundle.LoadAllAssets<UKContentSpawnable>().ToList();
+            
             return a;
         }
         

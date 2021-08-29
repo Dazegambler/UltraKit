@@ -11,6 +11,8 @@ namespace UltraMod.Core
 {
     public static class CoreContent
     {
+        static AssetBundle UIBundle = LoadAssetBundle(Properties.Resource1.ultramod);
+
         public static void Initialize()
         {
             RegisterPhysgun();

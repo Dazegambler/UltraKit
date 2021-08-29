@@ -15,7 +15,7 @@ namespace UltraMod
     [BepInPlugin("ULTRA.MOD", "ULTRAMOD", "1.0.0")]
     public class Plugin : BaseUnityPlugin
     {
-        static AssetBundle UIBundle = Plugin.LoadAssetBundle(Properties.Resource1.ultramod);
+        
         public static string BundlePath = Directory.GetCurrentDirectory() + "/AssetBundles";
 
         public void Start()
@@ -42,11 +42,6 @@ namespace UltraMod
         }
         
         
-        static AssetBundle LoadAssetBundle(byte[] Bytes)
-        {
-            if (Bytes == null) throw new ArgumentNullException(nameof(Bytes));
-            var bundle = AssetBundle.LoadFromMemory(Bytes);
-            return bundle;
-        }
+        
     }
 }
