@@ -8,9 +8,9 @@ using UnityEngine;
 
 namespace UltraMod.Data.Components
 {
-    public class UKScriptSWEP : MonoBehaviour
+
+    public class UKScript : MonoBehaviour
     {
-        public UKContentWeapon weapon;
         public TextAsset sourceCode;
     }
 }

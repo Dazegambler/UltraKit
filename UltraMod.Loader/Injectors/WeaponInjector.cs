@@ -7,54 +7,53 @@ using System.Text;
 using System.Threading.Tasks;
 using UltraMod.Data;
 using UltraMod.Data.ScriptableObjects.Registry;
+using UltraMod.Lua;
 using UnityEngine;
 
 namespace UltraMod.Loader.Registries
 {
     [HarmonyPatch(typeof(GunSetter), "ResetWeapons")]
-    class GunSetterPatch
+    public class GunSetterPatch
     {
-        static List<List<GameObject>> modSlots = new List<List<GameObject>>();
+        public static List<List<GameObject>> modSlots = new List<List<GameObject>>();
 
         static void Postfix(GunSetter __instance)
         {
+            Debug.Log("Weapons resetting");
             modSlots.Clear();
-            var allWeaps = AddonLoader.GetAll<UKContentWeapon>();
-            Debug.Log($"Loading {allWeaps.Count} weapons");
-
-            foreach (var weap in allWeaps)
+            foreach (var pair in AddonLoader.registry)
             {
-
-                // check if equipped
-                var slot = new List<GameObject>();
-                
-                foreach(var variant in weap.Variants)
+                foreach (var weap in pair.Key.GetAll<UKContentWeapon>())
                 {
-                    var go = GameObject.Instantiate(variant, __instance.transform);
-                    foreach(var c in go.GetComponentsInChildren<MeshRenderer>())
+
+                    // check if equipped
+                    var slot = new List<GameObject>();
+
+                    foreach (var variant in weap.Variants)
                     {
-                        c.gameObject.layer = LayerMask.NameToLayer("AlwaysOnTop");
+                        var go = GameObject.Instantiate(variant, __instance.transform);
+                        go.SetActive(false);
+                        foreach (var c in go.GetComponentsInChildren<MeshRenderer>())
+                        {
+                            c.gameObject.layer = LayerMask.NameToLayer("AlwaysOnTop");
+                        }
+                        slot.Add(go);
+
+                        var field = typeof(GunControl).GetField("weaponFreshnesses", BindingFlags.NonPublic | BindingFlags.Instance);
+                        var freshnessList = field.GetValue(__instance.gunc) as List<float>;
+                        freshnessList.Add(10);
+                        field.SetValue(__instance.gunc, freshnessList);
+
+                        __instance.gunc.slots.Add(slot);
+                        __instance.gunc.allWeapons.Add(go);
+
+                        UKLuaRuntime.Register(pair.Key.Data, go);
                     }
 
-                    slot.Add(go);
+                    Debug.Log(slot.Count);
 
-                    var field = typeof(GunControl).GetField("weaponFreshnesses", BindingFlags.NonPublic | BindingFlags.Instance);
-                    var freshnessList = field.GetValue(__instance.gunc) as List<float>;
-                    freshnessList.Add(10);
-
-                    field.SetValue(__instance.gunc, freshnessList);
-
-                    __instance.gunc.slots.Add(slot);
-                    foreach (var obj in slot)
-                    {
-                        obj.SetActive(false);
-                        __instance.gunc.allWeapons.Add(obj);
-                    }
+                    modSlots.Add(slot);
                 }
-
-                Debug.Log(slot.Count);
-
-                modSlots.Add(slot);
             }
         }
     }

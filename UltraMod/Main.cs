@@ -9,6 +9,10 @@ using UltraMod.Loader;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UltraMod.Lua;
+using UnityEngine.InputSystem;
+using UltraMod.Loader.Registries;
+using UltraMod.Lua.API;
 
 namespace UltraMod
 {
@@ -22,6 +26,7 @@ namespace UltraMod
         {
             
             Bindings.Initialize(Config);
+            UKLuaRuntime.Initialize();
             CoreContent.Initialize();
             AddonLoader.Initialize(BundlePath);
 
@@ -38,7 +43,27 @@ namespace UltraMod
 
         public void Update()
         {
-            
+            //TODO: better.
+            if (Keyboard.current.f8Key.wasPressedThisFrame)
+            {
+                foreach(var addon in AddonLoader.addons)
+                {
+                    addon.Bundle?.Unload(true);
+                }
+                AddonLoader.registry.Clear();
+ 
+                foreach (var slot in GunSetterPatch.modSlots)
+                {
+                    MonoSingleton<GunControl>.Instance.slots.Remove(slot);
+                }
+                GunSetterPatch.modSlots.Clear();
+
+                foreach(var binding in UKLuaBinding.bindings)
+                {
+                    UKLuaBinding.Unbind(binding);
+                }
+                UKLuaBinding.bindings.Clear();
+            }   
         }
         
         

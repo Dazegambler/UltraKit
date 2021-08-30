@@ -75,12 +75,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\UKScriptSWEP.cs" />
+    <Compile Include="Components\UKScript.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScriptableObjects\Registry\UKContent.cs" />
     <Compile Include="ScriptableObjects\Registry\UKContentSpawnable.cs" />
     <Compile Include="ScriptableObjects\Registry\UKContentWeapon.cs" />
-    <Compile Include="ScriptableObjects\UKAddonAssetDB.cs" />
     <Compile Include="ScriptableObjects\UKAddonData.cs" />
   </ItemGroup>
   <ItemGroup>

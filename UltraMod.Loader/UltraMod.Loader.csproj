@@ -90,6 +90,10 @@
       <Project>{217f1312-b984-4739-a96f-34bcbe601735}</Project>
       <Name>UltraMod.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UltraMod.Lua\UltraMod.Lua.csproj">
+      <Project>{3b43997e-dee0-437b-a791-3f927974e1da}</Project>
+      <Name>UltraMod.Lua</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
