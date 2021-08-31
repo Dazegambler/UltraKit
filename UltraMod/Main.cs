@@ -36,6 +36,7 @@ namespace UltraMod
                 {
                     if(CameraController.Instance != null)
                     {
+                        CameraController.Instance.gameObject.AddComponent<Core.ModMenu.ModMenuComponent>();
                     }
                 }
             };
