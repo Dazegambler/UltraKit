@@ -37,6 +37,7 @@
     <Reference Include="BepInEx">
       <HintPath>..\lib\BepInEx.dll</HintPath>
     </Reference>
+    <Reference Include="MoonSharp.Interpreter, Version=2.0.0.0, Culture=neutral, PublicKeyToken=921e73ce94aa17f8" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Unity.InputSystem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

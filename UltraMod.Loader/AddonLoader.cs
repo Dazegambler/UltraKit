@@ -57,6 +57,14 @@ namespace UltraMod.Loader
             // Loop over all folders at FilePath
             // Call LoadAddon on every folder
             Debug.LogWarning("LOADING ADDONS...");
+            LoadAllAddons(FilePath);
+            Debug.LogWarning("...FINISHED LOADING ADDONS");
+
+            harmony.PatchAll(Assembly.GetExecutingAssembly());
+        }
+
+        public static void LoadAllAddons(string FilePath)
+        {
             if (!Directory.Exists(FilePath))
             {
                 Debug.LogWarning($"Addons Directory Not Found...Creating Directory at {FilePath}");
@@ -71,14 +79,12 @@ namespace UltraMod.Loader
                 try
                 {
                     LoadAddon(file);
-                } catch(Exception e)
+                }
+                catch (Exception e)
                 {
                     Debug.LogError(e.Message);
                 }
             }
-            Debug.LogWarning("...FINISHED LOADING ADDONS");
-
-            harmony.PatchAll(Assembly.GetExecutingAssembly());
         }
 
         public static Addon LoadAddon(string FilePath)
@@ -94,8 +100,6 @@ namespace UltraMod.Loader
             registry.Add(a, new List<UKContent>());
             registry[a].AddRange(a.Bundle.LoadAllAssets<UKContentWeapon>());
             registry[a].AddRange(a.Bundle.LoadAllAssets<UKContentSpawnable>());
-
-            Debug.Log(registry[a].Count);
 
             return a;
         }

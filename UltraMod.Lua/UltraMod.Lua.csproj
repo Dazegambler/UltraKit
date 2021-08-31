@@ -48,21 +48,40 @@
     <Reference Include="Unity.InputSystem">
       <HintPath>..\lib\Unity.InputSystem.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\lib\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\Core\Proxies\UKLuaGameObject.cs" />
-    <Compile Include="API\Math\UKLuaVector3.cs" />
+    <Compile Include="API\Core\UKLuaGlobals.cs" />
+    <Compile Include="API\Core\UKLuaMath.cs" />
+    <Compile Include="API\Core\UKLuaPhysics.cs" />
+    <Compile Include="API\Proxies\Component\UKLuaAudioSource.cs" />
+    <Compile Include="API\Proxies\Component\UKLuaEnemy.cs" />
+    <Compile Include="API\Game\UKLuaPlayer.cs" />
+    <Compile Include="API\Proxies\Component\UKLuaComponent.cs" />
+    <Compile Include="API\Proxies\Component\UKLuaLineRenderer.cs" />
+    <Compile Include="API\Proxies\Component\UKLuaRigidbody.cs" />
+    <Compile Include="API\Proxies\UKLuaGameObject.cs" />
+    <Compile Include="API\Proxies\UKLuaVector3.cs" />
+    <Compile Include="API\UKLuaAPI.cs" />
     <Compile Include="API\UKLuaProxy.cs" />
-    <Compile Include="API\Core\Proxies\UKLuaTransform.cs" />
-    <Compile Include="API\UKLuaBinding.cs" />
+    <Compile Include="API\Proxies\Component\UKLuaTransform.cs" />
+    <Compile Include="API\Core\UKLuaInput.cs" />
     <Compile Include="Attributes\UKLuaProxyAttribute.cs" />
+    <Compile Include="Attributes\UKScriptCallbacks.cs" />
+    <Compile Include="ReflectionExtensions.cs" />
     <Compile Include="ScriptHelper.cs" />
     <Compile Include="Attributes\UKLuaStaticAttribute.cs" />
     <Compile Include="Components\UKScriptRuntime.cs" />
-    <Compile Include="UKLuaRuntime.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

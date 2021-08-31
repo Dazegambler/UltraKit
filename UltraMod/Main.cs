@@ -26,8 +26,8 @@ namespace UltraMod
         {
             
             Bindings.Initialize(Config);
-            UKLuaRuntime.Initialize();
             CoreContent.Initialize();
+            UKLuaAPI.Initialize();
             AddonLoader.Initialize(BundlePath);
 
             SceneManager.sceneLoaded += (scene, mode) =>
@@ -58,11 +58,7 @@ namespace UltraMod
                 }
                 GunSetterPatch.modSlots.Clear();
 
-                foreach(var binding in UKLuaBinding.bindings)
-                {
-                    UKLuaBinding.Unbind(binding);
-                }
-                UKLuaBinding.bindings.Clear();
+                UKLuaInput.bindings.Clear();
             }   
         }
         

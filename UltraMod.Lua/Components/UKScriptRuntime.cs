@@ -4,65 +4,97 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UltraMod.Data;
 using UltraMod.Data.Components;
+using UltraMod.Lua.API;
 using UltraMod.Lua.API.Proxies;
 using UnityEngine;
 
 namespace UltraMod.Lua.Components
 {
-    public class UKScriptRuntimeProxy : UKLuaProxy<UKScriptRuntime>
-    {
-        [MoonSharpHidden]
-        public UKScriptRuntime Target => target;
-
-        public UKScriptRuntimeProxy(UKScriptRuntime target) : base(target)
-        {
-        }
-    }
-
-    //TODO: properly sort runtime scripts into Addons
     public class UKScriptRuntime : MonoBehaviour
     {
-        public UKScript original;
-        public Script script;
+        public UKScript data;
+        public Script runtime;
 
-        void Awake()
+        public static void Create(UKAddonData addon, UKScript orig)
         {
-            original = GetComponent<UKScript>();
+            var r = orig.gameObject.AddComponent<UKScriptRuntime>();
+        }
 
-            script = new Script();
-            UKLuaRuntime.InitializeScript(script);
-
-            script.Globals["_source"] = this;
-            script.Globals["transform"] = transform;
-            script.Globals["gameObject"] = gameObject;
-
-            try
+        public static void Create(UKAddonData data, GameObject go)
+        {
+            foreach(var script in go.GetComponentsInChildren<UKScript>())
             {
-                script.DoString(original.sourceCode.text);
-            } catch(ScriptRuntimeException e)
-            {
-                //TODO: seriously, reorganize so you stop putting these everywhere
-                //TODO: this is the kinda stuff the runtime class is for!! leave the loading to the addonloader (duh)
-                //TODO: and the fuzzy calls there too dumbass
-                Debug.LogError($"(UltraMod Lua) - {e.DecoratedMessage}");
+                Create(data, script);
             }
         }
 
+        public void FuzzyCall(Table t, string name, params object[] luap)
+        {
+            try
+            {
+                if (t?.Get(name)?.Function != null)
+                {
+                    t.Get(name).Function.Call(luap);
+                }
+                else
+                {
+                    //TODO: proper logging
+                }
+            }
+            catch (ScriptRuntimeException e)
+            {
+                //TODO: propper logging
+                Debug.LogError($"(UltraMod Lua) {data.sourceCode.name} -  {e.DecoratedMessage}");
+            }
+        }
+
+        public void FuzzyCall(DynValue d, params object[] luap)
+        {
+            if (d.Function != null)
+            {
+                runtime.Call(d, luap);
+            }
+            else
+            {
+                //TODO: proper logging
+            }
+        }
+
+        void Awake()
+        {
+            data = GetComponent<UKScript>();
+            runtime = new Script(CoreModules.Preset_SoftSandbox);
+
+            
+
+            UKLuaAPI.ConstructScript(this);
+            runtime.DoString(data.sourceCode.text);
+        }
+
+        void OnDestroy()
+        {
+            UKLuaAPI.DestructScript(this);
+        }
+
+        //Script Callbacks
         void OnEnable()
         {
-            script.FuzzyCall("OnEnable");
+            FuzzyCall(runtime.Globals, "OnEnable");
         }
 
         void Update()
         {
-            script.FuzzyCall("Update", DynValue.FromObject(script, Time.deltaTime));
+            FuzzyCall(runtime.Globals, "Update", Time.deltaTime);
+
+            //TODO: automate API update calls using attribute
+            UKLuaInput.Update(this);
         }
 
         void OnDisable()
         {
-            script.FuzzyCall("OnDisable");
+            FuzzyCall(runtime.Globals, "OnDisable");
         }
-
     }
 }

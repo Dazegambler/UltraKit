@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using UltraMod.Data;
 using UltraMod.Data.ScriptableObjects.Registry;
 using UltraMod.Lua;
+using UltraMod.Lua.Components;
 using UnityEngine;
 
 namespace UltraMod.Loader.Registries
@@ -33,8 +34,13 @@ namespace UltraMod.Loader.Registries
                     {
                         var go = GameObject.Instantiate(variant, __instance.transform);
                         go.SetActive(false);
-                        foreach (var c in go.GetComponentsInChildren<MeshRenderer>())
+                        foreach (var c in go.GetComponentsInChildren<Renderer>())
                         {
+                            if (c is MeshRenderer)
+                            {
+                                c.material.shader = Shader.Find("psx/railgun");
+                            }
+                            
                             c.gameObject.layer = LayerMask.NameToLayer("AlwaysOnTop");
                         }
                         slot.Add(go);
@@ -47,7 +53,7 @@ namespace UltraMod.Loader.Registries
                         __instance.gunc.slots.Add(slot);
                         __instance.gunc.allWeapons.Add(go);
 
-                        UKLuaRuntime.Register(pair.Key.Data, go);
+                        UKScriptRuntime.Create(pair.Key.Data, go);
                     }
 
                     Debug.Log(slot.Count);

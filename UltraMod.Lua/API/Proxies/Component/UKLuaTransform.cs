@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using UltraMod.Lua.Attributes;
 using UnityEngine;
 
-namespace UltraMod.Lua.API.Proxies.Core
+namespace UltraMod.Lua.API.Proxies.Component
 {
     [UKLuaStatic("Transform")]
-    class UKLuaTransform : UKLuaProxy<Transform>
+    class UKLuaTransform : UKLuaComponent<Transform>
     {
         public UKLuaTransform(Transform target) : base(target)
         {
@@ -38,13 +38,22 @@ namespace UltraMod.Lua.API.Proxies.Core
         }
 
 
+        public Vector3 localScale
+        {
+            get => target.localScale;
+            set => target.localScale = value;
+        }
+
         public Vector3 forward
         {
             get => target.forward;
             set => target.forward = value;
         }
-
-        public GameObject gameObject => target.gameObject;
+        public Vector3 up
+        {
+            get => target.up;
+            set => target.up = value;
+        }
 
         public Transform Find(string n) => target.Find(n);
     }
