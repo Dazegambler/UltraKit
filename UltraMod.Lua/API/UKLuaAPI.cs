@@ -65,6 +65,7 @@ namespace UltraMod.Lua.API
             RegisterProxy<UKLuaEnemy, EnemyIdentifier>();
             RegisterProxy<UKLuaLineRenderer, LineRenderer>();
             RegisterProxy<UKLuaAudioSource, AudioSource>();
+            RegisterProxy<UKLuaProjectile, Projectile>();
         }
 
         public static void ConstructScript(UKScriptRuntime script)

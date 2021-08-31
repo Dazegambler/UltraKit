@@ -16,6 +16,7 @@ namespace UltraMod.Lua.API
     public static class UKLuaKeybinds
     {
         public static readonly string Fire1 = "<Mouse>/leftButton";
+        public static readonly string Fire2 = "<Mouse>/rightButton";
     }
 
     

@@ -69,6 +69,7 @@
     <Compile Include="API\Game\UKLuaPlayer.cs" />
     <Compile Include="API\Proxies\Component\UKLuaComponent.cs" />
     <Compile Include="API\Proxies\Component\UKLuaLineRenderer.cs" />
+    <Compile Include="API\Proxies\Component\UKLuaProjectile.cs" />
     <Compile Include="API\Proxies\Component\UKLuaRigidbody.cs" />
     <Compile Include="API\Proxies\UKLuaGameObject.cs" />
     <Compile Include="API\Proxies\UKLuaVector3.cs" />

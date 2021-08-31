@@ -14,12 +14,14 @@ namespace UltraMod.Lua.API.Proxies
     [UKLuaStatic("GameObject")]
     public class UKLuaGameObject : UKLuaProxy<GameObject>
     {
+        //TODO: move this to the api class use attribute to register them to a table AND here
         public static readonly Dictionary<ComponentType, Type> ComponentDict = new Dictionary<ComponentType, Type>()
         {
             { ComponentType.Rigidbody, typeof(Rigidbody) },
             { ComponentType.Enemy, typeof(EnemyIdentifier) },
             { ComponentType.LineRenderer, typeof(LineRenderer) },
-            { ComponentType.AudioSource, typeof(AudioSource) }
+            { ComponentType.AudioSource, typeof(AudioSource) },
+            { ComponentType.Projectile, typeof(Projectile) }
         };
 
         public UKLuaGameObject(GameObject target) : base(target)
@@ -40,6 +42,11 @@ namespace UltraMod.Lua.API.Proxies
         public DynValue GetComponentInTree(Script s, ComponentType type)
         {
             return DynValue.FromObject(s, FindComponentAllTree(ComponentDict[type]));
+        }
+
+        public DynValue GetComponentInParent(Script s, ComponentType type)
+        {
+            return DynValue.FromObject(s, target.GetComponentInParent(ComponentDict[type]));
         }
 
         public DynValue GetComponentInChildren(Script s, ComponentType type)

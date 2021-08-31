@@ -86,10 +86,13 @@ namespace UltraMod.Lua.Components
 
         void Update()
         {
-            FuzzyCall(runtime.Globals, "Update", Time.deltaTime);
+            if (!MonoSingleton<OptionsManager>.Instance.paused)
+            {
+                FuzzyCall(runtime.Globals, "Update", Time.deltaTime);
 
-            //TODO: automate API update calls using attribute
-            UKLuaInput.Update(this);
+                //TODO: automate API update calls using attribute
+                UKLuaInput.Update(this);
+            }
         }
 
         void OnDisable()

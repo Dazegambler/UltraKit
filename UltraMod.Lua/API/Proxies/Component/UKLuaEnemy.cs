@@ -19,7 +19,24 @@ namespace UltraMod.Lua.API
 
         public Transform transform => target.transform;
         public Rigidbody rigidbody => target.GetComponent<Rigidbody>();
-        
+
+        public void InstaKill() => target.InstaKill();
+
+        public bool GoLimp() {
+            if(target.machine != null)
+            {
+                target.machine?.GoLimp();
+                return true;
+            }
+
+            if (target.zombie != null)
+            {
+                target.zombie?.GoLimp();
+            }
+
+            return false;
+        }
+
         public void ForceAir(Script script, bool air)
         {
             if (target.gce == null)

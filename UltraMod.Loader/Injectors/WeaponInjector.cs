@@ -34,11 +34,13 @@ namespace UltraMod.Loader.Registries
                     {
                         var go = GameObject.Instantiate(variant, __instance.transform);
                         go.SetActive(false);
+
+                        Debug.Log(go.name);
                         foreach (var c in go.GetComponentsInChildren<Renderer>())
                         {
                             if (c is MeshRenderer)
                             {
-                                c.material.shader = Shader.Find("psx/railgun");
+                                //c.material.shader = Shader.Find("psx/railgun");
                             }
                             
                             c.gameObject.layer = LayerMask.NameToLayer("AlwaysOnTop");
@@ -50,11 +52,12 @@ namespace UltraMod.Loader.Registries
                         freshnessList.Add(10);
                         field.SetValue(__instance.gunc, freshnessList);
 
-                        __instance.gunc.slots.Add(slot);
                         __instance.gunc.allWeapons.Add(go);
 
                         UKScriptRuntime.Create(pair.Key.Data, go);
                     }
+
+                    __instance.gunc.slots.Add(slot);
 
                     Debug.Log(slot.Count);
 

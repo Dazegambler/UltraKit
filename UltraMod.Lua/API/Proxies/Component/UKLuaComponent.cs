@@ -10,13 +10,15 @@ namespace UltraMod.Lua.API.Proxies.Component
 {
 
     //TODO: autogenerate static as table on script construction, with dictionary matching static values to type i guess
+    //TODO: guess that means its time for another attribute
     [UKLuaStatic("ComponentType")]
     public enum ComponentType
     {
         Rigidbody,
         LineRenderer,
         Enemy,
-        AudioSource
+        AudioSource,
+        Projectile
     }
 
     public class UKLuaComponent<T> : UKLuaProxy<T>

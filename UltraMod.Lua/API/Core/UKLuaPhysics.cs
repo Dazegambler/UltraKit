@@ -32,6 +32,8 @@ namespace UltraMod.Lua.API.Core
     public static class UKLayerMask
     {
         public static int EnemyTrigger = NameToLayer("EnemyTrigger");
+        public static int Projectile = NameToLayer("Projectile");
+        public static int Limb = NameToLayer("Limb");
 
         public static int NameToLayer(string name) => LayerMask.NameToLayer(name);
     }
@@ -40,10 +42,18 @@ namespace UltraMod.Lua.API.Core
     [UKLuaStatic("Physics")]
     public static class UKLuaPhysics
     {
-        public static UKLineTraceResult Linecast(Vector3 start, Vector3 end, int layer)
+        public static UKLineTraceResult Linecast(Vector3 start, Vector3 end, params int[] layers)
         {
+            int mask = 0;
+            foreach(var layer in layers)
+            {
+                mask |= (1 << layer);
+            }
+
+
+
             RaycastHit info;
-            bool hit = Physics.Linecast(start, end, out info, 1 << layer, QueryTriggerInteraction.Ignore);
+            bool hit = Physics.Linecast(start, end, out info, mask);
 
             UKLineTraceResult res = null;
             if (hit)

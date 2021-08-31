@@ -15,6 +15,7 @@ namespace UltraMod.Lua.API.Proxies.Component
         {
         }
 
+        public void Play() => target.Play();
 
         public bool enabled
         {
