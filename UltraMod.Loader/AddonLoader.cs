@@ -95,7 +95,7 @@ namespace UltraMod.Loader
             var a = new Addon();
             a.Path = FilePath;
             a.Bundle = AssetBundle.LoadFromFile(FilePath);
-            a.Data = a.Bundle.LoadAsset<UKAddonData>("ModData");
+            a.Data = a.Bundle.LoadAllAssets<UKAddonData>()[0];
 
             registry.Add(a, new List<UKContent>());
             registry[a].AddRange(a.Bundle.LoadAllAssets<UKContentWeapon>());
