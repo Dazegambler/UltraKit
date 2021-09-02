@@ -71,7 +71,7 @@ namespace UltraMod.Core.ModMenu
                     {
                         for (int i = 0; i < list.Count; i++)
                         {
-                            GUI.Button(new Rect(5, 60 + (35 * (i)), 140, 30), list.ElementAt(i).Data.ModName);
+                            GUI.Button(new Rect(5, 60 + (35 * (i)), 140, 30), list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod");
                             wind.height = 95 + (35 * i);
                         }
                     }
