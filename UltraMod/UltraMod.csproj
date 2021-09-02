@@ -37,8 +37,16 @@
     <Reference Include="BepInEx">
       <HintPath>..\lib\BepInEx.dll</HintPath>
     </Reference>
+    <Reference Include="MoonSharp.Interpreter, Version=2.0.0.0, Culture=neutral, PublicKeyToken=921e73ce94aa17f8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\MoonSharp.Interpreter.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="Unity.InputSystem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Unity.InputSystem.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\lib\UnityEngine.dll</HintPath>
     </Reference>
@@ -67,29 +75,23 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resource1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resource1.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resource1.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ultramod" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UltraMod.Core\UltraMod.Core.csproj">
       <Project>{1E1D1395-958D-4417-A5B2-B0D11BAB5377}</Project>
       <Name>UltraMod.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UltraMod.Data\UltraMod.Data.csproj">
+      <Project>{217F1312-B984-4739-A96F-34BCBE601735}</Project>
+      <Name>UltraMod.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UltraMod.Loader\UltraMod.Loader.csproj">
       <Project>{DDF3583F-8893-464A-858F-264F2A6A469A}</Project>
       <Name>UltraMod.Loader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UltraMod.Lua\UltraMod.Lua.csproj">
+      <Project>{3B43997E-DEE0-437B-A791-3F927974E1DA}</Project>
+      <Name>UltraMod.Lua</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -3,7 +3,7 @@
 namespace UltraMod.Data
 {
     [CreateAssetMenu(fileName = "ModData", menuName = "UltraMod/ModData")]
-    public class UltraModData : ScriptableObject
+    public class UKAddonData : ScriptableObject
     {
         public string ModName;
         public string Author;

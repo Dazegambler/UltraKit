@@ -9,44 +9,33 @@ using UltraMod.Loader;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UltraMod.Lua;
+using UnityEngine.InputSystem;
+using UltraMod.Loader.Registries;
+using UltraMod.Lua.API;
 
 namespace UltraMod
 {
     [BepInPlugin("ULTRA.MOD", "ULTRAMOD", "1.0.0")]
     public class Plugin : BaseUnityPlugin
     {
-        static AssetBundle UIBundle = Plugin.LoadAssetBundle(Properties.Resource1.ultramod);
+        
         public static string BundlePath = Directory.GetCurrentDirectory() + "/AssetBundles";
 
         public void Start()
         {
             
-            Bindings.Initialize(Config);
             CoreContent.Initialize();
+            UKLuaAPI.Initialize();
             AddonLoader.Initialize(BundlePath);
-
-            SceneManager.sceneLoaded += (scene, mode) =>
-            {
-                if(mode != LoadSceneMode.Additive && scene.name != "Intro" && scene.name != "Main Menu")
-                {
-                    if(CameraController.Instance != null)
-                    {
-                    }
-                }
-            };
         }
 
         public void Update()
         {
-            
+
         }
         
         
-        static AssetBundle LoadAssetBundle(byte[] Bytes)
-        {
-            if (Bytes == null) throw new ArgumentNullException(nameof(Bytes));
-            var bundle = AssetBundle.LoadFromMemory(Bytes);
-            return bundle;
-        }
+        
     }
 }

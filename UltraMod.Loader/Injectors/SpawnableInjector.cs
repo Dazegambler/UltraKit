@@ -5,28 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UltraMod.Data;
+using UltraMod.Data.ScriptableObjects.Registry;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace UltraMod.Loader.Registries
 {
-    public static class SpawnableRegistry
+
+    public static class UKContentSpawnableExtensions
     {
-        public static Dictionary<Addon, List<SpawnableObject>> registeredObjects = new Dictionary<Addon, List<SpawnableObject>>();
-
-        public static void Register(Addon addon, UltraModItem item)
-        {
-            var spawnable = ObjFromItem(item);
-
-            if (!registeredObjects.ContainsKey(addon))
-            {
-                registeredObjects.Add(addon, new List<SpawnableObject>());
-            }
-            registeredObjects[addon].Add(spawnable);
-        }
-
-        public static SpawnableObject ObjFromItem(UltraModItem item)
+        public static SpawnableObject GetAsSpawnable(this UKContentSpawnable item)
         {
             SpawnableObject a = new SpawnableObject();
 
@@ -44,17 +33,14 @@ namespace UltraMod.Loader.Registries
             a.strategy = "";
 
             a.enemyType = EnemyType.MinosPrime;
-            a.description = item.Desc;
             a.type = "Custom Spawnable";
             a.preview = new GameObject();
             GameObject.DontDestroyOnLoad(a.preview);
-                
-            
+
+
             return a;
         }
     }
-
-    
 
     [HarmonyPatch(typeof(DebugArm))]
     public static class DebugArmPatch
@@ -97,9 +83,6 @@ namespace UltraMod.Loader.Registries
                     oldMenu.gameObject.SetActive(false);
                     newMenu.gameObject.SetActive(true);
                 }
-
-                
-                
             }
         }
 
@@ -113,8 +96,9 @@ namespace UltraMod.Loader.Registries
             dotAct.Enable();
             comAct.Enable();
 
-            foreach (var pair in SpawnableRegistry.registeredObjects)
+            foreach (var addon in AddonLoader.addons)
             {
+
                 __instance.SetPrivate("menu", MonoSingleton<HUDOptions>.Instance.GetComponentInChildren<SpawnMenu>(true));
                 var initMenu = __instance.GetPrivate("menu") as SpawnMenu;
                 initMenu.arm = __instance;
@@ -126,7 +110,7 @@ namespace UltraMod.Loader.Registries
                 // New menu instantiation
                 var newMenu = go.GetComponent<SpawnMenu>();
                 newMenu.arm = __instance;
-                menus.Add(newMenu, pair.Key);
+                menus.Add(newMenu, addon);
             }
 
             __instance.SetPrivate("menu", menus.Keys.ToList()[curIndex]);
@@ -167,7 +151,7 @@ namespace UltraMod.Loader.Registries
             {
                 // Setup
                 var addon = DebugArmPatch.menus[__instance];
-                var content = SpawnableRegistry.registeredObjects[addon];
+                var content = addon.GetAll<UKContentSpawnable>();
 
                 var secRef = __instance.GetPrivate("sectionReference") as SpawnMenuSectionReference;
                 secRef.gameObject.SetActive(false);
@@ -196,7 +180,7 @@ namespace UltraMod.Loader.Registries
                     Button b = MonoBehaviour.Instantiate(newSec.button, newSec.grid.transform, false);
                     b.onClick.AddListener(delegate
                     {
-                        __instance.arm.PreviewObject(spawnable);
+                        __instance.arm.PreviewObject(spawnable.GetAsSpawnable());
                         __instance.gameObject.SetActive(false);
                     });
 

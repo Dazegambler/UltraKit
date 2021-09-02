@@ -7,31 +7,49 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using UltraMod.Data;
+using UltraMod.Data.ScriptableObjects.Registry;
 using UltraMod.Loader.Registries;
 using UnityEngine;
 
 namespace UltraMod.Loader
 {
+    public static class AddonExtensions{
+        public static List<T> GetAll<T>(this Addon a)
+            where T : UKContent
+        {
+            var res = AddonLoader.registry[a].Where(k => k is T).ToList();
+            return res.Cast<T>().ToList();
+        }
+    }
+
     public static class AddonLoader
     {
-        public static List<Addon> addons = new List<Addon>();
+        public static List<Addon> addons{
+            get
+            {
+                return registry.Keys.ToList();
+            }
+        }
+
+        public static Dictionary<Addon, List<UKContent>> registry = new Dictionary<Addon, List<UKContent>>();
+        public static List<T> GetAll<T>()
+            where T : UKContent
+        {
+            var res = new List<T>();
+
+            foreach(var val in registry.Values)
+            {
+                res.AddRange(val.Where(k => k is T).ToList().Cast<T>());
+            }
+
+            return res;
+        }
+
+
         public static Harmony harmony = new Harmony("UltraMod.Loader");
         
         //TEMP TO MAKE SPAWNMENU WORK DELETE AFTER INTEGRATION INTO SPAWNER ARM
-        public static List<AssetBundle> assetBundles {
-            get
-            {
-                var l = new List<AssetBundle>();
-                foreach(var addon in addons)
-                {
-                    l.Add(addon.Bundle);
-                }
-
-                return l;
-            }
-
-
-        }
+        
 
         public static void Initialize(string FilePath)
         {
@@ -39,6 +57,14 @@ namespace UltraMod.Loader
             // Loop over all folders at FilePath
             // Call LoadAddon on every folder
             Debug.LogWarning("LOADING ADDONS...");
+            LoadAllAddons(FilePath);
+            Debug.LogWarning("...FINISHED LOADING ADDONS");
+
+            harmony.PatchAll(Assembly.GetExecutingAssembly());
+        }
+
+        public static void LoadAllAddons(string FilePath)
+        {
             if (!Directory.Exists(FilePath))
             {
                 Debug.LogWarning($"Addons Directory Not Found...Creating Directory at {FilePath}");
@@ -49,28 +75,14 @@ namespace UltraMod.Loader
             foreach (string file in files)
             {
                 Debug.LogWarning($"LOADING ADDON:{file}");
-                addons.Add(LoadAddon(file));
-            }
-            Debug.LogWarning("...FINISHED LOADING ADDONS");
 
-            harmony.PatchAll(Assembly.GetExecutingAssembly());
-            addons.ForEach(RegisterContent);
-        }
-
-        public static void RegisterContent(Addon a)
-        {
-            //REMOVE
-            SpawnableRegistry.registeredObjects.Add(a, new List<SpawnableObject>());
-
-            foreach (var content in a.LoadedContent)
-            {
-                switch (content.type) {
-                    case ContentType.Weapon:
-                        WeaponRegistry.Register(content);
-                        break;
-                    case ContentType.Spawnable:
-                        SpawnableRegistry.Register(a, content);
-                        break;
+                try
+                {
+                    LoadAddon(file);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError(e.Message);
                 }
             }
         }
@@ -81,18 +93,14 @@ namespace UltraMod.Loader
             // Load all asset bundles in folder
             // Fill all fields of 'a' variable
             var a = new Addon();
-
             a.Path = FilePath;
-
             a.Bundle = AssetBundle.LoadFromFile(FilePath);
+            a.Data = a.Bundle.LoadAllAssets<UKAddonData>()[0];
 
-            a.Data = a.Bundle.LoadAsset<UltraModData>("ModData");
+            registry.Add(a, new List<UKContent>());
+            registry[a].AddRange(a.Bundle.LoadAllAssets<UKContentWeapon>());
 
-            a.LoadedContent = new List<UltraModItem>();
-            foreach (UltraModItem item in a.Bundle.LoadAllAssets<UltraModItem>())
-            {
-                a.LoadedContent.Add(item);
-            }
+            registry[a].AddRange(a.Bundle.LoadAllAssets<UKContentSpawnable>());
 
             return a;
         }
