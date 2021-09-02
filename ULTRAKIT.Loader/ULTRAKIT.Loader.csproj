@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3B43997E-DEE0-437B-A791-3F927974E1DA}</ProjectGuid>
+    <ProjectGuid>{DDF3583F-8893-464A-858F-264F2A6A469A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ULTRAKIT.Lua</RootNamespace>
-    <AssemblyName>ULTRAKIT.Lua</AssemblyName>
+    <RootNamespace>ULTRAKIT.Loader</RootNamespace>
+    <AssemblyName>ULTRAKIT.Loader</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,11 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\lib\0Harmony.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\lib\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="MoonSharp.Interpreter">
-      <HintPath>..\lib\MoonSharp.Interpreter.dll</HintPath>
+    <Reference Include="BepInEx">
+      <HintPath>..\lib\BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -45,53 +48,52 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="Unity.InputSystem">
+    <Reference Include="Unity.InputSystem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Unity.InputSystem.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="UnityEngine">
+      <HintPath>..\lib\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>..\lib\UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
       <HintPath>..\lib\UnityEngine.AudioModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\lib\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>..\lib\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>..\lib\UnityEngine.InputLegacyModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
       <HintPath>..\lib\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\lib\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\Core\UKLuaGlobals.cs" />
-    <Compile Include="API\Core\UKLuaMath.cs" />
-    <Compile Include="API\Core\UKLuaPhysics.cs" />
-    <Compile Include="API\Proxies\Component\UKLuaAudioSource.cs" />
-    <Compile Include="API\Proxies\Component\UKLuaEnemy.cs" />
-    <Compile Include="API\Game\UKLuaPlayer.cs" />
-    <Compile Include="API\Proxies\Component\UKLuaComponent.cs" />
-    <Compile Include="API\Proxies\Component\UKLuaLineRenderer.cs" />
-    <Compile Include="API\Proxies\Component\UKLuaProjectile.cs" />
-    <Compile Include="API\Proxies\Component\UKLuaRigidbody.cs" />
-    <Compile Include="API\Proxies\UKLuaGameObject.cs" />
-    <Compile Include="API\Proxies\UKLuaVector3.cs" />
-    <Compile Include="API\UKLuaAPI.cs" />
-    <Compile Include="API\UKLuaProxy.cs" />
-    <Compile Include="API\Proxies\Component\UKLuaTransform.cs" />
-    <Compile Include="API\Core\UKLuaInput.cs" />
-    <Compile Include="Attributes\UKLuaProxyAttribute.cs" />
-    <Compile Include="Attributes\UKScriptCallbacks.cs" />
-    <Compile Include="ReflectionExtensions.cs" />
-    <Compile Include="ScriptHelper.cs" />
-    <Compile Include="Attributes\UKLuaStaticAttribute.cs" />
-    <Compile Include="Components\UKScriptRuntime.cs" />
+    <Compile Include="Addon.cs" />
+    <Compile Include="AddonLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Injectors\SpawnableInjector.cs" />
+    <Compile Include="Injectors\WeaponInjector.cs" />
+    <Compile Include="ReflectionExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DelegatePropertySnippet.snippet" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\UltraMod.Data\ULTRAKIT.Data.csproj">
+    <ProjectReference Include="..\ULTRAKIT.Data\ULTRAKIT.Data.csproj">
       <Project>{217f1312-b984-4739-a96f-34bcbe601735}</Project>
       <Name>ULTRAKIT.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ULTRAKIT.Lua\ULTRAKIT.Lua.csproj">
+      <Project>{3b43997e-dee0-437b-a791-3f927974e1da}</Project>
+      <Name>ULTRAKIT.Lua</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
