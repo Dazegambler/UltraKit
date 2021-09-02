@@ -74,15 +74,37 @@ namespace UltraMod.Loader.Registries
         }
     }
     
-    [HarmonyPatch(typeof(GunControl), "Start")]
+    [HarmonyPatch(typeof(GunControl))]
     class GunControlPatch
     {
-        static void Prefix(GunControl __instance)
+        [HarmonyPatch("Start")]
+        [HarmonyPrefix]
+        static void StartPrefix(GunControl __instance)
         {
             // Important to avoid semi-permanently breaking weapon script lol
             if (PlayerPrefs.GetInt("CurSlo", 1) > __instance.slots.Count)
             {
                 PlayerPrefs.SetInt("CurSlo", 1);
+            }
+        }
+
+        [HarmonyPatch("Update")]
+        [HarmonyPostfix]
+        static void UpdatePostfix(GunControl __instance)
+        {
+            if (MonoSingleton<InputManager>.Instance.InputSource.Slot6.WasPerformedThisFrame && __instance.slots[5]?.Count > 1)
+            {
+                __instance.SwitchWeapon(6);
+            }
+
+            if (MonoSingleton<InputManager>.Instance.InputSource.Slot7.WasPerformedThisFrame && __instance.slots[6]?.Count > 1)
+            {
+                __instance.SwitchWeapon(7);
+            }
+
+            if (MonoSingleton<InputManager>.Instance.InputSource.Slot8.WasPerformedThisFrame && __instance.slots[7]?.Count > 1)
+            {
+                __instance.SwitchWeapon(8);
             }
         }
     }
