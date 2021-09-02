@@ -41,7 +41,10 @@ namespace UltraMod.Loader.Registries
                         {
                             if (c is MeshRenderer)
                             {
-                                //c.material.shader = Shader.Find("psx/railgun");
+                                c.material.shader = Shader.Find("psx/railgun");
+                                c.material.SetFloat("_EmissiveStrength", 1);
+                                c.material.SetFloat("_EmissivePosition", 5);
+                                c.material.SetColor("_EmissiveColor", new Color(0.2f, 0.8f, 0.8f));
                             }
                             
                             c.gameObject.layer = LayerMask.NameToLayer("AlwaysOnTop");
