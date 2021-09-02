@@ -12,6 +12,8 @@ A modloader for ULTRAKILL designed to make designing & adding custom content as 
 4 - Run the game, and all should work! If not, feel free to DM or ping Heckteck#0512 on Discord
 
 # Credits
+Lua binding library used: MoonSharp
+
 Physgun model, texture & icon by Fat Tony
 
 Loader & Mod list: Dazegambler
