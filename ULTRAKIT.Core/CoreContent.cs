@@ -17,6 +17,10 @@ namespace ULTRAKIT.Core
         public static void Initialize()
         {
             ModMenuInjector.Initialize();
+            Loader.AddonLoader.addons.Add(CreateBossAddon());
+        }
+        public static Loader.Addon CreateBossAddon()
+        {
             Loader.Addon b = new Loader.Addon();
 
             b.Data = new Data.UKAddonData();
@@ -28,7 +32,7 @@ namespace ULTRAKIT.Core
 
             b.enabled = false;
 
-            Loader.AddonLoader.addons.Add(b);
+            return b;
         }
     }
 }
