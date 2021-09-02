@@ -78,13 +78,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bindings.cs" />
     <Compile Include="CoreContent.cs" />
     <Compile Include="GUIUtil.cs" />
     <Compile Include="ModMenu\ModMenuInjector.cs" />
     <Compile Include="ModMenu\ModMenuComponent.cs" />
     <Compile Include="ModMenu\OptionsManagerPatch.cs" />
-    <Compile Include="Physgun\PhysgunScript.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resource1.Designer.cs">
       <AutoGen>True</AutoGen>

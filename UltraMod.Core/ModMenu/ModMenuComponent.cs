@@ -22,8 +22,6 @@ namespace UltraMod.Core.ModMenu
         Rect _scroll = Rect.zero;
         Vector2 Scroll = Vector2.zero;
 
-        int t;
-
         void OnGUI()
         {
             if (pauseMenu.activeInHierarchy)

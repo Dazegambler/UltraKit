@@ -30,6 +30,7 @@ namespace UltraMod.Loader.Registries
                     // check if equipped
                     var slot = new List<GameObject>();
 
+                    int i = 0;
                     foreach (var variant in weap.Variants)
                     {
                         var go = GameObject.Instantiate(variant, __instance.transform);
@@ -45,6 +46,12 @@ namespace UltraMod.Loader.Registries
                             
                             c.gameObject.layer = LayerMask.NameToLayer("AlwaysOnTop");
                         }
+                        var wi = go.AddComponent<WeaponIcon>();
+                        wi.weaponIcon = weap.Icon;
+                        wi.glowIcon = weap.Icon;
+                        wi.variationColor = i;
+                        i++;
+
                         slot.Add(go);
 
                         var field = typeof(GunControl).GetField("weaponFreshnesses", BindingFlags.NonPublic | BindingFlags.Instance);

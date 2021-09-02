@@ -99,6 +99,7 @@ namespace UltraMod.Loader
 
             registry.Add(a, new List<UKContent>());
             registry[a].AddRange(a.Bundle.LoadAllAssets<UKContentWeapon>());
+
             registry[a].AddRange(a.Bundle.LoadAllAssets<UKContentSpawnable>());
 
             return a;

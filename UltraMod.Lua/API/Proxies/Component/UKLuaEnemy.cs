@@ -22,6 +22,11 @@ namespace UltraMod.Lua.API
 
         public void InstaKill() => target.InstaKill();
 
+        public void Damage(Script script, float dmg, Vector3 force, Vector3 point)
+        {
+            target.DeliverDamage(target.gameObject, force, point, dmg, false);
+        }
+
         public bool GoLimp() {
             if(target.machine != null)
             {

@@ -25,42 +25,14 @@ namespace UltraMod
         public void Start()
         {
             
-            Bindings.Initialize(Config);
             CoreContent.Initialize();
             UKLuaAPI.Initialize();
             AddonLoader.Initialize(BundlePath);
-
-            SceneManager.sceneLoaded += (scene, mode) =>
-            {
-                if(mode != LoadSceneMode.Additive && scene.name != "Intro" && scene.name != "Main Menu")
-                {
-                    if(CameraController.Instance != null)
-                    {
-                        //CameraController.Instance.gameObject.AddComponent<Core.ModMenu.ModMenuComponent>();
-                    }
-                }
-            };
         }
 
         public void Update()
         {
-            //TODO: better.
-            if (Keyboard.current.f8Key.wasPressedThisFrame)
-            {
-                foreach(var addon in AddonLoader.addons)
-                {
-                    addon.Bundle?.Unload(true);
-                }
-                AddonLoader.registry.Clear();
- 
-                foreach (var slot in GunSetterPatch.modSlots)
-                {
-                    MonoSingleton<GunControl>.Instance.slots.Remove(slot);
-                }
-                GunSetterPatch.modSlots.Clear();
 
-                UKLuaInput.bindings.Clear();
-            }   
         }
         
         
