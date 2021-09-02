@@ -21,7 +21,32 @@ namespace ULTRAKIT.Loader
             return res.Cast<T>().ToList();
         }
     }
+    public static class BossesAddon
+    {
+        public static Addon CreateAddon()
+        {
+            Addon b = new Addon();
 
+            b.Data = new Data.UKAddonData();
+            b.Data.ModName = "Vanilla Bosses/Enemies";
+            b.Data.Author = "UltraKit";
+            b.Data.ModDesc = "Contains Enemies that cannot be spawned by the spawner arm";
+
+
+            b.Bundle = CreateBundle();
+
+            b.Path = "Internal";
+
+            b.enabled = false;
+            return b;
+        }
+        public static AssetBundle CreateBundle()
+        {
+            AssetBundle a = null;///Null because new AssetBundle() doesnt work
+
+            return a;
+        }
+    }
     public static class AddonLoader
     {
         public static List<Addon> addons{
