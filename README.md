@@ -1,5 +1,7 @@
 # UltraKit
-A modloader for ULTRAKILL designed to make designing & adding custom content as easy as possible. Comes default with a physgun to play with
+A toolkit that can be used to add custom content to ULTRAKILL, such as custom weapons or spawnable objects.
+
+Comes installed with a physgun and gravity gun to play with!
 
 # Installation
 ### WARNING: THIS MOD IS IN AN EXPERIMENTAL PHASE, AND MAY ACCIDENTALLY MESS WITH YOUR GAME INSTALLATION! PLEASE ONLY INSTALL IT IF YOU ARE WILLING TO TAKE THIS RISK
