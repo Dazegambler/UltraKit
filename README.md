@@ -1,4 +1,4 @@
-# UltraKit
+# ULTRAKIT
 A toolkit that can be used to add custom content to ULTRAKILL, such as custom weapons or spawnable objects.
 
 Comes installed with a physgun and gravity gun to play with!
