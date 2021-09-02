@@ -13,5 +13,7 @@ A modloader for ULTRAKILL designed to make designing & adding custom content as 
 
 # Credits
 Physgun model, texture & icon by Fat Tony
+
 Loader & Mod list: Dazegambler
+
 Content injection & Lua API: Heckteck
