@@ -28,9 +28,11 @@ namespace ULTRAKIT.Core
             b.Data.Author = "UltraKit";
             b.Data.ModDesc = "Contains Enemies that cannot be spawned by the spawner arm";
 
+            b.Bundle = ModMenu.ModMenuInjector.UIBundle;///SINCE EVERYTHING WILL BE REGISTERED OUTSIDE OF THE ADDON I'LL JUST USE THE UI BUNDLE
+
             b.Path = "Internal";
 
-            b.enabled = false;
+            b.enabled = true;
 
             return b;
         }
