@@ -1,4 +1,4 @@
-# UltraMod
+# UltraKit
 A modloader for ULTRAKILL designed to make designing & adding custom content as easy as possible. Comes default with a physgun to play with
 
 # Installation
