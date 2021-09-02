@@ -26,63 +26,60 @@ namespace UltraMod.Core.ModMenu
 
         void OnGUI()
         {
-            if (pauseMenu.activeInHierarchy)
-            {
-                var list = UltraMod.Loader.AddonLoader.addons;
-                GUI.skin = skin;
-                GUI.Window(0, wind, AddonsMenu, "");
-            }
-            else
-            {
-                active = false;
-            }
+            var list = UltraMod.Loader.AddonLoader.addons;
+            GUI.skin = skin;
+            GUI.Window(0, wind, AddonsMenu, "");
         }
 
         void AddonsMenu(int id)
         {
-            if (id == 0) {
-                var list = UltraMod.Loader.AddonLoader.addons;
-                if(active)
-                {
-                    if (GUI.Button(new Rect(5, 5, 140, 50), $"Addons:{list.Count}"))
+            switch(id)
+            {
+                case 0:
+                    var list = UltraMod.Loader.AddonLoader.addons;
+                    switch (active)
                     {
-                        active = !active;
-                    }
-                    if (list.Count > 20)
-                    {
-                        Scroll = GUI.BeginScrollView(new Rect(5, 60, 155, 800), Scroll, _scroll, false, false);
-                        for (int i = 0; i < list.Count; i++)
-                        {
-                            GUI.Button(new Rect(5, 60 + (35 * (i)), 140, 30), i.ToString());
-                            _scroll = new Rect(5, 60, 155, 95 + (35 * i));
-                            if (wind.height > 800)
+                        case true:
+                            if (GUI.Button(new Rect(5, 5, 140, 50), $"Addons:{list.Count}"))
                             {
-                                wind.height = 800;
+                                active = !active;
+                            }
+                            if (list.Count > 20)
+                            {
+                                Scroll = GUI.BeginScrollView(new Rect(5,60, 155,800), Scroll,_scroll,false,false);
+                                for (int i = 0; i < list.Count; i++)
+                                {
+                                    GUI.Button(new Rect(5, 60 + (35 * (i)), 140, 30), i.ToString());
+                                    _scroll = new Rect(5,60,155,95+(35*i));
+                                    if(wind.height > 800)
+                                    {
+                                        wind.height = 800;
+                                    }
+                                    else
+                                    {
+                                       wind.height = 95 + (35 * i);
+                                    }
+                                }
+                                GUI.EndScrollView();
                             }
                             else
                             {
-                                wind.height = 95 + (35 * i);
+                                for (int i = 0; i < list.Count; i++)
+                                {
+                                    GUI.Button(new Rect(5, 60 + (35 * (i)), 140, 30), list.ElementAt(i).Data.ModName);
+                                    wind.height = 95 + (35 * i);
+                                }
                             }
-                        }
-                        GUI.EndScrollView();
+                            break;
+                        default:
+                            wind = guirect;
+                            if(GUI.Button(new Rect(5,5,140,50), $"Addons:{list.Count}"))
+                            {
+                                active = !active;
+                            }
+                            break;
                     }
-                    else
-                    {
-                        for (int i = 0; i < list.Count; i++)
-                        {
-                            GUI.Button(new Rect(5, 60 + (35 * (i)), 140, 30), list.ElementAt(i).Data.ModName);
-                            wind = new Rect(20 / (Screen.width / 1920), 40 / (Screen.height / 1080), 155, 95 + (35 * i));
-                        }
-                    }
-
-                } else {
-                    wind = guirect;
-                    if (GUI.Button(new Rect(5, 5, 140, 50), $"Addons:{list.Count}"))
-                    {
-                        active = !active;
-                    }
-                    
-                }
+                    break;
             }
         } 
     }
