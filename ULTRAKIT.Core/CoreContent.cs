@@ -17,6 +17,18 @@ namespace ULTRAKIT.Core
         public static void Initialize()
         {
             ModMenuInjector.Initialize();
+            Loader.Addon b = new Loader.Addon();
+
+            b.Data = new Data.UKAddonData();
+            b.Data.ModName = "Vanilla Bosses/Enemies";
+            b.Data.Author = "UltraKit";
+            b.Data.ModDesc = "Contains Enemies that cannot be spawned by the spawner arm";
+
+            b.Path = "Internal";
+
+            b.enabled = false;
+
+            Loader.AddonLoader.addons.Add(b);
         }
     }
 }
