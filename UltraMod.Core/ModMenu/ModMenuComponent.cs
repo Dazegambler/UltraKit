@@ -52,7 +52,7 @@ namespace UltraMod.Core.ModMenu
                         Scroll = GUI.BeginScrollView(new Rect(5, 60, 155, 800), Scroll, _scroll, false, false);
                         for (int i = 0; i < list.Count; i++)
                         {
-                            GUI.Button(new Rect(5, 60 + (35 * (i)), 140, 30), i.ToString());
+                            GUI.Button(new Rect(5, 60 + (35 * (i)), 140, 30), list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod");
                             _scroll = new Rect(5, 60, 155, 95 + (35 * i));
                             if (wind.height > 800)
                             {
