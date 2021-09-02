@@ -19,6 +19,8 @@ namespace UltraMod.Core.ModMenu
         public bool active;
 
         Rect guirect = new Rect(20 / (Screen.width / 1920), 40 / (Screen.height / 1080), 155, 60), wind;
+        Rect _scroll = Rect.zero;
+        Vector2 Scroll = Vector2.zero;
 
         int t;
 
@@ -26,11 +28,7 @@ namespace UltraMod.Core.ModMenu
         {
             var list = UltraMod.Loader.AddonLoader.addons;
             GUI.skin = skin;
-            GUI.Window(0,wind,AddonsMenu,"");
-            if (list.Count > 10)
-            {
-                GUI.Window(0, new Rect(20 / (Screen.width / 1920), 445 / (Screen.height / 1080), 155,40),TabButtons,"");
-            }
+            GUI.Window(0, wind, AddonsMenu, "");
         }
 
         void AddonsMenu(int id)
@@ -46,9 +44,27 @@ namespace UltraMod.Core.ModMenu
                             {
                                 active = !active;
                             }
-                            for(int i = 0+t; i < list.Count; i++)
+                            if (list.Count > 20)
                             {
-                                if (i < 10 + t)
+                                Scroll = GUI.BeginScrollView(new Rect(5,60, 155,800), Scroll,_scroll,false,false);
+                                for (int i = 0; i < list.Count; i++)
+                                {
+                                    GUI.Button(new Rect(5, 60 + (35 * (i)), 140, 30), i.ToString());
+                                    _scroll = new Rect(5,60,155,95+(35*i));
+                                    if(wind.height > 800)
+                                    {
+                                        wind.height = 800;
+                                    }
+                                    else
+                                    {
+                                       wind.height = 95 + (35 * i);
+                                    }
+                                }
+                                GUI.EndScrollView();
+                            }
+                            else
+                            {
+                                for (int i = 0; i < list.Count; i++)
                                 {
                                     GUI.Button(new Rect(5, 60 + (35 * (i)), 140, 30), list.ElementAt(i).Data.ModName);
                                     wind = new Rect(20 / (Screen.width / 1920), 40 / (Screen.height / 1080), 155, 95 + (35 * i));
@@ -66,28 +82,5 @@ namespace UltraMod.Core.ModMenu
                     break;
             }
         } 
-        void TabButtons(int id)
-        {
-            switch (id)
-            {
-                case 0:
-                    var list = UltraMod.Loader.AddonLoader.addons;
-                    if (GUI.Button(new Rect(5,5, 70, 30), "<"))
-                    {
-                        if (t != 0)
-                        {
-                            t--;
-                        }
-                    }
-                    if (GUI.Button(new Rect(75,5, 70, 30), ">"))
-                    {
-                        if (t < list.Count - 1)
-                        {
-                            t++;
-                        }
-                    }
-                    break;
-            }
-        }
     }
 }
