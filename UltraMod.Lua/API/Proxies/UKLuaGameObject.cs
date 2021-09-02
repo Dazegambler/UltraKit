@@ -64,18 +64,11 @@ namespace UltraMod.Lua.API.Proxies
             return target.GetComponent(t) ?? target.GetComponentInChildren(t) ?? target.GetComponentInParent(t) ?? null;
         }
 
-        public static GameObject Instantiate(Script s, GameObject g)
-        {
+        public GameObject Instantiate(Script s) => Instantiate(s, this.target);
+        public GameObject Instantiate(Script s, Transform parent) => GameObject.Instantiate(this.target, parent);
+        public static GameObject Instantiate(Script s, GameObject g) => GameObject.Instantiate(g);
+        public static GameObject Instantiate(Script s, GameObject g, Transform parent) => GameObject.Instantiate(g, parent);
 
-            var newG = GameObject.Instantiate(g);
-            return newG;
-        }
-        public static GameObject Instantiate(Script s, GameObject g, Transform parent)
-        {
-            var newG = Instantiate(s, g);
-            newG.transform.parent = parent;
-            return newG;
-        }
-
+        public static implicit operator Transform(UKLuaGameObject t) => t.transform;
     }
 }
