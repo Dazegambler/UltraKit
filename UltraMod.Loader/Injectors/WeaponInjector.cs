@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using UltraMod.Data;
+using UltraMod.Data.Components;
 using UltraMod.Data.ScriptableObjects.Registry;
 using UltraMod.Lua;
 using UltraMod.Lua.Components;
@@ -26,6 +27,7 @@ namespace UltraMod.Loader.Registries
             {
                 foreach (var weap in pair.Key.GetAll<UKContentWeapon>())
                 {
+                    
 
                     // check if equipped
                     var slot = new List<GameObject>();
@@ -33,22 +35,25 @@ namespace UltraMod.Loader.Registries
                     int i = 0;
                     foreach (var variant in weap.Variants)
                     {
+                        
                         var go = GameObject.Instantiate(variant, __instance.transform);
                         go.SetActive(false);
 
-                        Debug.Log(go.name);
                         foreach (var c in go.GetComponentsInChildren<Renderer>())
                         {
-                            if (c is MeshRenderer)
+                            c.gameObject.layer = LayerMask.NameToLayer("AlwaysOnTop");
+                            
+                            var glow = c.gameObject.GetComponent<UKGlow>();
+                            if (glow)
                             {
                                 c.material.shader = Shader.Find("psx/railgun");
-                                c.material.SetFloat("_EmissiveStrength", 1);
                                 c.material.SetFloat("_EmissivePosition", 5);
-                                c.material.SetColor("_EmissiveColor", new Color(0.2f, 0.8f, 0.8f));
+                                c.material.SetFloat("_EmissiveStrength", glow.glowIntensity);
+                                c.material.SetColor("_EmissiveColor", glow.glowColor);
                             }
-                            
-                            c.gameObject.layer = LayerMask.NameToLayer("AlwaysOnTop");
+
                         }
+
                         var wi = go.AddComponent<WeaponIcon>();
                         wi.weaponIcon = weap.Icon;
                         wi.glowIcon = weap.Icon;
@@ -61,6 +66,7 @@ namespace UltraMod.Loader.Registries
                         var freshnessList = field.GetValue(__instance.gunc) as List<float>;
                         freshnessList.Add(10);
                         field.SetValue(__instance.gunc, freshnessList);
+
 
                         __instance.gunc.allWeapons.Add(go);
 
