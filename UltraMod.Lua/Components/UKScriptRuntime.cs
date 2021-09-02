@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UltraMod.Data;
-using UltraMod.Data.Components;
-using UltraMod.Lua.API;
-using UltraMod.Lua.API.Proxies;
+using ULTRAKIT.Data;
+using ULTRAKIT.Data.Components;
+using ULTRAKIT.Lua.API;
+using ULTRAKIT.Lua.API.Proxies;
 using UnityEngine;
 
-namespace UltraMod.Lua.Components
+namespace ULTRAKIT.Lua.Components
 {
     public class UKScriptRuntime : MonoBehaviour
     {
@@ -46,7 +46,7 @@ namespace UltraMod.Lua.Components
             catch (ScriptRuntimeException e)
             {
                 //TODO: propper logging
-                Debug.LogError($"(UltraMod Lua) {data.sourceCode.name} -  {e.DecoratedMessage}");
+                Debug.LogError($"(ULTRAKIT Lua) {data.sourceCode.name} -  {e.DecoratedMessage}");
             }
         }
 

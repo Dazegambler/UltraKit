@@ -5,14 +5,14 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using UltraMod.Data;
-using UltraMod.Data.Components;
-using UltraMod.Data.ScriptableObjects.Registry;
-using UltraMod.Lua;
-using UltraMod.Lua.Components;
+using ULTRAKIT.Data;
+using ULTRAKIT.Data.Components;
+using ULTRAKIT.Data.ScriptableObjects.Registry;
+using ULTRAKIT.Lua;
+using ULTRAKIT.Lua.Components;
 using UnityEngine;
 
-namespace UltraMod.Loader.Registries
+namespace ULTRAKIT.Loader.Registries
 {
     [HarmonyPatch(typeof(GunSetter), "ResetWeapons")]
     public class GunSetterPatch

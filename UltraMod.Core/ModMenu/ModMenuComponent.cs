@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace UltraMod.Core.ModMenu
+namespace ULTRAKIT.Core.ModMenu
 { 
     public class ModMenuComponent : MonoBehaviour
     {
@@ -26,7 +26,7 @@ namespace UltraMod.Core.ModMenu
         {
             if (pauseMenu.activeInHierarchy)
             {
-                var list = UltraMod.Loader.AddonLoader.addons;
+                var list = ULTRAKIT.Loader.AddonLoader.addons;
                 GUI.skin = skin;
                 GUI.Window(0, wind, AddonsMenu, "");
             }
@@ -40,7 +40,7 @@ namespace UltraMod.Core.ModMenu
         {
             if (id == 0)
             {
-                var list = UltraMod.Loader.AddonLoader.addons;
+                var list = ULTRAKIT.Loader.AddonLoader.addons;
                 if (active)
                 {
                     if (GUI.Button(new Rect(5, 5, 140, 50), $"Addons:{list.Count}"))

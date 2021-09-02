@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UltraMod.Lua.Attributes;
-using UltraMod.Lua.Components;
+using ULTRAKIT.Lua.Attributes;
+using ULTRAKIT.Lua.Components;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
-namespace UltraMod.Lua.API
+namespace ULTRAKIT.Lua.API
 {
     [UKLuaStatic("Keybinds")]
     public static class UKLuaKeybinds

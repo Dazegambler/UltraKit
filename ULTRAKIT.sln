@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UltraMod", "UltraMod\UltraMod.csproj", "{F4533D37-4C9B-4499-B429-15D20EC6E639}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ULTRAKIT", "UltraMod\ULTRAKIT.csproj", "{F4533D37-4C9B-4499-B429-15D20EC6E639}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UltraMod.Loader", "UltraMod.Loader\UltraMod.Loader.csproj", "{DDF3583F-8893-464A-858F-264F2A6A469A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ULTRAKIT.Loader", "UltraMod.Loader\ULTRAKIT.Loader.csproj", "{DDF3583F-8893-464A-858F-264F2A6A469A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UltraMod.Core", "UltraMod.Core\UltraMod.Core.csproj", "{1E1D1395-958D-4417-A5B2-B0D11BAB5377}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ULTRAKIT.Core", "UltraMod.Core\ULTRAKIT.Core.csproj", "{1E1D1395-958D-4417-A5B2-B0D11BAB5377}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UltraMod.Data", "UltraMod.Data\UltraMod.Data.csproj", "{217F1312-B984-4739-A96F-34BCBE601735}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ULTRAKIT.Data", "UltraMod.Data\ULTRAKIT.Data.csproj", "{217F1312-B984-4739-A96F-34BCBE601735}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UltraMod.Lua", "UltraMod.Lua\UltraMod.Lua.csproj", "{3B43997E-DEE0-437B-A791-3F927974E1DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ULTRAKIT.Lua", "UltraMod.Lua\ULTRAKIT.Lua.csproj", "{3B43997E-DEE0-437B-A791-3F927974E1DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

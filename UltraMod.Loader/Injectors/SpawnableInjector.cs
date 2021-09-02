@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UltraMod.Data;
-using UltraMod.Data.ScriptableObjects.Registry;
+using ULTRAKIT.Data;
+using ULTRAKIT.Data.ScriptableObjects.Registry;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace UltraMod.Loader.Registries
+namespace ULTRAKIT.Loader.Registries
 {
 
     public static class UKContentSpawnableExtensions

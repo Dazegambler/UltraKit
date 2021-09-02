@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UltraMod.Loader
+namespace ULTRAKIT.Loader
 {
     public static class ReflectionExtensions
     {

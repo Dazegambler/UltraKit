@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UltraMod.Lua.API.Proxies
+namespace ULTRAKIT.Lua.API.Proxies
 {
     public abstract class UKLuaProxy<T>
     {

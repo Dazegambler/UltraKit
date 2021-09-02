@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UltraMod.Loader;
+using ULTRAKIT.Loader;
 using UnityEngine;
 
-namespace UltraMod.Core.ModMenu
+namespace ULTRAKIT.Core.ModMenu
 {
     [HarmonyPatch(typeof(OptionsMenuToManager))]
     public static class OptionsMenuToManagerPatch

@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace UltraMod.Data
+namespace ULTRAKIT.Data
 {
-    [CreateAssetMenu(fileName = "ModData", menuName = "UltraMod/ModData")]
+    [CreateAssetMenu(fileName = "ModData", menuName = "ULTRAKIT/ModData")]
     public class UKAddonData : ScriptableObject
     {
         public string ModName;

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace UltraMod.Core
+namespace ULTRAKIT.Core
 {
     public static class GUIUtil
     {

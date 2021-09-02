@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UltraMod.Lua.API.Proxies;
+using ULTRAKIT.Lua.API.Proxies;
 using UnityEngine;
 
-namespace UltraMod.Lua.API
+namespace ULTRAKIT.Lua.API
 {
     [MoonSharpUserData]
     public class UKLuaEnemy : UKLuaProxy<EnemyIdentifier>

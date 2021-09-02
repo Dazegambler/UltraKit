@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace UltraMod.Lua.API.Proxies.Component
+namespace ULTRAKIT.Lua.API.Proxies.Component
 {
     [MoonSharpUserData]
     class UKLuaProjectile : UKLuaComponent<Projectile>

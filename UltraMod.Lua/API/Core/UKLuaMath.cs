@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UltraMod.Lua.Attributes;
+using ULTRAKIT.Lua.Attributes;
 using UnityEngine;
 
-namespace UltraMod.Lua.API.Core
+namespace ULTRAKIT.Lua.API.Core
 {
     [UKLuaStatic("Math")]
     public static class UKLuaMath

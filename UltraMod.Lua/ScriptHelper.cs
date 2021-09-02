@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UltraMod.Lua
+namespace ULTRAKIT.Lua
 {
     //https://groups.google.com/g/moonsharp/c/On6dhfrpn1A/m/vohiIF1zFgAJ
     public static class ScriptHelper

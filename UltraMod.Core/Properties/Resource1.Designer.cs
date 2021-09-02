@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UltraMod.Core.Properties {
+namespace ULTRAKIT.Core.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace UltraMod.Core.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("UltraMod.Core.Properties.Resource1", typeof(Resource1).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ULTRAKIT.Core.Properties.Resource1", typeof(Resource1).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -63,9 +63,9 @@ namespace UltraMod.Core.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] ultramod {
+        internal static byte[] ULTRAKIT {
             get {
-                object obj = ResourceManager.GetObject("ultramod", resourceCulture);
+                object obj = ResourceManager.GetObject("ULTRAKIT", resourceCulture);
                 return ((byte[])(obj));
             }
         }

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using UltraMod.Data.ScriptableObjects.Registry;
+using ULTRAKIT.Data.ScriptableObjects.Registry;
 using UnityEngine;
 
-namespace UltraMod.Data.ScriptableObjects.Registry
+namespace ULTRAKIT.Data.ScriptableObjects.Registry
 {
     public enum Type
     {
@@ -10,7 +10,7 @@ namespace UltraMod.Data.ScriptableObjects.Registry
         Spawnable,
     }
 
-    [CreateAssetMenu(fileName = "UKContentSpawnable", menuName = "UltraMod/UKContentSpawnable")]
+    [CreateAssetMenu(fileName = "UKContentSpawnable", menuName = "ULTRAKIT/UKContentSpawnable")]
     public class UKContentSpawnable : UKContent
     {
         public Type type;

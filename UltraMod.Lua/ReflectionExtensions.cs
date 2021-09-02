@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UltraMod.Lua
+namespace ULTRAKIT.Lua
 {
     public static class ReflectionExtensions
     {

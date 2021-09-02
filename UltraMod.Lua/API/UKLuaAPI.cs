@@ -5,13 +5,13 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using UltraMod.Lua.API.Proxies;
-using UltraMod.Lua.API.Proxies.Component;
-using UltraMod.Lua.Attributes;
-using UltraMod.Lua.Components;
+using ULTRAKIT.Lua.API.Proxies;
+using ULTRAKIT.Lua.API.Proxies.Component;
+using ULTRAKIT.Lua.Attributes;
+using ULTRAKIT.Lua.Components;
 using UnityEngine;
 
-namespace UltraMod.Lua.API
+namespace ULTRAKIT.Lua.API
 {
     public class UKLuaAPI
     {

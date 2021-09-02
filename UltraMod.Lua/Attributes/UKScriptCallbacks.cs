@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UltraMod.Lua.Attributes
+namespace ULTRAKIT.Lua.Attributes
 {
     [AttributeUsage(AttributeTargets.Method)]
     public class UKScriptConstructor : Attribute

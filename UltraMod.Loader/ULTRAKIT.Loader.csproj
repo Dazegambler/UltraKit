@@ -7,8 +7,8 @@
     <ProjectGuid>{DDF3583F-8893-464A-858F-264F2A6A469A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UltraMod.Loader</RootNamespace>
-    <AssemblyName>UltraMod.Loader</AssemblyName>
+    <RootNamespace>ULTRAKIT.Loader</RootNamespace>
+    <AssemblyName>ULTRAKIT.Loader</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -87,13 +87,13 @@
     <Compile Include="ReflectionExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UltraMod.Data\UltraMod.Data.csproj">
+    <ProjectReference Include="..\UltraMod.Data\ULTRAKIT.Data.csproj">
       <Project>{217f1312-b984-4739-a96f-34bcbe601735}</Project>
-      <Name>UltraMod.Data</Name>
+      <Name>ULTRAKIT.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\UltraMod.Lua\UltraMod.Lua.csproj">
+    <ProjectReference Include="..\UltraMod.Lua\ULTRAKIT.Lua.csproj">
       <Project>{3b43997e-dee0-437b-a791-3f927974e1da}</Project>
-      <Name>UltraMod.Lua</Name>
+      <Name>ULTRAKIT.Lua</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

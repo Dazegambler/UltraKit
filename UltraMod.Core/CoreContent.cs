@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UltraMod.Core.ModMenu;
-using UltraMod.Data.ScriptableObjects.Registry;
-using UltraMod.Loader.Registries;
+using ULTRAKIT.Core.ModMenu;
+using ULTRAKIT.Data.ScriptableObjects.Registry;
+using ULTRAKIT.Loader.Registries;
 using UnityEngine;
 
-namespace UltraMod.Core
+namespace ULTRAKIT.Core
 {
     public static class CoreContent
     {

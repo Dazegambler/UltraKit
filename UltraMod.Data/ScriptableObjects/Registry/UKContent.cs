@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace UltraMod.Data.ScriptableObjects.Registry
+namespace ULTRAKIT.Data.ScriptableObjects.Registry
 {
     public abstract class UKContent : ScriptableObject
     {

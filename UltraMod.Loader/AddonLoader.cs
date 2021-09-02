@@ -6,12 +6,12 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using UltraMod.Data;
-using UltraMod.Data.ScriptableObjects.Registry;
-using UltraMod.Loader.Registries;
+using ULTRAKIT.Data;
+using ULTRAKIT.Data.ScriptableObjects.Registry;
+using ULTRAKIT.Loader.Registries;
 using UnityEngine;
 
-namespace UltraMod.Loader
+namespace ULTRAKIT.Loader
 {
     public static class AddonExtensions{
         public static List<T> GetAll<T>(this Addon a)
@@ -46,7 +46,7 @@ namespace UltraMod.Loader
         }
 
 
-        public static Harmony harmony = new Harmony("UltraMod.Loader");
+        public static Harmony harmony = new Harmony("ULTRAKIT.Loader");
         
         //TEMP TO MAKE SPAWNMENU WORK DELETE AFTER INTEGRATION INTO SPAWNER ARM
         

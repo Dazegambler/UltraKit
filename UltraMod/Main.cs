@@ -4,19 +4,19 @@ using System.Collections.Generic;
 using System.IO;
 using BepInEx;
 using BepInEx.Configuration;
-using UltraMod.Core;
-using UltraMod.Loader;
+using ULTRAKIT.Core;
+using ULTRAKIT.Loader;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UltraMod.Lua;
+using ULTRAKIT.Lua;
 using UnityEngine.InputSystem;
-using UltraMod.Loader.Registries;
-using UltraMod.Lua.API;
+using ULTRAKIT.Loader.Registries;
+using ULTRAKIT.Lua.API;
 
-namespace UltraMod
+namespace ULTRAKIT
 {
-    [BepInPlugin("ULTRA.MOD", "ULTRAMOD", "1.0.0")]
+    [BepInPlugin("ULTRAKIT", "ULTRAKIT", "1.0.0")]
     public class Plugin : BaseUnityPlugin
     {
         

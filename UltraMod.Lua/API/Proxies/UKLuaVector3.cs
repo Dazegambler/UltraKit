@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace UltraMod.Lua.API.Math
+namespace ULTRAKIT.Lua.API.Math
 {
     [MoonSharpUserData]
     public class UKLuaVector3

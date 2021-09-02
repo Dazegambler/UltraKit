@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UltraMod.Data.ScriptableObjects.Registry
+namespace ULTRAKIT.Data.ScriptableObjects.Registry
 {
-    [CreateAssetMenu(fileName = "UKContentWeapon",menuName = "UltraMod/UKContentWeapon")]
+    [CreateAssetMenu(fileName = "UKContentWeapon",menuName = "ULTRAKIT/UKContentWeapon")]
     public class UKContentWeapon : UKContent
     {
         public GameObject[] Variants;

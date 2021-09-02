@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace UltraMod.Data.Components
+namespace ULTRAKIT.Data.Components
 {
     public class UKGlow : MonoBehaviour
     {

@@ -7,8 +7,8 @@
     <ProjectGuid>{3B43997E-DEE0-437B-A791-3F927974E1DA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UltraMod.Lua</RootNamespace>
-    <AssemblyName>UltraMod.Lua</AssemblyName>
+    <RootNamespace>ULTRAKIT.Lua</RootNamespace>
+    <AssemblyName>ULTRAKIT.Lua</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -86,14 +86,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UltraMod.Data\UltraMod.Data.csproj">
-      <Project>{217F1312-B984-4739-A96F-34BCBE601735}</Project>
-      <Name>UltraMod.Data</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="DelegatePropertySnippet.snippet" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\UltraMod.Data\ULTRAKIT.Data.csproj">
+      <Project>{217f1312-b984-4739-a96f-34bcbe601735}</Project>
+      <Name>ULTRAKIT.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

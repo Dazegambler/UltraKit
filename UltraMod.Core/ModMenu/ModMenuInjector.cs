@@ -4,14 +4,14 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using UltraMod.Loader;
+using ULTRAKIT.Loader;
 using UnityEngine;
 
-namespace UltraMod.Core.ModMenu
+namespace ULTRAKIT.Core.ModMenu
 {
     public static class ModMenuInjector
     {
-        public static AssetBundle UIBundle = LoadAssetBundle(Properties.Resource1.ultramod);
+        public static AssetBundle UIBundle = LoadAssetBundle(Properties.Resource1.ULTRAKIT);
 
         public static void Initialize()
         {

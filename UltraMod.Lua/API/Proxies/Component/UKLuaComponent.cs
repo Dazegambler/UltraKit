@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UltraMod.Lua.Attributes;
+using ULTRAKIT.Lua.Attributes;
 using UnityEngine;
 
-namespace UltraMod.Lua.API.Proxies.Component
+namespace ULTRAKIT.Lua.API.Proxies.Component
 {
 
     //TODO: autogenerate static as table on script construction, with dictionary matching static values to type i guess
