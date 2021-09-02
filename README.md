@@ -3,7 +3,7 @@ A modloader for ULTRAKILL designed to make designing & adding custom content as 
 
 # Installation
 ### WARNING: THIS MOD IS IN AN EXPERIMENTAL PHASE, AND MAY ACCIDENTALLY MESS WITH YOUR GAME INSTALLATION! PLEASE ONLY INSTALL IT IF YOU ARE WILLING TO TAKE THIS RISK
-1 - Download & install BepInEx from https://github.com/BepInEx/BepInEx/releases ### CHECK IMAGES BELOW 
+1 - Download & install BepInEx from https://github.com/BepInEx/BepInEx/releases CHECK IMAGES BELOW 
 
 ### DOWNLOAD BEPINEX FROM THIS LINK IN THE RELEASES TAB https://github.com/BepInEx/BepInEx
 
