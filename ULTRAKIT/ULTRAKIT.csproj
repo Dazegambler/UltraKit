@@ -77,19 +77,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UltraMod.Core\ULTRAKIT.Core.csproj">
+    <ProjectReference Include="..\ULTRAKIT.Core\ULTRAKIT.Core.csproj">
       <Project>{1e1d1395-958d-4417-a5b2-b0d11bab5377}</Project>
       <Name>ULTRAKIT.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\UltraMod.Data\ULTRAKIT.Data.csproj">
+    <ProjectReference Include="..\ULTRAKIT.Data\ULTRAKIT.Data.csproj">
       <Project>{217f1312-b984-4739-a96f-34bcbe601735}</Project>
       <Name>ULTRAKIT.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\UltraMod.Loader\ULTRAKIT.Loader.csproj">
+    <ProjectReference Include="..\ULTRAKIT.Loader\ULTRAKIT.Loader.csproj">
       <Project>{ddf3583f-8893-464a-858f-264f2a6a469a}</Project>
       <Name>ULTRAKIT.Loader</Name>
     </ProjectReference>
-    <ProjectReference Include="..\UltraMod.Lua\ULTRAKIT.Lua.csproj">
+    <ProjectReference Include="..\ULTRAKIT.Lua\ULTRAKIT.Lua.csproj">
       <Project>{3b43997e-dee0-437b-a791-3f927974e1da}</Project>
       <Name>ULTRAKIT.Lua</Name>
     </ProjectReference>
