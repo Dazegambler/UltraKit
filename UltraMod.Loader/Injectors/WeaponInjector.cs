@@ -39,7 +39,7 @@ namespace UltraMod.Loader.Registries
                         var go = GameObject.Instantiate(variant, __instance.transform);
                         go.SetActive(false);
 
-                        foreach (var c in go.GetComponentsInChildren<Renderer>())
+                        foreach (var c in go.GetComponentsInChildren<Renderer>(true))
                         {
                             c.gameObject.layer = LayerMask.NameToLayer("AlwaysOnTop");
                             
