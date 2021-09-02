@@ -1,40 +1,14 @@
 # UltraMod
- Custom Object Spawn Menu based on Asset Bundles
- 
- # USAGE
- 
- 1-Drop Ultramod.dll to your Bepinex/Plugins File,
- 
- 2-Start the game once to create the assetbundles file inside your ultrakill file,
- 
- 3-After the assetbundles files is created drop the file named "basic" inside of it,
- 
- # BINDS
- 
- Backspace:Open Spawn Menu
- 
- I:Spawn Selected Object
- 
- X:Selects Object 
+A modloader for ULTRAKILL designed to make designing & adding custom content as easy as possible. Comes default with a physgun to play with
 
- Z:Resets Selected Object
- 
- KEYPAD KEYS
- 
- Obs:[0] means Rotation,[1] means Translation,[2] means Scale
- 
- 8:[0]X+,[1]Y+,[2]Y+
- 
- 2:[0]X-,[1]Y-,[2]Y-
- 
- 7:[0]Z-,[1]Z-,[2]Z-
- 
- 9:[0]Z+,[1]Z+,[2]Z+
- 
- 4:[0]Y-,[1]X-,[2]X-
- 
- 6:[0]Y+,[1]X+,[2]X+
- 
- 5:Delete Selected Object
- 
- 0:Clone Selected Object
+# Installation
+### WARNING: THIS MOD IS IN AN EXPERIMENTAL PHASE, AND MAY ACCIDENTALLY MESS WITH YOUR GAME INSTALLATION! PLEASE ONLY INSTALL IT IF YOU ARE WILLING TO TAKE THIS RISK
+1 - Download & install BepInEx from https://github.com/BepInEx/BepInEx/releases
+2 - Download the UltraMod loader from https://github.com/Dazegambler/UltraMod/releases
+3 - Take the contents of the UltraMod zip file and drag them all directly into the ULTRAKILL installation directory. Replace all files when prompted. 
+4 - Run the game, and all should work! If not, feel free to DM or ping Heckteck#0512 on Discord
+
+# Credits
+Physgun model, texture & icon by Fat Tony
+Loader & Mod list: Dazegambler
+Content injection & Lua API: Heckteck
