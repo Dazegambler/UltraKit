@@ -188,7 +188,10 @@ namespace ULTRAKIT.Loader.Registries
                         var text = b.GetComponentInChildren<Text>(true);
                         text.text = spawnable.Name;
                         text.gameObject.SetActive(true);
-
+                    }
+                    else
+                    {
+                        b.transform.Find("Background").Find("Foreground").GetComponent<Image>().sprite = spawnable.Icon;
                     }
 
                     b.onClick.AddListener(delegate

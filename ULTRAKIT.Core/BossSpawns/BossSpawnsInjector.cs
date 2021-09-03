@@ -10,6 +10,17 @@ namespace ULTRAKIT.Core.BossSpawns
 {
     public static class BossSpawnsInjector
     {
+        static string[] List ={
+            "MinosPrime",
+            "V2",
+            "Gabriel",
+            "DroneFlesh",
+            "Flesh Prison",
+            "MinosBoss",
+            "Wicked",
+            "DroneSkull Variant"
+        };
+
         public static void Initialize()
         {
             Loader.Addon b = new Loader.Addon();
@@ -19,7 +30,7 @@ namespace ULTRAKIT.Core.BossSpawns
             b.Data.Author = "UltraKit";
             b.Data.ModDesc = "Contains Enemies that cannot be spawned by the spawner arm";
 
-            b.Bundle = ModMenu.ModMenuInjector.UIBundle;///SINCE EVERYTHING WILL BE REGISTERED OUTSIDE OF THE ADDON I'LL JUST USE THE UI BUNDLE
+            b.Bundle = CoreContent.UIBundle;///SINCE EVERYTHING WILL BE REGISTERED OUTSIDE OF THE ADDON I'LL JUST USE THE UI BUNDLE
 
             b.Path = "Internal";
 
@@ -32,16 +43,7 @@ namespace ULTRAKIT.Core.BossSpawns
         public static List<UKContentSpawnable> Enemies()
         {
             List<UKContentSpawnable> a = new List<UKContentSpawnable>();
-            string[] List ={
-                "MinosPrime",
-                "V2",
-                "Gabriel",
-                "DroneFlesh",
-                "Flesh Prison",
-                "MinosBoss",
-                "Wicked",
-                "DroneSkull Variant"
-            };
+            
 
             foreach (string item in List) a.Add(EnemySpawnable(item));
 
@@ -56,6 +58,7 @@ namespace ULTRAKIT.Core.BossSpawns
             a.type = Data.ScriptableObjects.Registry.Type.Enemy;
 
             a.Prefab = PrefabFind(Enemy);
+            a.Icon = CoreContent.UIBundle.LoadAsset<Sprite>($"{Enemy}");
 
             return a;
         }

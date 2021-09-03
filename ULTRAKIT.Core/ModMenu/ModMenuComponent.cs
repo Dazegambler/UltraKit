@@ -10,7 +10,7 @@ namespace ULTRAKIT.Core.ModMenu
     public class ModMenuComponent : MonoBehaviour
     {
         // Loads GuiSkin in Built-in Asset Bundle
-        GUISkin skin = ModMenuInjector.UIBundle.LoadAsset<GUISkin>("UIUltraMod");
+        GUISkin skin = CoreContent.UIBundle.LoadAsset<GUISkin>("UIUltraMod");
 
         // These two are automatically filled in; the button to access the mod list should only show when optionsMenu is active
         public GameObject pauseMenu, optionsMenu;
