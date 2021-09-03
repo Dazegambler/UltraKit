@@ -36,6 +36,10 @@ namespace ULTRAKIT
         }
         
         
-        
+        void OnApplicationQuit()
+        {
+            // Ensures that the mod can be uninstalled without issue
+            PlayerPrefs.SetInt("CurSlo", 1);
+        }
     }
 }
