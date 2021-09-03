@@ -97,7 +97,6 @@ namespace ULTRAKIT.Loader.Injectors
         {
             var go = GameObject.Instantiate(buttonTemplate, parent.transform);
 
-
             var top = (80) - (buttonHeight * i);
             var rect = go.GetComponent<RectTransform>();
             rect.offsetMax = new Vector3(-100, top);
@@ -110,7 +109,7 @@ namespace ULTRAKIT.Loader.Injectors
             {
                 foreach(var pair in panels)
                 {
-                    pair.Value.SetActive(false);
+                    pair.Value.SetActive(panels[weap] == pair.Value);
                 }
 
                 foreach(Transform obj in parent.transform)
@@ -129,28 +128,6 @@ namespace ULTRAKIT.Loader.Injectors
 
             go.AddComponent<HudOpenEffect>();
             return go;
-        }
-
-        static GameObject CreatePageButton()
-        {
-            var pageGo = GameObject.Instantiate(buttonTemplate, buttonTemplate.transform.parent);
-
-            var pageTop = (-10) - (buttonHeight * 4);
-            var pageRect = pageGo.GetComponent<RectTransform>();
-            pageRect.offsetMax = new Vector3(-100, -130);
-            pageRect.offsetMin = new Vector3(-260, -160);
-
-            pageGo.GetComponentInChildren<Text>().text = $"PAGE {page+1}";
-
-            pageGo.GetComponent<ShopButton>().deactivated = true;
-            pageGo.GetComponent<Button>().onClick.AddListener(() =>
-            {
-                page++;
-                UpdatePage();
-            });
-
-            pageGo.AddComponent<HudOpenEffect>();
-            return pageGo;
         }
 
         static Dictionary<UKContentWeapon, GameObject> CreatePanels(GameObject parent)
@@ -219,6 +196,28 @@ namespace ULTRAKIT.Loader.Injectors
             return go;
         }
 
+        static GameObject CreatePageButton()
+        {
+            var pageGo = GameObject.Instantiate(buttonTemplate, buttonTemplate.transform.parent);
+
+            var pageTop = (-10) - (buttonHeight * 4);
+            var pageRect = pageGo.GetComponent<RectTransform>();
+            pageRect.offsetMax = new Vector3(-100, -130);
+            pageRect.offsetMin = new Vector3(-260, -160);
+
+            pageGo.GetComponentInChildren<Text>().text = $"PAGE {page + 1}";
+
+            pageGo.GetComponent<ShopButton>().deactivated = true;
+            pageGo.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                page++;
+                UpdatePage();
+            });
+
+            pageGo.AddComponent<HudOpenEffect>();
+            return pageGo;
+        }
+
         static void UpdatePage()
         {
             page = (int)Mathf.Repeat(page, pages.Count);
@@ -230,7 +229,6 @@ namespace ULTRAKIT.Loader.Injectors
                 foreach (var pageObj in pageList)
                 {
                     pageObj.SetActive(page == index);
-
                 }
                 index++;
             }

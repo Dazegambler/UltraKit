@@ -23,6 +23,22 @@ namespace ULTRAKIT.Loader.Registries
         static void Postfix(GunSetter __instance)
         {
             Debug.Log("Weapons resetting");
+
+            foreach(var slot in modSlots)
+            {
+                foreach(var item in slot)
+                {
+                    if (item)
+                    {
+                        GameObject.Destroy(item);
+                    }
+                }
+
+                if (__instance.gunc?.slots?.Contains(slot) ?? false)
+                {
+                    __instance.gunc.slots.Remove(slot);
+                }
+            }
             modSlots.Clear();
             foreach (var pair in AddonLoader.registry)
             {
@@ -113,17 +129,19 @@ namespace ULTRAKIT.Loader.Registries
         [HarmonyPostfix]
         static void UpdatePostfix(GunControl __instance)
         {
-            if (MonoSingleton<InputManager>.Instance.InputSource.Slot6.WasPerformedThisFrame && __instance.slots[5]?.Count > 1)
+            Debug.Log(__instance.slots[5].Count);
+            if (MonoSingleton<InputManager>.Instance.InputSource.Slot6.WasPerformedThisFrame && __instance.slots[5]?.Count > 0)
             {
+                Debug.Log("IM SWITCHING");
                 __instance.SwitchWeapon(6);
             }
 
-            if (MonoSingleton<InputManager>.Instance.InputSource.Slot7.WasPerformedThisFrame && __instance.slots[6]?.Count > 1)
+            if (MonoSingleton<InputManager>.Instance.InputSource.Slot7.WasPerformedThisFrame && __instance.slots[6]?.Count > 0)
             {
                 __instance.SwitchWeapon(7);
             }
 
-            if (MonoSingleton<InputManager>.Instance.InputSource.Slot8.WasPerformedThisFrame && __instance.slots[7]?.Count > 1)
+            if (MonoSingleton<InputManager>.Instance.InputSource.Slot8.WasPerformedThisFrame && __instance.slots[7]?.Count > 0)
             {
                 __instance.SwitchWeapon(8);
             }
