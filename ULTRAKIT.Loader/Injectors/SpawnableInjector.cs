@@ -111,7 +111,6 @@ namespace ULTRAKIT.Loader.Registries
                 newMenu.arm = __instance;
 
                 menus.Add(newMenu, addon);
-                Debug.Log("Balls 2");
             }
 
             __instance.SetPrivate("menu", menus.Keys.ToList()[curIndex]);
@@ -176,9 +175,22 @@ namespace ULTRAKIT.Loader.Registries
                 // New section
                 var newSec = GameObject.Instantiate(secRef, secRef.transform.parent);
                 newSec.sectionName.text = addon.Data?.ModName ?? "SPAWNABLES";
+
                 foreach (var spawnable in content)
                 {
-                    Button b = MonoBehaviour.Instantiate(newSec.button, newSec.grid.transform, false);
+                    GameObject bgo = GameObject.Instantiate(newSec.button.gameObject, newSec.grid.transform, false);
+                    var b = bgo.GetComponent<Button>();
+
+                    
+                    if (spawnable.Icon == null)
+                    {
+                        b.transform.Find("Background").gameObject.SetActive(false);
+                        var text = b.GetComponentInChildren<Text>(true);
+                        text.text = spawnable.Name;
+                        text.gameObject.SetActive(true);
+
+                    }
+
                     b.onClick.AddListener(delegate
                     {
                         __instance.arm.PreviewObject(spawnable.GetAsSpawnable());
@@ -188,10 +200,21 @@ namespace ULTRAKIT.Loader.Registries
                 }
                 newSec.gameObject.SetActive(true);
                 newSec.button.gameObject.SetActive(false);
+               
 
                 // Skip regular awake call
                 return false;
             }
+        }
+    }
+
+    public class ButtonIconDetector : MonoBehaviour
+    {
+
+
+        void OnEnable()
+        {
+
         }
     }
 }
