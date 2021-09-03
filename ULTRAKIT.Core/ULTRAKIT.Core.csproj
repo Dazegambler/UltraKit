@@ -92,9 +92,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ultramod" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Properties\Resource1.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -110,6 +107,9 @@
       <Project>{ddf3583f-8893-464a-858f-264f2a6a469a}</Project>
       <Name>ULTRAKIT.Loader</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ULTRAKIT" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
