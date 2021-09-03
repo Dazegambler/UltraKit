@@ -22,8 +22,6 @@ namespace ULTRAKIT.Loader.Registries
 
         static void Postfix(GunSetter __instance)
         {
-            Debug.Log("Weapons resetting");
-
             foreach(var slot in modSlots)
             {
                 foreach(var item in slot)
@@ -103,8 +101,6 @@ namespace ULTRAKIT.Loader.Registries
 
                     __instance.gunc.slots.Add(slot);
 
-                    Debug.Log(slot.Count);
-
                     modSlots.Add(slot);
                 }
             }
@@ -129,10 +125,8 @@ namespace ULTRAKIT.Loader.Registries
         [HarmonyPostfix]
         static void UpdatePostfix(GunControl __instance)
         {
-            Debug.Log(__instance.slots[5].Count);
             if (MonoSingleton<InputManager>.Instance.InputSource.Slot6.WasPerformedThisFrame && __instance.slots[5]?.Count > 0)
             {
-                Debug.Log("IM SWITCHING");
                 __instance.SwitchWeapon(6);
             }
 
