@@ -14,11 +14,11 @@ namespace ULTRAKIT.Core.BossSpawns
             "MinosPrime",
             "V2",
             "Gabriel",
-            "DroneFlesh",
             "Flesh Prison",
+            "DroneFlesh",
+            "DroneSkull Variant",
             "MinosBoss",
-            "Wicked",
-            "DroneSkull Variant"
+            "Wicked"
         };
 
         public static void Initialize()
