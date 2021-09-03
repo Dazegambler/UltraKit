@@ -18,6 +18,7 @@ namespace ULTRAKIT.Loader.Registries
     public class GunSetterPatch
     {
         public static List<List<GameObject>> modSlots = new List<List<GameObject>>();
+        public static Dictionary<GameObject, bool> equippedDict = new Dictionary<GameObject, bool>();
 
         static void Postfix(GunSetter __instance)
         {
@@ -35,9 +36,20 @@ namespace ULTRAKIT.Loader.Registries
                     int i = 0;
                     foreach (var variant in weap.Variants)
                     {
-                        
+                        if (!equippedDict.ContainsKey(variant))
+                        {
+                            equippedDict.Add(variant, true);
+                        }
+
+                        if (!equippedDict[variant])
+                        {
+                            continue;
+                        }
+
+
                         var go = GameObject.Instantiate(variant, __instance.transform);
                         go.SetActive(false);
+                        
 
                         foreach (var c in go.GetComponentsInChildren<Renderer>(true))
                         {
