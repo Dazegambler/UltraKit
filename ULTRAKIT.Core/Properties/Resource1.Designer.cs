@@ -59,5 +59,15 @@ namespace ULTRAKIT.Core.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Byte[].
+        /// </summary>
+        internal static byte[] ULTRAKIT {
+            get {
+                object obj = ResourceManager.GetObject("ULTRAKIT", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }
