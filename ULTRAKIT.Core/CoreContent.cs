@@ -22,7 +22,7 @@ namespace ULTRAKIT.Core
             Loader.Addon b = new Loader.Addon();
 
             b.Data = new Data.UKAddonData();
-            b.Data.ModName = "Vanilla Bosses/Enemies";
+            b.Data.ModName = "<size=9>Vanilla Bosses/Enemies</size>";
             b.Data.Author = "UltraKit";
             b.Data.ModDesc = "Contains Enemies that cannot be spawned by the spawner arm";
 
@@ -34,7 +34,7 @@ namespace ULTRAKIT.Core
 
             Loader.AddonLoader.registry.Add(b, new List<UKContent>());
             Loader.AddonLoader.registry[b].AddRange(Enemies());
-            Loader.AddonLoader.registry[b].AddRange(new List<UKContentWeapon>());
+            //Loader.AddonLoader.registry[b].AddRange(new List<UKContentWeapon>());
         }
         public static List<UKContentSpawnable> Enemies()
         {
@@ -73,7 +73,7 @@ namespace ULTRAKIT.Core
             GameObject a = new GameObject();
             foreach (GameObject obj in Pool)
             {
-                if (obj.gameObject.name == name)
+                if (obj.gameObject.name == name && obj.gameObject.tag == "Enemy")
                 {
                     if (obj.activeSelf != true) obj.SetActive(true);
                     a = obj;
