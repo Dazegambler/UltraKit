@@ -96,21 +96,22 @@ namespace ULTRAKIT.Loader.Registries
             dotAct.Enable();
             comAct.Enable();
 
+            __instance.SetPrivate("menu", MonoSingleton<HUDOptions>.Instance.GetComponentInChildren<SpawnMenu>(true));
+            var initMenu = __instance.GetPrivate("menu") as SpawnMenu;
+            initMenu.arm = __instance;
+            menus.Add(initMenu, null);
+
             foreach (var addon in AddonLoader.addons)
             {
-
-                __instance.SetPrivate("menu", MonoSingleton<HUDOptions>.Instance.GetComponentInChildren<SpawnMenu>(true));
-                var initMenu = __instance.GetPrivate("menu") as SpawnMenu;
-                initMenu.arm = __instance;
-                menus.Add(initMenu, null);
-
                 var go = GameObject.Instantiate(initMenu.gameObject, initMenu.transform.parent);
                 go.SetActive(false);
 
                 // New menu instantiation
                 var newMenu = go.GetComponent<SpawnMenu>();
                 newMenu.arm = __instance;
+
                 menus.Add(newMenu, addon);
+                Debug.Log("Balls 2");
             }
 
             __instance.SetPrivate("menu", menus.Keys.ToList()[curIndex]);
