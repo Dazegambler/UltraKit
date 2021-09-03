@@ -43,7 +43,7 @@ namespace ULTRAKIT.Core.BossSpawns
                 "DroneSkull Variant"
             };
 
-            foreach (string _List in List) a.Add(EnemySpawnable(_List));
+            foreach (string item in List) a.Add(EnemySpawnable(item));
 
             return a;
         }
