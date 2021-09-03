@@ -174,7 +174,7 @@ namespace ULTRAKIT.Loader.Registries
 
                 // New section
                 var newSec = GameObject.Instantiate(secRef, secRef.transform.parent);
-                newSec.sectionName.text = addon.Data?.ModName ?? "SPAWNABLES";
+                newSec.sectionName.enabled = false;
 
                 foreach (var spawnable in content)
                 {
@@ -191,7 +191,9 @@ namespace ULTRAKIT.Loader.Registries
                     }
                     else
                     {
-                        b.transform.Find("Background").Find("Foreground").GetComponent<Image>().sprite = spawnable.Icon;
+                        var bg = b.transform.Find("Background");
+                        bg.Find("Foreground").GetComponent<Image>().sprite = spawnable.Icon;
+                        bg.GetComponent<Image>().color = new Color(0.5f, 0.5f, 0.5f);
                     }
 
                     b.onClick.AddListener(delegate
