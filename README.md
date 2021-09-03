@@ -32,3 +32,5 @@ Physgun model, texture & icon by Fat Tony
 Loader & Mod list: Dazegambler
 
 Content injection & Lua API: Heckteck
+
+Testing: Cecelune
