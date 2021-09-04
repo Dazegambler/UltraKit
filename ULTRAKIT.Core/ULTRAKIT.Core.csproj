@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BossSpawns\BossSpawnsInjector.cs" />
+    <Compile Include="BossSpawns\V2Utils.cs" />
     <Compile Include="CoreContent.cs" />
     <Compile Include="GUIUtil.cs" />
     <Compile Include="ModMenu\ModMenuInjector.cs" />
