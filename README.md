@@ -7,7 +7,7 @@ Comes installed with a physgun and gravity gun to play with!
 ### WARNING: THIS MOD IS IN AN EXPERIMENTAL PHASE, AND MAY ACCIDENTALLY MESS WITH YOUR GAME INSTALLATION! PLEASE ONLY INSTALL IT IF YOU ARE WILLING TO TAKE THIS RISK
 1 - Download & install BepInEx as shown in this video
 
-[![HOW TO INSTALL ULTRAKILL MODS WITH BEPINEX](https://user-images.githubusercontent.com/27899907/132107314-aca2f7c3-812c-4e03-8a04-c3b0a4d90a91.png)](https://www.youtube.com/watch?v=meNiXcbPh_s)
+[![HOW TO INSTALL ULTRAKILL MODS WITH BEPINEX](https://user-images.githubusercontent.com/27899907/132107380-d55c608f-c7d9-45ec-adce-3502734eae45.png)](https://www.youtube.com/watch?v=meNiXcbPh_s)
 
 2 - Download the UltraMod loader from https://github.com/Dazegambler/UltraMod/releases
 
