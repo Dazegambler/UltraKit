@@ -25,7 +25,14 @@ namespace ULTRAKIT.Data
             "Coin",
             "RailcannonBeamMalicious",
             "RailcannonBeam",
-            "HarpoonMalicious"
+            "HarpoonMalicious",
+            "Projectile",
+            "ProjectileHoming",
+            "ProjectileExplosiveHH",
+            "ProjectileExplosive",
+            "ShotgunProjectileEnemy",
+            "ProjectileMinosPrime",
+            "ProjectileSpread"
         };
 
         public static void Initialiaze()
