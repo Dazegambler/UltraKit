@@ -101,8 +101,15 @@ namespace ULTRAKIT.Loader.Registries
             initMenu.arm = __instance;
             menus.Add(initMenu, null);
 
+            
+
             foreach (var addon in AddonLoader.addons)
             {
+                if (addon.GetAll<UKContentSpawnable>().Count == 0)
+                {
+                    continue;
+                }
+
                 var go = GameObject.Instantiate(initMenu.gameObject, initMenu.transform.parent);
                 go.SetActive(false);
 
