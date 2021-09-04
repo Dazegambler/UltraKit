@@ -14,6 +14,7 @@ namespace ULTRAKIT.Data
         public static string[] _assets = {
             "RevolverBeam",
             "RevolverBeamSuper",
+            "MaliciousBeam",
             "ShotgunProjectile",
             "Grenade",
             "NailHeated",
@@ -32,7 +33,20 @@ namespace ULTRAKIT.Data
             "ProjectileExplosive",
             "ShotgunProjectileEnemy",
             "ProjectileMinosPrime",
-            "ProjectileSpread"
+            "ProjectileSpread",
+            "Explosion",
+            "ExplosionPrime",
+            "ExplosionBig",
+            "MindflayerExplosion",
+            "ExplosionMaliciousRail",
+            "ExplosionSuper",
+            "ExplosionSand",
+            "VirtueShatterExplosionless",
+            "VirtueShatterExplosionlessHuge",
+            "BlackHoleExplosion",
+            "ExplosionWaveEnemy",
+            "ExplosionWaveSisyphus",
+            "ExplosionWave",
         };
 
         public static void Initialiaze()
