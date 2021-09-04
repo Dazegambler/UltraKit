@@ -26,7 +26,7 @@ namespace ULTRAKIT.Core.BossSpawns
             Loader.Addon b = new Loader.Addon();
 
             b.Data = new Data.UKAddonData();
-            b.Data.ModName = "Vanilla Bosses/Enemies";
+            b.Data.ModName = "Bosses";
             b.Data.Author = "UltraKit";
             b.Data.ModDesc = "Contains Enemies that cannot be spawned by the spawner arm";
 
@@ -84,6 +84,16 @@ namespace ULTRAKIT.Core.BossSpawns
                         }
                     }
                 }
+            }
+
+            if (a.GetComponent<V2>())
+            {
+                a.GetComponent<V2>().onKnockout.onActivate.AddListener(() =>
+                {
+                    var go = new GameObject();
+                    a.GetComponent<V2>().escapeTarget = go.transform;
+                    go.transform.position = a.GetComponent<V2>().transform.position;
+                });
             }
 
 
