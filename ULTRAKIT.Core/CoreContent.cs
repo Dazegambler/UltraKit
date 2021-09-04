@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ULTRAKIT.Core.BossSpawns;
 using ULTRAKIT.Core.ModMenu;
 using ULTRAKIT.Data.ScriptableObjects.Registry;
+using ULTRAKIT.Loader;
 using ULTRAKIT.Loader.Registries;
 using UnityEngine;
 
@@ -18,6 +19,8 @@ namespace ULTRAKIT.Core
 
         public static void Initialize()
         {
+            AddonLoader.harmony.PatchAll();
+
             ModMenuInjector.Initialize();
             BossSpawnsInjector.Initialize();
         }
