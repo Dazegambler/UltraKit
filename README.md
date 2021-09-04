@@ -5,8 +5,7 @@ Comes installed with a physgun and gravity gun to play with!
 
 # Installation
 ### WARNING: THIS MOD IS IN AN EXPERIMENTAL PHASE, AND MAY ACCIDENTALLY MESS WITH YOUR GAME INSTALLATION! PLEASE ONLY INSTALL IT IF YOU ARE WILLING TO TAKE THIS RISK
-1 - Download & install BepInEx from https://github.com/BepInEx/BepInEx/releases, as shown in this video:
-https://www.youtube.com/watch?v=meNiXcbPh_s
+1 - Download & install BepInEx as shown in this video: https://www.youtube.com/watch?v=meNiXcbPh_s
 
 
 4 - Download the UltraMod loader from https://github.com/Dazegambler/UltraMod/releases
