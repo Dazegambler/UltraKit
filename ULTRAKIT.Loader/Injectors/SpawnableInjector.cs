@@ -41,7 +41,22 @@ namespace ULTRAKIT.Loader.Registries
             return a;
         }
     }
-
+    [HarmonyPatch(typeof(DebugArm))]
+    public static class SpawnPatch
+    {
+        [HarmonyPatch("Update")]
+        [HarmonyPostfix]
+        public static void StartPostfix(DebugArm __instance)
+        {
+            var Cc = __instance.cameraCtrl;
+            if (MonoSingleton<InputManager>.Instance.InputSource.Fire1.WasPerformedThisFrame){
+                if (Physics.Raycast(Cc.transform.position, Cc.transform.forward, out var hitInfo, 50f))
+                {
+                    hitInfo.transform.rotation = GameObject.Find("Player").transform.rotation;
+                }
+            }
+        }
+    }
     [HarmonyPatch(typeof(DebugArm))]
     public static class DebugArmPatch
     {
@@ -59,6 +74,7 @@ namespace ULTRAKIT.Loader.Registries
                 curIndex -= 1;
             };
         }
+
 
         public static Dictionary<SpawnMenu, Addon> menus = new Dictionary<SpawnMenu, Addon>();
         static int _curIndex;
