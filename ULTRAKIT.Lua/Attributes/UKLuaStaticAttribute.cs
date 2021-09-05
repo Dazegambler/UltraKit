@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ULTRAKIT.Lua.Attributes
 {
+    /// <summary>
+    /// Used for objects that are treated as statics in lua, accessed globally with their name (without an instance).
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum)]
     public class UKLuaStaticAttribute : Attribute
     {

@@ -2,107 +2,90 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using ULTRAKIT.Lua.API.Proxies;
-using ULTRAKIT.Lua.API.Proxies.Component;
 using ULTRAKIT.Lua.Attributes;
 using ULTRAKIT.Lua.Components;
 using UnityEngine;
 
 namespace ULTRAKIT.Lua.API
 {
-    public class UKLuaAPI
+    public static class UKLuaAPI
     {
-        public static Dictionary<string, System.Type> staticDict = new Dictionary<string, System.Type>();
-        public static List<MethodInfo> 
-            constructionMethods = new List<MethodInfo>(), 
-            destructionMethods = new List<MethodInfo>();
+        public static Dictionary<Type, string> luaStatics = new Dictionary<Type, string>();
+        public static Action<UKScriptRuntime> constructMethods, destructMethods, updateMethods;
 
+
+        ///<summary> 
+        /// Fills in constructMethods and deconstructMethods to be called when a script is destroyed or created
+        ///</summary>
         public static void Initialize()
         {
-            ScriptHelper.RegisterSimpleAction();
+            // Register all types with MoonsharpUserData attribute
             UserData.RegisterAssembly();
 
-            foreach (var type in Assembly.GetExecutingAssembly().GetTypes())
-            {
-                var stat = type.GetCustomAttribute<UKLuaStaticAttribute>();
-                if (stat != null)
-                {
-                    UserData.RegisterType(type);
-                    staticDict.Add(stat.luaName, type);
-                }
-
-                foreach(var method in type.GetMethods(BindingFlags.NonPublic | BindingFlags.Static))
-                {
-                    //TODO: update callback to move all code away from ukscriptruntime
-                    var con = method.GetCustomAttribute<UKScriptConstructor>();
-                    if (con != null)
-                    {
-                        constructionMethods.Add(method);
-                    }
-
-                    var des = method.GetCustomAttribute<UKScriptConstructor>();
-                    if (des != null)
-                    {
-                        destructionMethods.Add(method);
-                    }
-                }
-            }
-
-            Debug.Log(constructionMethods.Count);
-
-            //TODO: proxy these
-            RegisterValueType<Vector3>();
-
-            //TODO: AUTOMATE WITH A PROXY ATTRIBUTE
-            //https://stackoverflow.com/questions/293905/reflection-getting-the-generic-arguments-from-a-system-type-instance
-            //call method with reflection so you can use runtime types as the type arguments!!!!
-            RegisterProxy<UKLuaGameObject, GameObject>();
-            RegisterProxy<UKLuaRigidbody, Rigidbody>();
-            RegisterProxy<UKLuaTransform, Transform>();
-            RegisterProxy<UKLuaEnemy, EnemyIdentifier>();
-            RegisterProxy<UKLuaLineRenderer, LineRenderer>();
-            RegisterProxy<UKLuaAudioSource, AudioSource>();
-            RegisterProxy<UKLuaProjectile, Projectile>();
-        }
-
-        public static void ConstructScript(UKScriptRuntime script)
-        {
+            // Register all types with UKLuaStatic attribute
+            luaStatics = AttributeHelper.GetTypesWith<UKLuaStaticAttribute>()
+                .ToDictionary(pair => pair.Key, pair => pair.Value.luaName);
             
-            foreach (var pair in staticDict)
+            foreach(var type in luaStatics.Keys)
             {
-                script.runtime.Globals[pair.Key] = pair.Value;
+                UserData.RegisterType(type);
             }
-            
-            foreach (var method in constructionMethods)
+
+            // Register all methods with UKScriptConstructor attribute
+            foreach(var method in AttributeHelper.GetMethodsWith<UKScriptConstructor>().Keys)
             {
-                
-                method.Invoke(null, new object[] { script });
+                constructMethods += Delegate.CreateDelegate(method.DeclaringType, method) as Action<UKScriptRuntime>;
+            }
+
+            // Register all methods with UKScriptUpdater attributes
+            foreach (var method in AttributeHelper.GetMethodsWith<UKScriptUpdater>().Keys)
+            {
+                updateMethods += Delegate.CreateDelegate(method.DeclaringType, method) as Action<UKScriptRuntime>;
+            }
+
+            // Register all methods with UKScriptDestructor attributes
+            foreach (var method in AttributeHelper.GetMethodsWith<UKScriptDestructor>().Keys)
+            {
+                destructMethods += Delegate.CreateDelegate(method.DeclaringType, method) as Action<UKScriptRuntime>;
             }
         }
 
-        public static void DestructScript(UKScriptRuntime script) {
-            foreach (var method in constructionMethods)
-            {
-                method.Invoke(null, new object[] { script });
-            }
-        }
-
-        //TEMP
-        public static void RegisterValueType<T>()
+        ///<summary>
+        /// Accepts a UKScriptRuntime and calls constructMethods on it, allowing all the API modules to access the scripts on construction for whatever reason 
+        ///</summary>
+        public static void ConstructScript(UKScriptRuntime c)
         {
-            UserData.RegisterType<Vector3>();
-            staticDict.Add(typeof(T).Name, typeof(T));
+            // Globals
+            var script = new Script(CoreModules.Preset_SoftSandbox);
+            // TODO: real log method
+            script.Globals["log"] = (Action<string>)Debug.Log;
+
+            // Statics
+            foreach(var pair in luaStatics)
+            {
+                script.Globals[pair.Value] = pair.Key;
+            }
+
+            constructMethods?.Invoke(c);
+            c.runtime = script;
         }
 
-        // holy shit
-        public static void RegisterProxy<P, T>()
-            where T : class
-            where P : UKLuaProxy<T>
+        ///<summary>
+        /// Accepts a UKScriptRuntime and calls deconstructMethods on it, allowing all the API modules to access the scripts on destroy for whatever reason 
+        ///</summary>
+        public static void DestructScript(UKScriptRuntime c)
         {
-            UserData.RegisterProxyType<P, T>((o) => (P)Activator.CreateInstance(typeof(P), o));
+            destructMethods.Invoke(c);
+        }
+
+        ///<summary>
+        /// Accepts a UKScriptRuntime and calls updateMethods on it, allowing all the API modules to access the scripts on update for whatever reason 
+        ///</summary>
+        public static void UpdateScript(UKScriptRuntime c)
+        {
+            updateMethods.Invoke(c);
         }
     }
 }

@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using ULTRAKIT.Data;
@@ -41,22 +43,7 @@ namespace ULTRAKIT.Loader.Registries
             return a;
         }
     }
-    [HarmonyPatch(typeof(DebugArm))]
-    public static class SpawnPatch
-    {
-        [HarmonyPatch("Update")]
-        [HarmonyPostfix]
-        public static void StartPostfix(DebugArm __instance)
-        {
-            var Cc = __instance.cameraCtrl;
-            if (MonoSingleton<InputManager>.Instance.InputSource.Fire1.WasPerformedThisFrame){
-                if (Physics.Raycast(Cc.transform.position, Cc.transform.forward, out var hitInfo, 50f))
-                {
-                    hitInfo.transform.rotation = GameObject.Find("Player").transform.rotation;
-                }
-            }
-        }
-    }
+
     [HarmonyPatch(typeof(DebugArm))]
     public static class DebugArmPatch
     {
@@ -151,10 +138,44 @@ namespace ULTRAKIT.Loader.Registries
 
         [HarmonyPatch("Update")]
         [HarmonyPrefix]
-        public static void UpdatePrefix(DebugArm __instance)
+        public static bool UpdatePrefix(DebugArm __instance, AudioSource ___jabSound, Animator ___armAnimator, SpawnableObject ___currentObject, LayerMask ___raycastLayers, SpawnMenu ___menu)
         {
+            
+
+            if (Time.timeScale == 0f)
+            {
+                return false;
+            }
+            if (MonoSingleton<InputManager>.Instance.InputSource.Fire1.WasPerformedThisFrame)
+            {
+                if (___menu.gameObject.activeSelf || ___currentObject == null)
+                {
+                    return false;
+                }
+
+                __instance.StopAllCoroutines();
+                __instance.StartCoroutine("HandClosedAnimationThingy");
+
+                ___jabSound.Play();
+                ___armAnimator.SetTrigger(Animator.StringToHash("Punch"));
+                RaycastHit raycastHit;
+                if (Physics.Raycast(__instance.cameraCtrl.transform.position, __instance.cameraCtrl.transform.forward, out raycastHit, 50f, ___raycastLayers))
+                {
+                    var goreZone = __instance.GetType().GetMethod("GetGoreZone", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(__instance, new object[] { }) as GoreZone;
+                    var go = GameObject.Instantiate<GameObject>(___currentObject.gameObject, raycastHit.point, Quaternion.identity, goreZone.transform);
+                    go.transform.forward = -MonoSingleton<NewMovement>.Instance.transform.forward;
+                }
+            }
+            if (MonoSingleton<InputManager>.Instance.InputSource.Fire2.WasPerformedThisFrame)
+            {
+                
+                ___menu.gameObject.SetActive(true);
+                MonoSingleton<OptionsManager>.Instance.Freeze();
+            }
 
             __instance.SetPrivate("menu", menus.Keys.ToList()[curIndex]);
+
+            return false;
         }
     }
 
@@ -233,16 +254,6 @@ namespace ULTRAKIT.Loader.Registries
                 // Skip regular awake call
                 return false;
             }
-        }
-    }
-
-    public class ButtonIconDetector : MonoBehaviour
-    {
-
-
-        void OnEnable()
-        {
-
         }
     }
 }

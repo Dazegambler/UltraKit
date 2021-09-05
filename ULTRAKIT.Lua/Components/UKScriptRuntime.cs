@@ -91,7 +91,7 @@ namespace ULTRAKIT.Lua.Components
                 FuzzyCall(runtime.Globals, "Update", Time.deltaTime);
 
                 //TODO: automate API update calls using attribute
-                UKLuaInput.Update(this);
+                //UKLuaInput.Update(this);
             }
         }
 

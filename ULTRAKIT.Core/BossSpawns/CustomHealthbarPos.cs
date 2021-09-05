@@ -24,8 +24,9 @@ namespace ULTRAKIT.Core.BossSpawns
         {
             var newPos = enemy.transform.position + offset;
             var diff = (newPos - playerCam.transform.position).normalized;
-            barObj.SetActive(Vector3.Dot(diff, playerCam.transform.forward) > 0);
             barObj.transform.position = playerCam.WorldToScreenPoint(newPos);
+
+            barObj.SetActive(Vector3.Dot(diff, playerCam.transform.forward) > 0.05);
         }
     }
 }

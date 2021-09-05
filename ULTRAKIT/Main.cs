@@ -28,7 +28,7 @@ namespace ULTRAKIT
             CoreContent.Initialize();
             UKLuaAPI.Initialize();
             AddonLoader.Initialize(BundlePath);
-            Data.AssetDatabase.Initialiaze();
+            //Data.AssetDatabase.Initialiaze();
         }
 
         public void Update()
