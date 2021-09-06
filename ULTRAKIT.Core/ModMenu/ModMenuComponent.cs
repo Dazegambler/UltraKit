@@ -18,9 +18,13 @@ namespace ULTRAKIT.Core.ModMenu
         // Use this to decide whether to show the mod list or not
         public bool active;
 
-        Rect guirect = new Rect(20 / (Screen.width / 1920), 40 / (Screen.height / 1080), 155, 60), wind;
-        Rect _scroll = Rect.zero;
-        Vector2 Scroll = Vector2.zero;
+        Rect 
+            guirect = new Rect(20 / (Screen.width / 1920), 40 / (Screen.height / 1080), 155, 60),
+            wind;
+        Rect 
+            _scroll = Rect.zero;
+        Vector2 
+            Scroll = Vector2.zero;
 
         void OnGUI()
         {
@@ -46,13 +50,16 @@ namespace ULTRAKIT.Core.ModMenu
                     if (GUI.Button(new Rect(5, 5, 140, 50), $"Addons:{list.Count}"))
                     {
                         active = !active;
+                        Debug.LogWarning($"{active}");
                     }
                     if (list.Count > 20)
                     {
                         Scroll = GUI.BeginScrollView(new Rect(5, 60, 155, 800), Scroll, _scroll, false, false);
                         for (int i = 0; i < list.Count; i++)
                         {
-                            GUI.Button(new Rect(5, 60 + (35 * (i)), 140, 30), list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod");
+                            if(GUI.Button(new Rect(5, 60 + (35 * (i)), 140, 30), list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod")){
+                                Debug.LogWarning($"{list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod"} Selected");
+                            }
                             _scroll = new Rect(5, 60, 155, 95 + (35 * i));
                             if (wind.height > 800)
                             {
@@ -69,8 +76,10 @@ namespace ULTRAKIT.Core.ModMenu
                     {
                         for (int i = 0; i < list.Count; i++)
                         {
-                            GUI.Button(new Rect(5, 60 + (35 * (i)), 140, 30), list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod");
-                            wind.height = 95 + (35 * i);
+                            if (GUI.Button(new Rect(5, 60 + (35 * (i)), 140, 30), list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod")){
+                                Debug.LogWarning($"{list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod"} Selected");
+                            }
+                            wind.height = 95 + (35 * i);//95 + (35 * i)
                         }
                     }
                 }
@@ -80,6 +89,7 @@ namespace ULTRAKIT.Core.ModMenu
                     if (GUI.Button(new Rect(5, 5, 140, 50), $"Addons:{list.Count}"))
                     {
                         active = !active;
+                        Debug.LogWarning($"{active}");
                     }
                 }
             }
