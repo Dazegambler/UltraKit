@@ -162,7 +162,7 @@ namespace ULTRAKIT.Loader.Registries
                 if (Physics.Raycast(__instance.cameraCtrl.transform.position, __instance.cameraCtrl.transform.forward, out raycastHit, 50f, ___raycastLayers))
                 {
                     var goreZone = __instance.GetType().GetMethod("GetGoreZone", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(__instance, new object[] { }) as GoreZone;
-                    var go = GameObject.Instantiate<GameObject>(___currentObject.gameObject, raycastHit.point, Quaternion.identity, goreZone.transform);
+                    var go = GameObject.Instantiate<GameObject>(___currentObject.gameObject, raycastHit.point,Quaternion.identity, goreZone.transform);
                     go.transform.forward = -MonoSingleton<NewMovement>.Instance.transform.forward;
                 }
             }
