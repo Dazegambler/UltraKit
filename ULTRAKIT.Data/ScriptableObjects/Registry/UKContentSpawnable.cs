@@ -8,6 +8,8 @@ namespace ULTRAKIT.Data.ScriptableObjects.Registry
     {
         Enemy,
         Spawnable,
+        Throwable,
+        Explosive,
     }
 
     [CreateAssetMenu(fileName = "UKContentSpawnable", menuName = "ULTRAKIT/UKContentSpawnable")]
