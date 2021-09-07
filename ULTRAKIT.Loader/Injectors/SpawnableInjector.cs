@@ -256,4 +256,27 @@ namespace ULTRAKIT.Loader.Registries
             }
         }
     }
+    [HarmonyPatch(typeof(EndlessGrid))]
+    public class TestCGPatch
+    {
+        [HarmonyPatch("Start")]
+        [HarmonyPostfix]
+        public  void ArenaPatch(EndlessGrid __instance)
+        {
+            var cubes = __instance.cubes;
+            var gridCube = __instance.GetPrivate("gridCube");
+            var offset = __instance.GetPrivate("offset");
+            for (int i = 0; i < 32; i++)
+            {
+                cubes[i] = new EndlessCube[32];
+                for (int j = 0; j < 32; j++)
+                {
+                    GameObject gameObject = UnityEngine.Object.Instantiate(gridCube,base.transform, worldPositionStays: true);
+                    gameObject.SetActive(value: true);
+                    gameObject.transform.localPosition = new Vector3((float)i * (float)offset, 0f, (float)j * (float)offset);
+                    cubes[i][j] = gameObject.GetComponent<EndlessCube>();
+                }
+            }
+        }
+    }
 }
