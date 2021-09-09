@@ -100,7 +100,7 @@ namespace ULTRAKIT.Loader.Registries
             comAct.Enable();
 
             __instance.SetPrivate("menu", MonoSingleton<HUDOptions>.Instance.GetComponentInChildren<SpawnMenu>(true));
-            var initMenu = __instance.GetPrivate("menu") as SpawnMenu;
+            var initMenu = __instance.GetPrivate<SpawnMenu>("menu");
             initMenu.arm = __instance;
             menus.Add(initMenu, null);
 
@@ -197,7 +197,7 @@ namespace ULTRAKIT.Loader.Registries
                 var addon = DebugArmPatch.menus[__instance];
                 var content = addon.GetAll<UKContentSpawnable>();
 
-                var secRef = __instance.GetPrivate("sectionReference") as SpawnMenuSectionReference;
+                var secRef = __instance.GetPrivate<SpawnMenuSectionReference>("sectionReference");
                 secRef.gameObject.SetActive(false);
 
                 foreach(Transform child in secRef.transform.parent)
@@ -252,6 +252,29 @@ namespace ULTRAKIT.Loader.Registries
 
                 // Skip regular awake call
                 return false;
+            }
+        }
+    }
+    [HarmonyPatch(typeof(EndlessGrid))]
+    public class TestCGPatch
+    {
+        [HarmonyPatch("Start")]
+        [HarmonyPostfix]
+        public static void ArenaPatch(EndlessGrid __instance)
+        {
+            var cubes = __instance.cubes;
+            var gridCube = __instance.GetPrivate<GameObject>("gridCube");
+            var offset = __instance.GetPrivate<float>("offset");
+            for (int i = 0; i < 32; i++)
+            {
+                cubes[i] = new EndlessCube[32];
+                for (int j = 0; j < 32; j++)
+                {
+                    GameObject gameObject = UnityEngine.Object.Instantiate(gridCube, __instance.transform, worldPositionStays: true);
+                    gameObject.SetActive(value: true);
+                    gameObject.transform.localPosition = new Vector3((float)i * (float)offset, 0f, (float)j * (float)offset);
+                    cubes[i][j] = gameObject.GetComponent<EndlessCube>();
+                }
             }
         }
     }

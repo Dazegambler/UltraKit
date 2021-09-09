@@ -45,13 +45,17 @@ namespace ULTRAKIT.Core.ModMenu
             if (id == 0)
             {
                 var list = ULTRAKIT.Loader.AddonLoader.addons;
+
+                if (GUI.Button(new Rect(5, 5, 140, 50), $"Addons:{list.Count}"))
+                {
+                    Debug.Log("MY NUTS");
+                }
+
+                active = true;
+
                 if (active)
                 {
-                    if (GUI.Button(new Rect(5, 5, 140, 50), $"Addons:{list.Count}"))
-                    {
-                        active = !active;
-                        Debug.LogWarning($"{active}");
-                    }
+                    
                     if (list.Count > 20)
                     {
                         Scroll = GUI.BeginScrollView(new Rect(5, 60, 155, 800), Scroll, _scroll, false, false);
@@ -86,11 +90,6 @@ namespace ULTRAKIT.Core.ModMenu
                 else
                 {
                     wind = guirect;
-                    if (GUI.Button(new Rect(5, 5, 140, 50), $"Addons:{list.Count}"))
-                    {
-                        active = !active;
-                        Debug.LogWarning($"{active}");
-                    }
                 }
             }
         } 

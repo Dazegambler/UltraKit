@@ -89,7 +89,7 @@ namespace ULTRAKIT.Loader.Registries
                         slot.Add(go);
 
                         var field = typeof(GunControl).GetField("weaponFreshnesses", BindingFlags.NonPublic | BindingFlags.Instance);
-                        var freshnessList = field.GetValue(__instance.gunc) as List<float>;
+                        List<float> freshnessList = field.GetValue(__instance.gunc) as List<float>;
                         freshnessList.Add(10);
                         field.SetValue(__instance.gunc, freshnessList);
 

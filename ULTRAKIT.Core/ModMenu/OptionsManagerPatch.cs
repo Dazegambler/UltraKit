@@ -16,7 +16,7 @@ namespace ULTRAKIT.Core.ModMenu
         [HarmonyPostfix]
         public static void StartPostfix(OptionsMenuToManager __instance)
         {
-            var opm = __instance.GetPrivate("opm") as OptionsManager;
+            var opm = __instance.GetPrivate<OptionsManager>("opm");
             var mm = opm.gameObject.AddComponent<ModMenuComponent>();
             mm.optionsMenu = __instance.optionsMenu;
             mm.pauseMenu = __instance.pauseMenu;

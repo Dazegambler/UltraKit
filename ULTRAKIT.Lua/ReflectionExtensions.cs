@@ -9,14 +9,14 @@ namespace ULTRAKIT.Lua
 {
     public static class ReflectionExtensions
     {
-        public static void SetPrivate<T>(this T obj, string name, object value)
+        public static void SetPrivate(this object obj, string name, object value)
         {
-            typeof(T).GetField(name, BindingFlags.Instance | BindingFlags.NonPublic).SetValue(obj, value);
+            obj.GetType().GetField(name, BindingFlags.Instance | BindingFlags.NonPublic).SetValue(obj, value);
         }
 
-        public static object GetPrivate<T>(this T obj, string name)
+        public static T GetPrivate<T>(this object obj, string name)
         {
-            return typeof(T).GetField(name, BindingFlags.Instance | BindingFlags.NonPublic).GetValue(obj);
+            return (T) obj.GetType().GetField(name, BindingFlags.Instance | BindingFlags.NonPublic).GetValue(obj);
         }
     }
 }
