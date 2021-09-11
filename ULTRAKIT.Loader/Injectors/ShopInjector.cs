@@ -1,9 +1,6 @@
 ﻿using HarmonyLib;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ULTRAKIT.Data.ScriptableObjects.Registry;
 using ULTRAKIT.Loader.Registries;
 using UnityEngine;
@@ -35,7 +32,7 @@ namespace ULTRAKIT.Loader.Injectors
         static int page;
 
         static GameObject pageButton;
-        
+
 
         [HarmonyPatch("OnEnable")]
         [HarmonyPostfix]
@@ -63,7 +60,7 @@ namespace ULTRAKIT.Loader.Injectors
 
             // Vanilla page
             res.Add(new List<GameObject>());
-            foreach(var vanillaButton in parent.GetComponentsInChildren<ShopButton>())
+            foreach (var vanillaButton in parent.GetComponentsInChildren<ShopButton>())
             {
                 foreach (var panel in panels.Values)
                 {
@@ -71,18 +68,18 @@ namespace ULTRAKIT.Loader.Injectors
                 }
                 res[0].Add(vanillaButton.gameObject);
             }
-            
+
             // Custom weapon pages
             var allWeaps = AddonLoader.GetAll<UKContentWeapon>();
             int curPage = 1;
             int curWeap = 0;
             res.Add(new List<GameObject>());
-            foreach(var weap in allWeaps)
+            foreach (var weap in allWeaps)
             {
                 res[curPage].Add(CreateWeaponButton(parent, weap, curWeap));
 
                 curWeap++;
-                if(curWeap > 5)
+                if (curWeap > 5)
                 {
                     res.Add(new List<GameObject>());
                     curPage++;
@@ -107,14 +104,14 @@ namespace ULTRAKIT.Loader.Injectors
             go.GetComponent<ShopButton>().deactivated = true;
             go.GetComponent<Button>().onClick.AddListener(() =>
             {
-                foreach(var pair in panels)
+                foreach (var pair in panels)
                 {
                     pair.Value.SetActive(panels[weap] == pair.Value);
                 }
 
-                foreach(Transform obj in parent.transform)
+                foreach (Transform obj in parent.transform)
                 {
-                    if(obj == parent.transform)
+                    if (obj == parent.transform)
                     {
                         continue;
                     }
@@ -134,7 +131,7 @@ namespace ULTRAKIT.Loader.Injectors
         {
             var res = new Dictionary<UKContentWeapon, GameObject>();
             var allWeaps = AddonLoader.GetAll<UKContentWeapon>();
-            foreach(var weap in allWeaps)
+            foreach (var weap in allWeaps)
             {
                 var go = GameObject.Instantiate(panelTemplate, parent.transform);
                 foreach (Transform child in go.transform)
@@ -143,7 +140,7 @@ namespace ULTRAKIT.Loader.Injectors
                 }
 
                 int i = 0;
-                foreach(var variant in weap.Variants)
+                foreach (var variant in weap.Variants)
                 {
                     CreateVariantOption(go, weap, i);
                     i++;
@@ -177,7 +174,7 @@ namespace ULTRAKIT.Loader.Injectors
             var isEquipped = GunSetterPatch.equippedDict[weapon.Variants[i]];
             img.sprite = info.equipSprites[isEquipped ? 1 : 0];
 
-            
+
             UnityAction del = () =>
             {
                 GunSetterPatch.equippedDict[weapon.Variants[i]] = !GunSetterPatch.equippedDict[weapon.Variants[i]];

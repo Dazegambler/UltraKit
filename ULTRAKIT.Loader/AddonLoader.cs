@@ -3,17 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using ULTRAKIT.Data;
 using ULTRAKIT.Data.ScriptableObjects.Registry;
-using ULTRAKIT.Loader.Registries;
 using UnityEngine;
 
 namespace ULTRAKIT.Loader
 {
-    public static class AddonExtensions{
+    public static class AddonExtensions
+    {
         public static List<T> GetAll<T>(this Addon a)
             where T : UKContent
         {
@@ -23,7 +20,8 @@ namespace ULTRAKIT.Loader
     }
     public static class AddonLoader
     {
-        public static List<Addon> addons{
+        public static List<Addon> addons
+        {
             get
             {
                 return registry.Keys.ToList();
@@ -36,7 +34,7 @@ namespace ULTRAKIT.Loader
         {
             var res = new List<T>();
 
-            foreach(var val in registry.Values)
+            foreach (var val in registry.Values)
             {
                 res.AddRange(val.Where(k => k is T).ToList().Cast<T>());
             }
@@ -46,9 +44,9 @@ namespace ULTRAKIT.Loader
 
 
         public static Harmony harmony = new Harmony("ULTRAKIT.Loader");
-        
+
         //TEMP TO MAKE SPAWNMENU WORK DELETE AFTER INTEGRATION INTO SPAWNER ARM
-        
+
 
         public static void Initialize(string FilePath)
         {
@@ -59,7 +57,7 @@ namespace ULTRAKIT.Loader
             LoadAllAddons(FilePath);
             Debug.LogWarning("...FINISHED LOADING ADDONS");
 
-            
+
 
             harmony.PatchAll();
         }
@@ -104,6 +102,6 @@ namespace ULTRAKIT.Loader
 
             return a;
         }
-        
+
     }
 }

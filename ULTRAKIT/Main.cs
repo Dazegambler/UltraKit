@@ -1,30 +1,21 @@
-﻿using System;
-using System.Reflection;
-using System.Collections.Generic;
+﻿using BepInEx;
 using System.IO;
-using BepInEx;
-using BepInEx.Configuration;
 using ULTRAKIT.Core;
 using ULTRAKIT.Loader;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using ULTRAKIT.Lua;
-using UnityEngine.InputSystem;
-using ULTRAKIT.Loader.Registries;
 using ULTRAKIT.Lua.API;
+using UnityEngine;
 
 namespace ULTRAKIT
 {
     [BepInPlugin("ULTRAKIT", "ULTRAKIT", "1.0.0")]
     public class Plugin : BaseUnityPlugin
     {
-        
+
         public static string BundlePath = Directory.GetCurrentDirectory() + "/AssetBundles";
 
         public void Start()
         {
-            
+
             CoreContent.Initialize();
             UKLuaAPI.Initialize();
             AddonLoader.Initialize(BundlePath);
@@ -35,8 +26,8 @@ namespace ULTRAKIT
         {
 
         }
-        
-        
+
+
         void OnApplicationQuit()
         {
             // Ensures that the mod can be uninstalled without issue

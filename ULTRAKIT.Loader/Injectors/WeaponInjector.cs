@@ -1,14 +1,8 @@
 ﻿using HarmonyLib;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using ULTRAKIT.Data;
 using ULTRAKIT.Data.Components;
 using ULTRAKIT.Data.ScriptableObjects.Registry;
-using ULTRAKIT.Lua;
 using ULTRAKIT.Lua.Components;
 using UnityEngine;
 
@@ -22,9 +16,9 @@ namespace ULTRAKIT.Loader.Registries
 
         static void Postfix(GunSetter __instance)
         {
-            foreach(var slot in modSlots)
+            foreach (var slot in modSlots)
             {
-                foreach(var item in slot)
+                foreach (var item in slot)
                 {
                     if (item)
                     {
@@ -42,7 +36,7 @@ namespace ULTRAKIT.Loader.Registries
             {
                 foreach (var weap in pair.Key.GetAll<UKContentWeapon>())
                 {
-                    
+
 
                     // check if equipped
                     var slot = new List<GameObject>();
@@ -63,12 +57,12 @@ namespace ULTRAKIT.Loader.Registries
 
                         var go = GameObject.Instantiate(variant, __instance.transform);
                         go.SetActive(false);
-                        
+
 
                         foreach (var c in go.GetComponentsInChildren<Renderer>(true))
                         {
                             c.gameObject.layer = LayerMask.NameToLayer("AlwaysOnTop");
-                            
+
                             var glow = c.gameObject.GetComponent<UKGlow>();
                             if (glow)
                             {
@@ -106,7 +100,7 @@ namespace ULTRAKIT.Loader.Registries
             }
         }
     }
-    
+
     [HarmonyPatch(typeof(GunControl))]
     class GunControlPatch
     {

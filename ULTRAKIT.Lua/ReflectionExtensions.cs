@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 
 namespace ULTRAKIT.Lua
 {
@@ -16,7 +11,7 @@ namespace ULTRAKIT.Lua
 
         public static T GetPrivate<T>(this object obj, string name)
         {
-            return (T) obj.GetType().GetField(name, BindingFlags.Instance | BindingFlags.NonPublic).GetValue(obj);
+            return (T)obj.GetType().GetField(name, BindingFlags.Instance | BindingFlags.NonPublic).GetValue(obj);
         }
     }
 }

@@ -61,15 +61,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\Proxies\UKProxy.cs" />
+    <Compile Include="API\Abstract\UKProxy.cs" />
+    <Compile Include="API\Abstract\UKStatic.cs" />
     <Compile Include="API\Proxies\UKProxyGameObject.cs" />
+    <Compile Include="API\Proxies\UKProxyObject.cs" />
+    <Compile Include="API\Statics\UKStaticGameObject.cs" />
+    <Compile Include="API\Statics\UKStaticObject.cs" />
     <Compile Include="API\UKLuaAPI.cs" />
     <Compile Include="AttributeHelper.cs" />
-    <Compile Include="Attributes\UKLuaProxyAttribute.cs" />
     <Compile Include="Attributes\UKScriptCallbacks.cs" />
     <Compile Include="ReflectionExtensions.cs" />
     <Compile Include="ScriptHelper.cs" />
-    <Compile Include="Attributes\UKLuaStaticAttribute.cs" />
     <Compile Include="Components\UKScriptRuntime.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -83,7 +85,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="API\Statics\" />
+    <Folder Include="API\Proxies\Components\" />
     <Folder Include="API\UserDatas\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

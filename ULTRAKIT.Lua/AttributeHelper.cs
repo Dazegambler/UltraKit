@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using UnityEngine;
 
 namespace ULTRAKIT.Lua
 {
@@ -44,6 +43,38 @@ namespace ULTRAKIT.Lua
                 .ToDictionary(m => m, m => m.GetCustomAttribute<T>());
 
             return res;
+        }
+
+        /// <summary>
+        /// Gets all subclasses of a specific type in the executing assembly
+        /// </summary>
+        /// <param name="type">The base type to be searched</typeparam>
+        /// <returns>A list of all types in the assembly that extend T</returns>
+        public static List<Type> GetDerivedTypes(Type type)
+        {
+            var asm = Assembly.GetExecutingAssembly();
+            var res = asm
+                .GetTypes()
+                .Where(t => t != type && !t.IsAbstract && IsSubclassOfRawGeneric(type, t))
+                .ToList();
+
+            Debug.Log(res.Count);
+
+            return res;
+        }
+
+        static bool IsSubclassOfRawGeneric(Type generic, Type toCheck)
+        {
+            while (toCheck != null && toCheck != typeof(object))
+            {
+                var cur = toCheck.IsGenericType ? toCheck.GetGenericTypeDefinition() : toCheck;
+                if (generic == cur)
+                {
+                    return true;
+                }
+                toCheck = toCheck.BaseType;
+            }
+            return false;
         }
     }
 }

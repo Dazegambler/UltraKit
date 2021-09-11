@@ -1,8 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
-using System.IO;
-
-public class CreateAssetBundles
+﻿public class CreateAssetBundles
 {
     //[MenuItem("Assets/BuildAssetBundles")]
     //static void BuildAllAssetBundles()

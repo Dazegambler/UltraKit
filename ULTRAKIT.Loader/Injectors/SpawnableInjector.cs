@@ -1,12 +1,7 @@
 ﻿using HarmonyLib;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
-using ULTRAKIT.Data;
 using ULTRAKIT.Data.ScriptableObjects.Registry;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -65,8 +60,9 @@ namespace ULTRAKIT.Loader.Registries
 
         public static Dictionary<SpawnMenu, Addon> menus = new Dictionary<SpawnMenu, Addon>();
         static int _curIndex;
-        
-        public static int curIndex {
+
+        public static int curIndex
+        {
             get
             {
                 return _curIndex;
@@ -104,7 +100,7 @@ namespace ULTRAKIT.Loader.Registries
             initMenu.arm = __instance;
             menus.Add(initMenu, null);
 
-            
+
 
             foreach (var addon in AddonLoader.addons)
             {
@@ -140,7 +136,7 @@ namespace ULTRAKIT.Loader.Registries
         [HarmonyPrefix]
         public static bool UpdatePrefix(DebugArm __instance, AudioSource ___jabSound, Animator ___armAnimator, SpawnableObject ___currentObject, LayerMask ___raycastLayers, SpawnMenu ___menu)
         {
-            
+
 
             if (Time.timeScale == 0f)
             {
@@ -162,13 +158,13 @@ namespace ULTRAKIT.Loader.Registries
                 if (Physics.Raycast(__instance.cameraCtrl.transform.position, __instance.cameraCtrl.transform.forward, out raycastHit, 50f, ___raycastLayers))
                 {
                     var goreZone = __instance.GetType().GetMethod("GetGoreZone", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(__instance, new object[] { }) as GoreZone;
-                    var go = GameObject.Instantiate<GameObject>(___currentObject.gameObject, raycastHit.point,Quaternion.identity, goreZone.transform);
+                    var go = GameObject.Instantiate<GameObject>(___currentObject.gameObject, raycastHit.point, Quaternion.identity, goreZone.transform);
                     go.transform.forward = -MonoSingleton<NewMovement>.Instance.transform.forward;
                 }
             }
             if (MonoSingleton<InputManager>.Instance.InputSource.Fire2.WasPerformedThisFrame)
             {
-                
+
                 ___menu.gameObject.SetActive(true);
                 MonoSingleton<OptionsManager>.Instance.Freeze();
             }
@@ -200,9 +196,9 @@ namespace ULTRAKIT.Loader.Registries
                 var secRef = __instance.GetPrivate<SpawnMenuSectionReference>("sectionReference");
                 secRef.gameObject.SetActive(false);
 
-                foreach(Transform child in secRef.transform.parent)
+                foreach (Transform child in secRef.transform.parent)
                 {
-                    if(child != secRef.transform)
+                    if (child != secRef.transform)
                     {
                         GameObject.Destroy(child.gameObject);
                     }
@@ -248,7 +244,7 @@ namespace ULTRAKIT.Loader.Registries
                 }
                 newSec.gameObject.SetActive(true);
                 newSec.button.gameObject.SetActive(false);
-               
+
 
                 // Skip regular awake call
                 return false;

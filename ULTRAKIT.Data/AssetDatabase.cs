@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace ULTRAKIT.Data
@@ -51,14 +47,15 @@ namespace ULTRAKIT.Data
 
         public static void Initialiaze()
         {
-            foreach(string Name in _assets){
-                assets.Add(Name,AssetFind(Name));
+            foreach (string Name in _assets)
+            {
+                assets.Add(Name, AssetFind(Name));
             }
         }
         private static GameObject AssetFind(string name)
         {
             //Find set Object in the prefabs
-            GameObject[] 
+            GameObject[]
                 Pool = Resources.FindObjectsOfTypeAll<GameObject>();
             GameObject
                 Original = new GameObject();

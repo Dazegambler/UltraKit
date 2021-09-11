@@ -1,13 +1,7 @@
 ﻿using MoonSharp.Interpreter;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ULTRAKIT.Data;
 using ULTRAKIT.Data.Components;
 using ULTRAKIT.Lua.API;
-using ULTRAKIT.Lua.API.Proxies;
 using UnityEngine;
 
 namespace ULTRAKIT.Lua.Components
@@ -24,7 +18,7 @@ namespace ULTRAKIT.Lua.Components
 
         public static void Create(UKAddonData data, GameObject go)
         {
-            foreach(var script in go.GetComponentsInChildren<UKScript>())
+            foreach (var script in go.GetComponentsInChildren<UKScript>())
             {
                 Create(data, script);
             }
@@ -67,10 +61,9 @@ namespace ULTRAKIT.Lua.Components
             data = GetComponent<UKScript>();
             runtime = new Script(CoreModules.Preset_SoftSandbox);
 
-            
-
+            var func = runtime.LoadString(data.sourceCode.text);
             UKLuaAPI.ConstructScript(this);
-            runtime.DoString(data.sourceCode.text);
+            FuzzyCall(func);
         }
 
         void OnDestroy()
@@ -86,12 +79,11 @@ namespace ULTRAKIT.Lua.Components
 
         void Update()
         {
+            UKLuaAPI.UpdateScript(this);
+
             if (!MonoSingleton<OptionsManager>.Instance.paused)
             {
                 FuzzyCall(runtime.Globals, "Update", Time.deltaTime);
-
-                //TODO: automate API update calls using attribute
-                //UKLuaInput.Update(this);
             }
         }
 

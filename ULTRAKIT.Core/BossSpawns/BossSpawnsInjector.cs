@@ -1,11 +1,6 @@
 ﻿using HarmonyLib;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ULTRAKIT.Data.ScriptableObjects.Registry;
-using ULTRAKIT.Loader;
 using UnityEngine;
 
 namespace ULTRAKIT.Core.BossSpawns
@@ -45,7 +40,7 @@ namespace ULTRAKIT.Core.BossSpawns
         public static List<UKContentSpawnable> Enemies()
         {
             List<UKContentSpawnable> a = new List<UKContentSpawnable>();
-            
+
 
             foreach (string item in List) a.Add(EnemySpawnable(item));
 
@@ -184,7 +179,7 @@ namespace ULTRAKIT.Core.BossSpawns
         [HarmonyPrefix]
         public static void BeginEscapePrefix(V2 __instance)
         {
-            if(__instance.escapeTarget == null)
+            if (__instance.escapeTarget == null)
             {
                 __instance.escapeTarget = new GameObject("Escape").transform;
                 __instance.escapeTarget.parent = __instance.transform;
