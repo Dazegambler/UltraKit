@@ -81,7 +81,7 @@ namespace ULTRAKIT.Lua.API.Proxies.Components.Unity
         public Transform Find(string name) => target.Find(name);
         public Transform GetChild(int index) => target.GetChild(index);
         public int GetSiblingIndex() => target.GetSiblingIndex();
-        public Vector3 InverseTrasnformDirection(Vector3 direction) => target.InverseTransformDirection(direction);
+        public Vector3 InverseTransformDirection(Vector3 direction) => target.InverseTransformDirection(direction);
         public Vector3 InverseTransformPoint(Vector3 point) => target.InverseTransformPoint(point);
         public Vector3 InverseTransformVector(Vector3 vector) => target.InverseTransformVector(vector);
         public bool IsChildOf(Transform parent) => target.IsChildOf(parent);
