@@ -63,9 +63,20 @@
   <ItemGroup>
     <Compile Include="API\Abstract\UKProxy.cs" />
     <Compile Include="API\Abstract\UKStatic.cs" />
+    <Compile Include="API\Proxies\Components\Unity\UKProxyAudioSource.cs" />
+    <Compile Include="API\Proxies\Components\Game\UKProxyEnemy.cs" />
+    <Compile Include="API\Proxies\Components\Unity\UKProxyLight.cs" />
+    <Compile Include="API\Proxies\Components\Unity\UKProxyLineRenderer.cs" />
+    <Compile Include="API\Proxies\Components\Game\UKProxyProjectile.cs" />
+    <Compile Include="API\Proxies\Components\Unity\UKProxyMeshFilter.cs" />
+    <Compile Include="API\Proxies\Components\Unity\UKProxyMeshRenderer.cs" />
+    <Compile Include="API\Proxies\Components\Unity\UKProxyRigidbody.cs" />
+    <Compile Include="API\Proxies\Components\Unity\UKProxyTransform.cs" />
+    <Compile Include="API\Proxies\UKProxyComponent.cs" />
     <Compile Include="API\Proxies\UKProxyGameObject.cs" />
     <Compile Include="API\Proxies\UKProxyObject.cs" />
     <Compile Include="API\Statics\UKStaticGameObject.cs" />
+    <Compile Include="API\Statics\UKStaticInput.cs" />
     <Compile Include="API\Statics\UKStaticObject.cs" />
     <Compile Include="API\UKLuaAPI.cs" />
     <Compile Include="AttributeHelper.cs" />
@@ -85,7 +96,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="API\Proxies\Components\" />
     <Folder Include="API\UserDatas\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

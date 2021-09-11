@@ -16,10 +16,14 @@ namespace ULTRAKIT.Lua.API
         public static Action<UKScriptRuntime> constructMethods, destructMethods, updateMethods;
 
         ///<summary> 
-        /// Fills in constructMethods and deconstructMethods to be called when a script is destroyed or created
+        /// Registers UserData, fills in constructMethods and deconstructMethods to be called when a script is destroyed or created, and registers all proxies
         ///</summary>
         public static void Initialize()
         {
+            UserData.RegisterType<Vector3>();
+            UserData.RegisterType<Vector2>();
+            UserData.RegisterType<Quaternion>();
+
             // Register all types with MoonsharpUserData attribute
             UserData.RegisterAssembly();
 
@@ -59,11 +63,9 @@ namespace ULTRAKIT.Lua.API
             foreach (var type in AttributeHelper.GetDerivedTypes(typeof(UKProxy<>)))
             {
                 var targetType = type.BaseType.GetGenericArguments()[0];
-                Debug.Log(targetType.Name);
 
                 var regMethodGen = regMethod.MakeGenericMethod(type, targetType);
 
-                Debug.Log(regMethodGen.IsGenericMethodDefinition);
                 regMethodGen.Invoke(null, new object[] { });
             }
         }
