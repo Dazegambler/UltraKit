@@ -13,7 +13,7 @@ using UnityEngine.InputSystem;
 namespace ULTRAKIT.Lua.API.Statics
 {
 
-    //TODO: IsDown method that checks for Keybind
+    //TODO: actual keybind system
     public class UKLuaInput : UKStatic
     {
         public override string name => "Input";
@@ -28,9 +28,19 @@ namespace ULTRAKIT.Lua.API.Statics
             b.enabled = true;
             bindings[s].Add(b);
 
-            Debug.Log(b.ActionState.PerformedFrame);
-
             return b;
+        }
+
+        public void BindSWEP(Script s, Table t)
+        {
+            var fireB = new UKBinding(new InputAction(), t.Get("FireStart"), t.Get("FireEnd"));
+            fireB.ActionState.Action.AddBinding("<Mouse>/leftButton");
+
+            var altFireB = new UKBinding(new InputAction(), t.Get("AltFireStart"), t.Get("AltFireEnd"));
+            altFireB.ActionState.Action.AddBinding("<Mouse>/rightButton");
+
+            bindings[s].Add(fireB);
+            bindings[s].Add(altFireB);
         }
 
         [UKScriptConstructor]
@@ -61,8 +71,9 @@ namespace ULTRAKIT.Lua.API.Statics
                 }
             }
         }
+    }
 
-        [MoonSharpUserData]
+    [MoonSharpUserData]
     public class UKBinding
     {
         public bool wasPressedThisFrame => ActionState.WasPerformedThisFrame;
@@ -102,16 +113,12 @@ namespace ULTRAKIT.Lua.API.Statics
         public DynValue ReleasedCallback;
     }
 
+    // Actual keybinds system
     public class UKLuaKeybinds : UKStatic
     {
         public override string name => "Keybinds";
 
         public readonly string Fire1 = "<Mouse>/leftButton";
         public readonly string Fire2 = "<Mouse>/rightButton";
-    }
-
-    
-
-        
     }
 }
