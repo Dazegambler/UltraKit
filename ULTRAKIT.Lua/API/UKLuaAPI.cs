@@ -25,6 +25,7 @@ namespace ULTRAKIT.Lua.API
             RegisterUnityStruct<Vector2>();
             RegisterUnityStruct<Quaternion>();
             RegisterUnityStruct<Color>();
+            RegisterUnityStruct<Mathf>();
 
             // Register all types with MoonsharpUserData attribute
             UserData.RegisterAssembly();
@@ -33,7 +34,6 @@ namespace ULTRAKIT.Lua.API
             var staticsToInitialize = AttributeHelper.GetDerivedTypes(typeof(UKStatic));
             foreach (var staticType in staticsToInitialize)
             {
-                UserData.RegisterType(staticType);
                 var inst = (UKStatic)Activator.CreateInstance(staticType);
                 
                 if(inst.name == null)
@@ -45,27 +45,28 @@ namespace ULTRAKIT.Lua.API
                 luaStatics.Add(inst.name, inst);
             }
 
-            foreach (var obj in luaStatics.Keys)
-            {
-                UserData.RegisterType(obj.GetType());
-            }
 
-            // Register all methods with UKScriptConstructor attribute
-            foreach (var method in AttributeHelper.GetMethodsWith<UKScriptConstructor>().Keys)
+            foreach (var inst in luaStatics.Values)
             {
-                constructMethods += Delegate.CreateDelegate(method.DeclaringType, method) as Action<UKScriptRuntime>;
-            }
+                UserData.RegisterType(inst.GetType());
 
-            // Register all methods with UKScriptUpdater attributes
-            foreach (var method in AttributeHelper.GetMethodsWith<UKScriptUpdater>().Keys)
-            {
-                updateMethods += Delegate.CreateDelegate(method.DeclaringType, method) as Action<UKScriptRuntime>;
-            }
+                // Register all methods with UKScriptConstructor attribute
+                foreach (var method in AttributeHelper.GetMethodsWith<UKScriptConstructor>(inst.GetType()).Keys)
+                {
+                    constructMethods += method.CreateDelegate(typeof(Action<UKScriptRuntime>), inst) as Action<UKScriptRuntime>;
+                }
 
-            // Register all methods with UKScriptDestructor attributes
-            foreach (var method in AttributeHelper.GetMethodsWith<UKScriptDestructor>().Keys)
-            {
-                destructMethods += Delegate.CreateDelegate(method.DeclaringType, method) as Action<UKScriptRuntime>;
+                // Register all methods with UKScriptUpdater attributes
+                foreach (var method in AttributeHelper.GetMethodsWith<UKScriptUpdater>(inst.GetType()).Keys)
+                {
+                    updateMethods += method.CreateDelegate(typeof(Action<UKScriptRuntime>), inst) as Action<UKScriptRuntime>;
+                }
+
+                // Register all methods with UKScriptDestructor attributes
+                foreach (var method in AttributeHelper.GetMethodsWith<UKScriptDestructor>(inst.GetType()).Keys)
+                {
+                    destructMethods += method.CreateDelegate(typeof(Action<UKScriptRuntime>), inst) as Action<UKScriptRuntime>;
+                }
             }
 
             var regMethod = typeof(UKLuaAPI).GetMethod(nameof(RegisterProxyType), BindingFlags.Public | BindingFlags.Static);
@@ -73,11 +74,7 @@ namespace ULTRAKIT.Lua.API
             {
                 var targetType = type.BaseType.GetGenericArguments()[0];
 
-                Debug.Log(type.FullName);
-                Debug.Log(targetType.FullName);
-
                 var regMethodGen = regMethod.MakeGenericMethod(type, targetType);
-                Debug.Log(regMethodGen.ContainsGenericParameters);
                 regMethodGen.Invoke(null, new object[] { });
             }
         }
@@ -91,7 +88,6 @@ namespace ULTRAKIT.Lua.API
         {
             UserData.RegisterType<T>();
             luaStructs.Add(typeof(T));
-            Debug.Log(typeof(T).Name);
         }
 
         /// <summary>
@@ -114,6 +110,7 @@ namespace ULTRAKIT.Lua.API
             // Globals
             c.runtime.Options.DebugPrint = (Action<string>)Debug.Log;
             c.runtime.Globals["gameObject"] = c.gameObject;
+            c.runtime.Globals["transform"] = c.transform;
 
             // Statics
             foreach (var pair in luaStatics)

@@ -20,12 +20,13 @@ namespace ULTRAKIT.Lua.API.Statics
 
         Dictionary<Script, List<UKBinding>> bindings = new Dictionary<Script, List<UKBinding>>();
 
-        public float Scroll => Mouse.current.scroll.ReadValue().y;
+        public float Scroll => Mouse.current.scroll.ReadValue().normalized.y;
         public UKBinding Bind(Script s, Table t)
         {
             var b = new UKBinding(new InputAction(), t.Get("Pressed"), t.Get("Released"));
             b.ActionState.Action.AddBinding(t.Get("Key").String);
             b.enabled = true;
+
             bindings[s].Add(b);
 
             return b;
@@ -33,10 +34,10 @@ namespace ULTRAKIT.Lua.API.Statics
 
         public void BindSWEP(Script s, Table t)
         {
-            var fireB = new UKBinding(new InputAction(), t.Get("FireStart"), t.Get("FireEnd"));
+            var fireB = new UKBinding(new InputAction(), t.Get("FirePressed"), t.Get("FireReleased"));
             fireB.ActionState.Action.AddBinding("<Mouse>/leftButton");
 
-            var altFireB = new UKBinding(new InputAction(), t.Get("AltFireStart"), t.Get("AltFireEnd"));
+            var altFireB = new UKBinding(new InputAction(), t.Get("AltFirePressed"), t.Get("AltFireReleased"));
             altFireB.ActionState.Action.AddBinding("<Mouse>/rightButton");
 
             bindings[s].Add(fireB);
@@ -44,19 +45,19 @@ namespace ULTRAKIT.Lua.API.Statics
         }
 
         [UKScriptConstructor]
-        void Construct(UKScriptRuntime s)
+        public void Construct(UKScriptRuntime s)
         {
             bindings.Add(s.runtime, new List<UKBinding>());
         }
 
         [UKScriptDestructor]
-        void Destruct(UKScriptRuntime s)
+        public void Destruct(UKScriptRuntime s)
         {
             bindings.Remove(s.runtime);
         }
 
         [UKScriptUpdater]
-        void Update(UKScriptRuntime s)
+        public void Update(UKScriptRuntime s)
         {
             foreach (var b in bindings[s.runtime])
             {
@@ -65,7 +66,7 @@ namespace ULTRAKIT.Lua.API.Statics
                     s.FuzzyCall(b.PressedCallback);
                 }
 
-                if (b.wasCanceledThisFrame && b.PressedCallback.IsNotNil())
+                if (b.wasCanceledThisFrame && b.ReleasedCallback.IsNotNil())
                 {
                     s.FuzzyCall(b.ReleasedCallback);
                 }

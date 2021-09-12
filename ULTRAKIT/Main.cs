@@ -4,6 +4,7 @@ using ULTRAKIT.Core;
 using ULTRAKIT.Loader;
 using ULTRAKIT.Lua.API;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace ULTRAKIT
 {
@@ -24,7 +25,26 @@ namespace ULTRAKIT
 
         public void Update()
         {
+            if (Keyboard.current.f8Key.wasPressedThisFrame)
+            {
+                foreach(var addon in AddonLoader.registry.Keys)
+                {
+                    AddonLoader.registry[addon].Clear();
+                    addon.Bundle.Unload(true);
+                }
+                AddonLoader.registry.Clear();
+                AddonLoader.LoadAllAddons(BundlePath);
 
+                var gs = MonoSingleton<GunSetter>.Instance;
+
+                var storedSlot = gs.gunc.currentSlot;
+                var storedVariant = gs.gunc.currentVariation;
+                gs.ResetWeapons();
+                
+                gs.gunc.currentSlot = storedSlot;
+                gs.gunc.currentVariation = storedVariant;
+                gs.gunc.YesWeapon();
+            }
         }
 
 

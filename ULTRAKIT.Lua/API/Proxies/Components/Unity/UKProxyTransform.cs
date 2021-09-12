@@ -96,6 +96,7 @@ namespace ULTRAKIT.Lua.API.Proxies.Components.Unity
         public Vector3 TransformDirection(Vector3 direction) => target.TransformDirection(direction);
         public Vector3 TransformPoint(Vector3 point) => target.TransformPoint(point);
         public Vector3 TransformVector(Vector3 vector) => target.TransformVector(vector);
+
         public void Translate(Vector3 translation) => target.Translate(translation);
     }
 }

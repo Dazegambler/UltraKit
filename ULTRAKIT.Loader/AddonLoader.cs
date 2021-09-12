@@ -57,8 +57,6 @@ namespace ULTRAKIT.Loader
             LoadAllAddons(FilePath);
             Debug.LogWarning("...FINISHED LOADING ADDONS");
 
-
-
             harmony.PatchAll();
         }
 

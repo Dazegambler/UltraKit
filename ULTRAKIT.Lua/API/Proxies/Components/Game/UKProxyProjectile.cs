@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace ULTRAKIT.Lua.API.Proxies.Components
 {
-    class UKProxyProjectile
+    public class UKProxyProjectile : UKProxyComponentAbstract<Projectile>
     {
+        public UKProxyProjectile(Projectile target) : base(target)
+        {
+        }
     }
 }

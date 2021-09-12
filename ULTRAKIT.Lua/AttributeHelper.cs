@@ -46,6 +46,23 @@ namespace ULTRAKIT.Lua
         }
 
         /// <summary>
+        /// Gets all methods with a specific attribute in the specified type
+        /// </summary>
+        /// <typeparam name="T">The type of the requested attribute</typeparam>
+        /// <returns>A dictionary with the keys as the methods and the value as the attributes theirselves</returns>
+        public static Dictionary<MethodInfo, T> GetMethodsWith<T>(Type target)
+            where T : Attribute
+        {
+            var asm = Assembly.GetExecutingAssembly();
+            var res = target
+                .GetMethods()
+                .Where(m => m.GetCustomAttribute<T>() != null)
+                .ToDictionary(m => m, m => m.GetCustomAttribute<T>());
+
+            return res;
+        }
+
+        /// <summary>
         /// Gets all subclasses of a specific type in the executing assembly
         /// </summary>
         /// <param name="type">The base type to be searched</typeparam>

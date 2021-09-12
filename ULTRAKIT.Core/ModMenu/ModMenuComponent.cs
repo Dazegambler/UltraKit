@@ -44,7 +44,6 @@ namespace ULTRAKIT.Core.ModMenu
 
                 if (GUI.Button(new Rect(5, 5, 140, 50), $"Addons:{list.Count}"))
                 {
-                    Debug.Log("MY NUTS");
                 }
 
                 active = true;

@@ -40,7 +40,7 @@ namespace ULTRAKIT.Lua.Components
             catch (ScriptRuntimeException e)
             {
                 //TODO: propper logging
-                Debug.LogError($"(ULTRAKIT Lua) {data.sourceCode.name} -  {e.DecoratedMessage}");
+                Debug.LogError($"(ULTRAKIT Lua) RUNTIME ERROR: {data.sourceCode.name} - {e.DecoratedMessage}");
             }
         }
 
@@ -48,7 +48,14 @@ namespace ULTRAKIT.Lua.Components
         {
             if (d.Function != null)
             {
-                runtime.Call(d, luap);
+                try
+                {
+                    runtime.Call(d, luap);
+                } catch(ScriptRuntimeException e)
+                {
+                    //TODO: propper logging
+                    Debug.LogError($"(ULTRAKIT Lua) RUNTIME ERROR: {data.sourceCode.name} - {e.DecoratedMessage}");
+                }
             }
             else
             {
@@ -61,9 +68,17 @@ namespace ULTRAKIT.Lua.Components
             data = GetComponent<UKScript>();
             runtime = new Script(CoreModules.Preset_SoftSandbox);
 
-            var func = runtime.LoadString(data.sourceCode.text);
-            UKLuaAPI.ConstructScript(this);
-            FuzzyCall(func);
+            try
+            {
+                var func = runtime.LoadString(data.sourceCode.text);
+                UKLuaAPI.ConstructScript(this);
+                FuzzyCall(func);
+            } catch(SyntaxErrorException e)
+            {
+                //TODO: propper logging
+                Debug.LogError($"(ULTRAKIT Lua) {data.sourceCode.name} - SYNTAX ERROR: {e.DecoratedMessage}");
+                this.enabled = false;
+            }
         }
 
         void OnDestroy()

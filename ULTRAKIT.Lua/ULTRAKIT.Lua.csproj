@@ -78,6 +78,9 @@
     <Compile Include="API\Statics\UKStaticGameObject.cs" />
     <Compile Include="API\Statics\UKStaticInput.cs" />
     <Compile Include="API\Statics\UKStaticObject.cs" />
+    <Compile Include="API\Statics\UKStaticPhysics.cs" />
+    <Compile Include="API\Statics\UKStaticPlayer.cs" />
+    <Compile Include="API\Statics\UKStaticRandom.cs" />
     <Compile Include="API\UKLuaAPI.cs" />
     <Compile Include="AttributeHelper.cs" />
     <Compile Include="Attributes\UKScriptCallbacks.cs" />
