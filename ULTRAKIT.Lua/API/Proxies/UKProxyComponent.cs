@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace ULTRAKIT.Lua.API.Proxies
 {
-    class UKProxyComponentAbstract<T> : UKProxyObjectAbstract<T>
+    abstract class UKProxyComponentAbstract<T> : UKProxyObjectAbstract<T>
         where T : Component
     {
         public UKProxyComponentAbstract(T target) : base(target)
@@ -30,5 +30,12 @@ namespace ULTRAKIT.Lua.API.Proxies
         #endregion
 
 
+    }
+
+    class UKProxyComponent : UKProxyComponentAbstract<Component>
+    {
+        public UKProxyComponent(Component target) : base(target)
+        {
+        }
     }
 }

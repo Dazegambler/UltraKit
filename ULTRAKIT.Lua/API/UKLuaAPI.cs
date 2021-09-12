@@ -12,7 +12,8 @@ namespace ULTRAKIT.Lua.API
 {
     public static class UKLuaAPI
     {
-        public static Dictionary<UKStatic, string> luaStatics = new Dictionary<UKStatic, string>();
+        public static Dictionary<string, UKStatic> luaStatics = new Dictionary<string, UKStatic>();
+        public static List<Type> luaStructs = new List<Type>();
         public static Action<UKScriptRuntime> constructMethods, destructMethods, updateMethods;
 
         ///<summary> 
@@ -20,9 +21,10 @@ namespace ULTRAKIT.Lua.API
         ///</summary>
         public static void Initialize()
         {
-            UserData.RegisterType<Vector3>();
-            UserData.RegisterType<Vector2>();
-            UserData.RegisterType<Quaternion>();
+            RegisterUnityStruct<Vector3>();
+            RegisterUnityStruct<Vector2>();
+            RegisterUnityStruct<Quaternion>();
+            RegisterUnityStruct<Color>();
 
             // Register all types with MoonsharpUserData attribute
             UserData.RegisterAssembly();
@@ -31,9 +33,16 @@ namespace ULTRAKIT.Lua.API
             var staticsToInitialize = AttributeHelper.GetDerivedTypes(typeof(UKStatic));
             foreach (var staticType in staticsToInitialize)
             {
+                UserData.RegisterType(staticType);
                 var inst = (UKStatic)Activator.CreateInstance(staticType);
-                Debug.Log($"IS {inst.name} NULL: {inst == null}");
-                luaStatics.Add(inst, inst.name);
+                
+                if(inst.name == null)
+                {
+                    Debug.LogError($"HECKTECK FORGOT TO GIVE {staticType.Name} A STATIC NAME, GO SHOUT AT HIM ON DISCORD RIGHT NOW");
+                    continue;
+                }
+
+                luaStatics.Add(inst.name, inst);
             }
 
             foreach (var obj in luaStatics.Keys)
@@ -64,14 +73,29 @@ namespace ULTRAKIT.Lua.API
             {
                 var targetType = type.BaseType.GetGenericArguments()[0];
 
-                var regMethodGen = regMethod.MakeGenericMethod(type, targetType);
+                Debug.Log(type.FullName);
+                Debug.Log(targetType.FullName);
 
+                var regMethodGen = regMethod.MakeGenericMethod(type, targetType);
+                Debug.Log(regMethodGen.ContainsGenericParameters);
                 regMethodGen.Invoke(null, new object[] { });
             }
         }
 
         /// <summary>
-        /// A wrapper function to allow calls to UserData.RegisterProxy with runtime types. Additionally adds all fake fields of the proxy to the typedef
+        /// Registers a default unity struct (these cannot be proxied effectively as they are value types)
+        /// </summary>
+        /// <typeparam name="T">The struct to be registered</typeparam>
+        public static void RegisterUnityStruct<T>()
+            where T : struct
+        {
+            UserData.RegisterType<T>();
+            luaStructs.Add(typeof(T));
+            Debug.Log(typeof(T).Name);
+        }
+
+        /// <summary>
+        /// A wrapper function to allow calls to UserData.RegisterProxy with runtime types.
         /// </summary>
         /// <typeparam name="TProxy">The proxy type to be registered</typeparam>
         /// <typeparam name="TTarget">The type that the proxy is targeting</typeparam>
@@ -94,7 +118,13 @@ namespace ULTRAKIT.Lua.API
             // Statics
             foreach (var pair in luaStatics)
             {
-                c.runtime.Globals[pair.Value] = pair.Key;
+                c.runtime.Globals[pair.Key] = pair.Value;
+            }
+
+            // Structs
+            foreach(var structType in luaStructs)
+            {
+                c.runtime.Globals[structType.Name] = structType;
             }
 
             constructMethods?.Invoke(c);

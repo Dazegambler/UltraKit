@@ -58,7 +58,6 @@ namespace ULTRAKIT.Lua
                 .Where(t => t != type && !t.IsAbstract && IsSubclassOfRawGeneric(type, t))
                 .ToList();
 
-            Debug.Log(res.Count);
 
             return res;
         }
