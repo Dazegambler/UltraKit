@@ -69,7 +69,6 @@
     <Compile Include="API\Proxies\Components\Unity\UKProxyLineRenderer.cs" />
     <Compile Include="API\Proxies\Components\Game\UKProxyProjectile.cs" />
     <Compile Include="API\Proxies\Components\Unity\UKProxyMeshFilter.cs" />
-    <Compile Include="API\Proxies\Components\Unity\UKProxyMeshRenderer.cs" />
     <Compile Include="API\Proxies\Components\Unity\UKProxyRigidbody.cs" />
     <Compile Include="API\Proxies\Components\Unity\UKProxyTransform.cs" />
     <Compile Include="API\Proxies\UKProxyComponent.cs" />
