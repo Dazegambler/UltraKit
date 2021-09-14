@@ -86,7 +86,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UKLuaAssetDatabase.cs" />
     <Compile Include="Components\UKGlow.cs" />
     <Compile Include="Components\UKScript.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
