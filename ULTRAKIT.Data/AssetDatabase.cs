@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ULTRAKIT.Data
 {
-    public static class AssetDatabase
+    public class AssetDatabase
     {
         private static Dictionary<string, GameObject> assets = new Dictionary<string, GameObject>();
 
@@ -54,7 +54,7 @@ namespace ULTRAKIT.Data
             }
         }
 
-        private static GameObject GetAsset(string name)
+        public static UnityEngine.Object GetAsset(string name)
         {
             try
             {
