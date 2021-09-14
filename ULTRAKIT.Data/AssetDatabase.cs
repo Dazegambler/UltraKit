@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace ULTRAKIT.Data
 {
     public static class AssetDatabase
     {
-        public static Dictionary<string, GameObject> assets = new Dictionary<string, GameObject>();
+        private static Dictionary<string, GameObject> assets = new Dictionary<string, GameObject>();
 
         public static string[] _assets = {
             "RevolverBeam",
@@ -52,6 +53,20 @@ namespace ULTRAKIT.Data
                 assets.Add(Name, AssetFind(Name));
             }
         }
+
+        private static GameObject GetAsset(string name)
+        {
+            try
+            {
+                return assets[name];
+            }
+            catch (KeyNotFoundException)
+            {
+                Debug.LogWarning($"Could Not Find Asset {name} Please Check Asset List");
+                return new GameObject();
+            }
+        }
+
         private static GameObject AssetFind(string name)
         {
             //Find set Object in the prefabs

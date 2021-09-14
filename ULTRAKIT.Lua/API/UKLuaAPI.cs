@@ -29,6 +29,7 @@ namespace ULTRAKIT.Lua.API
 
             // Register all types with MoonsharpUserData attribute
             UserData.RegisterAssembly();
+            UserData.RegisterType<Data.AssetDatabase>();
 
             // Register all types extending UKStatic
             var staticsToInitialize = AttributeHelper.GetDerivedTypes(typeof(UKStatic));
@@ -113,6 +114,7 @@ namespace ULTRAKIT.Lua.API
             c.runtime.Globals["transform"] = c.transform;
 
             // Statics
+            c.runtime.Globals["Database"] = typeof(Data.AssetDatabase);
             foreach (var pair in luaStatics)
             {
                 c.runtime.Globals[pair.Key] = pair.Value;
