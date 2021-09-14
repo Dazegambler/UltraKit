@@ -170,7 +170,6 @@ namespace ULTRAKIT.Lua.API
             c.runtime.Globals["transform"] = c.transform;
 
             // Statics
-            c.runtime.Globals["Database"] = typeof(Data.UKStaticAssetDatabase);
             foreach (var pair in luaStatics)
             {
                 c.runtime.Globals[pair.Key] = pair.Value;
