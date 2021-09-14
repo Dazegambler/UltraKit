@@ -108,19 +108,19 @@ namespace ULTRAKIT.Lua.API
                 UserData.RegisterType(inst.GetType());
 
                 // Register all methods with UKScriptConstructor attribute
-                foreach (var method in AttributeHelper.GetMethodsWith<UKScriptConstructor>(inst.GetType()).Keys)
+                foreach (var method in AttributeHelper.GetMethodsWith<UKScriptConstructor>(inst.GetType(), BindingFlags.NonPublic).Keys)
                 {
                     constructMethods += method.CreateDelegate(typeof(Action<UKScriptRuntime>), inst) as Action<UKScriptRuntime>;
                 }
 
                 // Register all methods with UKScriptUpdater attributes
-                foreach (var method in AttributeHelper.GetMethodsWith<UKScriptUpdater>(inst.GetType()).Keys)
+                foreach (var method in AttributeHelper.GetMethodsWith<UKScriptUpdater>(inst.GetType(), BindingFlags.NonPublic).Keys)
                 {
                     updateMethods += method.CreateDelegate(typeof(Action<UKScriptRuntime>), inst) as Action<UKScriptRuntime>;
                 }
 
                 // Register all methods with UKScriptDestructor attributes
-                foreach (var method in AttributeHelper.GetMethodsWith<UKScriptDestructor>(inst.GetType()).Keys)
+                foreach (var method in AttributeHelper.GetMethodsWith<UKScriptDestructor>(inst.GetType(), BindingFlags.NonPublic).Keys)
                 {
                     destructMethods += method.CreateDelegate(typeof(Action<UKScriptRuntime>), inst) as Action<UKScriptRuntime>;
                 }

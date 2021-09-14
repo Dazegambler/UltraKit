@@ -45,19 +45,19 @@ namespace ULTRAKIT.Lua.API.Statics
         }
 
         [UKScriptConstructor]
-        public void Construct(UKScriptRuntime s)
+        void Construct(UKScriptRuntime s)
         {
             bindings.Add(s.runtime, new List<UKBinding>());
         }
 
         [UKScriptDestructor]
-        public void Destruct(UKScriptRuntime s)
+        void Destruct(UKScriptRuntime s)
         {
             bindings.Remove(s.runtime);
         }
 
         [UKScriptUpdater]
-        public void Update(UKScriptRuntime s)
+        void Update(UKScriptRuntime s)
         {
             foreach (var b in bindings[s.runtime])
             {

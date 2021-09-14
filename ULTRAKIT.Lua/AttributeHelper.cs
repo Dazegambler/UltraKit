@@ -48,6 +48,7 @@ namespace ULTRAKIT.Lua
         /// <summary>
         /// Gets all methods with a specific attribute in the specified type
         /// </summary>
+        /// <param name="target">The type in which to search for the methods</param>
         /// <typeparam name="T">The type of the requested attribute</typeparam>
         /// <returns>A dictionary with the keys as the methods and the value as the attributes theirselves</returns>
         public static Dictionary<MethodInfo, T> GetMethodsWith<T>(Type target)
@@ -56,6 +57,26 @@ namespace ULTRAKIT.Lua
             var asm = Assembly.GetExecutingAssembly();
             var res = target
                 .GetMethods()
+                .Where(m => m.GetCustomAttribute<T>() != null)
+                .ToDictionary(m => m, m => m.GetCustomAttribute<T>());
+
+            return res;
+        }
+
+
+        /// <summary>
+        /// Gets all methods with a specific attribute in the specified type
+        /// </summary>
+        /// <param name="target">The type in which to search for the methods</param>
+        /// <param name="flags">The BindingFlags passed to GetMethods(BindingFlags)</param>
+        /// <typeparam name="T">The type of the requested attribute</typeparam>
+        /// <returns>A dictionary with the keys as the methods and the value as the attributes theirselves</returns>
+        public static Dictionary<MethodInfo, T> GetMethodsWith<T>(Type target, BindingFlags flags)
+            where T : Attribute
+        {
+            var asm = Assembly.GetExecutingAssembly();
+            var res = target
+                .GetMethods(flags)
                 .Where(m => m.GetCustomAttribute<T>() != null)
                 .ToDictionary(m => m, m => m.GetCustomAttribute<T>());
 
