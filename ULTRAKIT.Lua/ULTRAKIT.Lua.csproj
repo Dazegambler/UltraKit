@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\ULTRAKIT.Core\bin\Debug\0Harmony.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\lib\Assembly-CSharp.dll</HintPath>
     </Reference>
@@ -81,6 +84,7 @@
     <Compile Include="API\Statics\UKStaticPlayer.cs" />
     <Compile Include="API\Statics\UKStaticRandom.cs" />
     <Compile Include="API\UKLuaAPI.cs" />
+    <Compile Include="API\Statics\UKStaticAssetDatabase.cs" />
     <Compile Include="AttributeHelper.cs" />
     <Compile Include="Attributes\UKScriptCallbacks.cs" />
     <Compile Include="ReflectionExtensions.cs" />

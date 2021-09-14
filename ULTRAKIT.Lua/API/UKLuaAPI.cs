@@ -1,4 +1,5 @@
-﻿using MoonSharp.Interpreter;
+﻿using HarmonyLib;
+using MoonSharp.Interpreter;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -10,17 +11,73 @@ using UnityEngine;
 
 namespace ULTRAKIT.Lua.API
 {
+    //[HarmonyPatch(typeof(DynValue))]
+    //public static class DynValuePatch
+    //{
+    //    [HarmonyPatch(nameof(DynValue.IsNotNil))]
+    //    [HarmonyPrefix]
+    //    public static bool IsNotNilPrefix(DynValue __instance, ref bool __result)
+    //    {
+    //        if(__instance.Type == DataType.UserData && __instance.UserData.Object == null)
+    //        {
+    //            __result = false;
+    //            return false;
+    //        }
+
+    //        return true;
+    //    }
+
+    //    [HarmonyPatch(nameof(DynValue.IsNil))]
+    //    [HarmonyPrefix]
+    //    public static bool IsNilPrefix(DynValue __instance, ref bool __result)
+    //    {
+
+    //        if (__instance.Type == DataType.UserData && __instance.UserData. == null)
+    //        {
+    //            UserData
+    //            Debug.Log($"{__instance.UserData.Descriptor.Name} IS APPARENTLY NULL");
+    //            __result = true;
+    //            return false;
+    //        }
+
+    //        return true;
+    //    }
+
+    //    [HarmonyPatch(nameof(DynValue.Equals))]
+    //    [HarmonyPrefix]
+    //    public static bool EqualsPrefix(DynValue __instance, ref bool __result, object obj)
+    //    {
+    //        var other = obj as DynValue;
+    //        if(obj == null)
+    //        {
+    //            return true;
+    //        }
+
+    //        if(__instance.Type == DataType.UserData && other.Type == DataType.Nil)
+    //        {
+    //            Debug.Log("NO WAY HOW DID IT ACTUALLY WORK HOLY SHIT");
+    //            __result = __instance.UserData == null;
+    //            return false;
+    //        }
+
+    //        return true;
+    //    }
+    //}
+
     public static class UKLuaAPI
     {
         public static Dictionary<string, UKStatic> luaStatics = new Dictionary<string, UKStatic>();
         public static List<Type> luaStructs = new List<Type>();
         public static Action<UKScriptRuntime> constructMethods, destructMethods, updateMethods;
+        public static Harmony harmony = new Harmony("ULTRAKIT.Lua");
 
         ///<summary> 
         /// Registers UserData, fills in constructMethods and deconstructMethods to be called when a script is destroyed or created, and registers all proxies
         ///</summary>
         public static void Initialize()
         {
+            harmony.PatchAll();
+
             RegisterUnityStruct<Vector3>();
             RegisterUnityStruct<Vector2>();
             RegisterUnityStruct<Quaternion>();
@@ -29,7 +86,6 @@ namespace ULTRAKIT.Lua.API
 
             // Register all types with MoonsharpUserData attribute
             UserData.RegisterAssembly();
-            UserData.RegisterType<Data.AssetDatabase>();
 
             // Register all types extending UKStatic
             var staticsToInitialize = AttributeHelper.GetDerivedTypes(typeof(UKStatic));
@@ -114,7 +170,7 @@ namespace ULTRAKIT.Lua.API
             c.runtime.Globals["transform"] = c.transform;
 
             // Statics
-            c.runtime.Globals["Database"] = typeof(Data.AssetDatabase);
+            c.runtime.Globals["Database"] = typeof(Data.UKStaticAssetDatabase);
             foreach (var pair in luaStatics)
             {
                 c.runtime.Globals[pair.Key] = pair.Value;
