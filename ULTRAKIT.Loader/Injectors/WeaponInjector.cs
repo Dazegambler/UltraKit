@@ -73,6 +73,10 @@ namespace ULTRAKIT.Loader.Registries
                                 c.material.SetFloat("_EmissiveStrength", glow.glowIntensity);
                                 c.material.SetColor("_EmissiveColor", glow.glowColor);
                             }
+                            else
+                            {
+                                c.material.shader = Shader.Find(c.material.shader.name);
+                            }
                         }
 
                         var wi = go.AddComponent<WeaponIcon>();
