@@ -17,6 +17,10 @@ namespace ULTRAKIT.Loader.Registries
             SpawnableObject a = new SpawnableObject();
 
             a.gameObject = item.Prefab;
+            foreach (var c in a.gameObject.GetComponentsInChildren<Renderer>(true))
+            {
+                c.material.shader = Shader.Find(c.material.shader.name);
+            }
 
             a.armOffset = Vector3.zero;
             a.armRotationOffset = Vector3.zero;

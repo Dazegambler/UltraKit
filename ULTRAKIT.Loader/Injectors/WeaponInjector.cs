@@ -61,9 +61,11 @@ namespace ULTRAKIT.Loader.Registries
 
                         foreach (var c in go.GetComponentsInChildren<Renderer>(true))
                         {
+                            Debug.Log(c.gameObject.name);
                             c.gameObject.layer = LayerMask.NameToLayer("AlwaysOnTop");
 
                             var glow = c.gameObject.GetComponent<UKGlow>();
+
                             if (glow)
                             {
                                 c.material.shader = Shader.Find("psx/railgun");
@@ -71,7 +73,6 @@ namespace ULTRAKIT.Loader.Registries
                                 c.material.SetFloat("_EmissiveStrength", glow.glowIntensity);
                                 c.material.SetColor("_EmissiveColor", glow.glowColor);
                             }
-
                         }
 
                         var wi = go.AddComponent<WeaponIcon>();
