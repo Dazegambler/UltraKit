@@ -41,37 +41,52 @@ namespace ULTRAKIT.Lua.API.Statics
     public class UKStaticPhysics : UKStatic
     {
         public override string name => "Physics";
-        static readonly int DefaultCastMask = (1 << LayerMask.NameToLayer("EnemyTrigger")) | (1 << LayerMask.NameToLayer("Projectile"));
 
-        public UKHitResult Raycast(Vector3 point, Vector3 dir, float maxDistance)
+        // EnemyTrigger, Projectile, Environment
+        const int DefaultCastMask = (1 << 12) | (1 << 14) | (1 << 8);
+
+        public UKHitResult Raycast(Vector3 point, Vector3 dir, float maxDistance = Mathf.Infinity, int layerMask = DefaultCastMask)
         {
             RaycastHit hit;
-            if (Physics.Raycast(point, dir, out hit, maxDistance, DefaultCastMask))
+            if (Physics.Raycast(point, dir, out hit, maxDistance, layerMask))
             {
                 var res = new UKHitResult(
                     hit.point, hit.normal, hit.transform,
                     new UKProxyEnemy(hit.transform.GetComponentInChildren<EnemyIdentifier>()), 
                     new UKProxyProjectile(hit.transform.GetComponentInChildren<Projectile>()));
                 return res;
-            } else if(Physics.Raycast(point, dir, out hit))
-            {
-                var res = new UKHitResult(
-                    hit.point, hit.normal, hit.transform,
-                    null,
-                    null
-                );
-
-                return res;
             }
 
             return null;
         }
-        public UKHitResult Raycast(Vector3 point, Vector3 dir) => Raycast(point, dir, Mathf.Infinity);
 
-        public UKHitResult Linecast(Vector3 start, Vector3 end)
+        public UKHitResult Linecast(Vector3 start, Vector3 end, int layerMask = DefaultCastMask)
         {
             var diff = end - start;
-            return Raycast(start, diff.normalized, diff.magnitude);
+            return Raycast(start, diff.normalized, diff.magnitude, DefaultCastMask);
+        }
+
+        public int CreateLayerMask(params string[] maskNames)
+        {
+            int res = 0;
+
+            foreach(var name in maskNames)
+            {
+                res |= (1 << LayerMask.NameToLayer(name));
+            }
+
+            return res;
+        }
+
+        public int CreateLayerMask(params int[] maskNums)
+        {
+            int res = 0;
+            foreach(var layer in maskNums)
+            {
+                res |= (1 << layer);
+            }
+
+            return res;
         }
     }
 }
