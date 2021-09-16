@@ -53,6 +53,15 @@ namespace ULTRAKIT.Lua.API.Statics
                     new UKProxyEnemy(hit.transform.GetComponentInChildren<EnemyIdentifier>()), 
                     new UKProxyProjectile(hit.transform.GetComponentInChildren<Projectile>()));
                 return res;
+            } else if(Physics.Raycast(point, dir, out hit))
+            {
+                var res = new UKHitResult(
+                    hit.point, hit.normal, hit.transform,
+                    null,
+                    null
+                );
+
+                return res;
             }
 
             return null;
