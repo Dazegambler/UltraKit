@@ -85,6 +85,8 @@ namespace ULTRAKIT.Lua.API
             RegisterUnityStruct<Mathf>();
             RegisterUnityStruct<Bounds>();
 
+            UserData.RegisterType<Collision>();
+
             // Register all types with MoonsharpUserData attribute
             UserData.RegisterAssembly();
 
