@@ -29,14 +29,12 @@
 
   <CodeSnippet Format="1.0.0">
     <Header>
-      <Title>Property Delegation</Title>
+      <Title>Property Delegation Readonly</Title>
       <Shortcut>gtarget</Shortcut>
     </Header>
     <Snippet>
       <Code Language="CSharp">
-        <![CDATA[public $TypeName$ $PropName${
-          get => return target.$PropName$;
-        }]]>
+        <![CDATA[public $TypeName$ $PropName$ => target.$PropName$;]]>
       </Code>
 
       <Declarations>
