@@ -92,6 +92,36 @@ namespace ULTRAKIT.Lua.Components
             FuzzyCall(runtime.Globals, "OnEnable");
         }
 
+        void OnCollisionEnter(Collider other)
+        {
+            FuzzyCall(runtime.Globals, "OnCollisionEnter", other);
+        }
+
+        void OnCollisionStay(Collider other)
+        {
+            FuzzyCall(runtime.Globals, "OnCollisionStay", other);
+        }
+
+        void OnCollisionExit(Collider other)
+        {
+            FuzzyCall(runtime.Globals, "OnCollisionExit", other);
+        }
+
+        void OnTriggerEnter(Collider other)
+        {
+            FuzzyCall(runtime.Globals, "OnTriggerEnter", other);
+        }
+
+        void OnTriggerStay(Collider other)
+        {
+            FuzzyCall(runtime.Globals, "OnTriggerStay", other);
+        }
+
+        void OnTriggerExit(Collider other)
+        {
+            FuzzyCall(runtime.Globals, "OnTriggerExit", other);
+        }
+
         void Update()
         {
             UKLuaAPI.UpdateScript(this);

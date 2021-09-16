@@ -83,6 +83,7 @@ namespace ULTRAKIT.Lua.API
             RegisterUnityStruct<Quaternion>();
             RegisterUnityStruct<Color>();
             RegisterUnityStruct<Mathf>();
+            RegisterUnityStruct<Bounds>();
 
             // Register all types with MoonsharpUserData attribute
             UserData.RegisterAssembly();
