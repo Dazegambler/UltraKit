@@ -72,6 +72,8 @@ namespace ULTRAKIT.Data
             }
         }
 
+        //TODO: create asset position
+
         private GameObject AssetFind(string name)
         {
             //Find set Object in the prefabs
