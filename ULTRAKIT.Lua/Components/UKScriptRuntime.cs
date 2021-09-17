@@ -18,8 +18,9 @@ namespace ULTRAKIT.Lua.Components
 
         public static void Create(UKAddonData data, GameObject go)
         {
-            foreach (var script in go.GetComponentsInChildren<UKScript>())
+            foreach (var script in go.GetComponentsInChildren<UKScript>(true))
             {
+                Debug.Log(script.sourceCode.name);
                 Create(data, script);
             }
         }
