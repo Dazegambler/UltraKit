@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using MoonSharp.Interpreter;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
 using ULTRAKIT.Lua.API.Abstract;
@@ -86,7 +87,18 @@ namespace ULTRAKIT.Lua.API
             RegisterUnityStruct<Bounds>();
             RegisterUnityStruct<ParticleSystem.EmissionModule>();
 
+            RegisterUnityStruct<SpriteDrawMode>();
+            RegisterUnityStruct<SpriteTileMode>();
+            RegisterUnityStruct<SpriteMaskInteraction>();
+            RegisterUnityStruct<SpriteSortPoint>();
+
             UserData.RegisterType<Collision>();
+            UserData.RegisterType<ParticleSystem>();
+            UserData.RegisterType<SpriteRenderer>();
+            UserData.RegisterType<TrailRenderer>();
+            UserData.RegisterType<MeshRenderer>();
+            UserData.RegisterType<LineRenderer>();
+            UserData.RegisterType<StyleHUD>();
 
             // Register all types with MoonsharpUserData attribute
             UserData.RegisterAssembly();
