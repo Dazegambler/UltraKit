@@ -9,7 +9,5 @@ namespace ULTRAKIT.Data
 
         [TextArea]
         public string ModDesc;
-
-        public string ExportPath;
     }
 }
