@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace ULTRAKIT.Data
 {
@@ -9,5 +9,7 @@ namespace ULTRAKIT.Data
 
         [TextArea]
         public string ModDesc;
+
+        public string ExportPath;
     }
 }
