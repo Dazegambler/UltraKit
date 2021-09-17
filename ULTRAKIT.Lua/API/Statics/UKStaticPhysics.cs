@@ -50,9 +50,11 @@ namespace ULTRAKIT.Lua.API.Statics
             RaycastHit hit;
             if (Physics.Raycast(point, dir, out hit, maxDistance, layerMask))
             {
+                var enemyIdentifier = hit.transform.GetComponentInChildren<EnemyIdentifier>() ?? hit.transform.GetComponentInParent<EnemyIdentifier>();
+
                 var res = new UKHitResult(
                     hit.point, hit.normal, hit.transform,
-                    new UKProxyEnemy(hit.transform.GetComponentInChildren<EnemyIdentifier>()), 
+                    new UKProxyEnemy(enemyIdentifier), 
                     new UKProxyProjectile(hit.transform.GetComponentInChildren<Projectile>()));
                 return res;
             }
