@@ -13,36 +13,33 @@ namespace ULTRAKIT.EditorScripts
     [CustomEditor(typeof(UKAddonData))]
     public class UKAddonDataEditor : Editor
     {
-        string outputPath;
-
         public override void OnInspectorGUI()
         {
-            var data = target as UKAddonData;
-            var assetPath = UnityEditor.AssetDatabase.GetAssetPath(data.GetInstanceID());
-
-            EditorGUILayout.LabelField("ADDON DATA", EditorStyles.boldLabel);
             DrawDefaultInspector();
-            EditorGUILayout.Space(20);
-
-            EditorGUILayout.LabelField("EXPORT", EditorStyles.boldLabel);
-            EditorGUILayout.BeginHorizontal();
-
-            // Doesn't prompt user on export if export path field has a value
-            outputPath = EditorGUILayout.TextField(outputPath);
-            if (GUILayout.Button("Browse"))
-            {
-                outputPath = EditorUtility.SaveFilePanel("Export mod", "Assets", data.ModName, "ukaddon");
-            }
-            EditorGUILayout.EndHorizontal();
-
-
+            EditorGUILayout.Space();
             if(GUILayout.Button("Export mod"))
-            {   
-                if(outputPath == null || outputPath.Length == 0)
-                {
-                    EditorUtility.DisplayDialog("Invalid Path", "Please choose a valid export directory", "Ok");
-                }
+            {
+                //string assetBundleDirectory = "Assets/ExportTemp";
+                //if (!Directory.Exists(Application.streamingAssetsPath))
+                //{
+                //    Directory.CreateDirectory(assetBundleDirectory);
+                //}
+                //BuildPipeline.BuildAssetBundles(assetBundleDirectory, BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
+
+                var data = target as UKAddonData;
+                var assetPath = UnityEditor.AssetDatabase.GetAssetPath(data.GetInstanceID());
                 
+                // Doesn't prompt user on export if export path field has a value
+                string outputPath = data.ExportPath == null || data.ExportPath.Length == 0 
+                    ? EditorUtility.SaveFilePanel("Export mod", "Assets", data.ModName, "") 
+                    : data.ExportPath;
+                
+                // Saves the selected path to the field
+                if (data.ExportPath == null || data.ExportPath.Length == 0)
+                {
+                    EditorUtility.SetDirty(target);
+                    data.ExportPath = outputPath;
+                }
 
                 var assetLabel = UnityEditor.AssetDatabase.GetImplicitAssetBundleName(assetPath);
                 BuildAssetBundleByName(assetLabel, outputPath);
