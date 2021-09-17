@@ -13,7 +13,7 @@ namespace ULTRAKIT.EditorScripts
     [CustomEditor(typeof(UKAddonData))]
     public class UKAddonDataEditor : Editor
     {
-        string outputPath;
+        static string outputPath = "";
 
         public override void OnInspectorGUI()
         {
@@ -41,6 +41,7 @@ namespace ULTRAKIT.EditorScripts
                 if(outputPath == null || outputPath.Length == 0)
                 {
                     EditorUtility.DisplayDialog("Invalid Path", "Please choose a valid export directory", "Ok");
+                    return;
                 }
                 
 
@@ -51,6 +52,14 @@ namespace ULTRAKIT.EditorScripts
 
         public static void BuildAssetBundleByName(string name, string outputPath)
         {
+            if (File.Exists(outputPath))
+            {
+                if (!EditorUtility.DisplayDialog("Replace File", $@"File '{Path.GetFileName(outputPath)}' already exists. Would you like to replace it?", "Yes", "No"))
+                {
+                    return;
+                }
+            }
+
             var tempPath = @"Assets/_tempexport";
             if (Directory.Exists(tempPath))
             {
@@ -58,7 +67,6 @@ namespace ULTRAKIT.EditorScripts
             }
 
             Directory.CreateDirectory(tempPath);
-
 
             var build = new AssetBundleBuild();
             build.assetBundleName = name;
