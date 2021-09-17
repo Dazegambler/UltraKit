@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -28,7 +28,17 @@ namespace ULTRAKIT.EditorScripts
 
                 var data = target as UKAddonData;
                 var assetPath = UnityEditor.AssetDatabase.GetAssetPath(data.GetInstanceID());
-                var outputPath = EditorUtility.SaveFilePanel("Export mod", "Assets", data.ModName, "");
+                
+                // Doesn't prompt user on export if export path field has a value
+                string outputPath = data.ExportPath.Length == 0 ? EditorUtility.SaveFilePanel("Export mod", "Assets", data.ModName, "") : data.ExportPath;
+                
+                // Saves the selected path to the field
+                if (data.ExportPath.Length == 0)
+                {
+                    EditorUtility.SetDirty(target);
+                    data.ExportPath = outputPath;
+                }
+
                 var assetLabel = UnityEditor.AssetDatabase.GetImplicitAssetBundleName(assetPath);
                 BuildAssetBundleByName(assetLabel, outputPath);
             }
