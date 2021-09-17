@@ -37,7 +37,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\Desktop\Legit pelit!\ULTRAKILL.v7185467\ULTRAKILL.v7185467\ULTRAKILL_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\lib\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="MoonSharp.Interpreter">
       <HintPath>..\lib\MoonSharp.Interpreter.dll</HintPath>
@@ -53,22 +53,6 @@
     <Reference Include="Unity.InputSystem">
       <HintPath>..\lib\Unity.InputSystem.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\Desktop\Legit pelit!\ULTRAKILL.v7185467\ULTRAKILL.v7185467\ULTRAKILL_Data\Managed\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.AccessibilityModule">
-      <HintPath>..\..\..\..\Desktop\Legit pelit!\ULTRAKILL.v7185467\ULTRAKILL.v7185467\ULTRAKILL_Data\Managed\UnityEngine.AccessibilityModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Advertisements">
-      <HintPath>..\..\..\..\Desktop\Legit pelit!\ULTRAKILL.v7185467\ULTRAKILL.v7185467\ULTRAKILL_Data\Managed\UnityEngine.Advertisements.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.AIModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Desktop\Legit pelit!\ULTRAKILL.v7185467\ULTRAKILL.v7185467\ULTRAKILL_Data\Managed\UnityEngine.AIModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.AndroidJNIModule">
-      <HintPath>..\..\..\..\Desktop\Legit pelit!\ULTRAKILL.v7185467\ULTRAKILL.v7185467\ULTRAKILL_Data\Managed\UnityEngine.AndroidJNIModule.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\UnityEngine.AnimationModule.dll</HintPath>
@@ -80,9 +64,8 @@
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\lib\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.ParticleSystemModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Desktop\Legit pelit!\ULTRAKILL.v7185467\ULTRAKILL.v7185467\ULTRAKILL_Data\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
+    <Reference Include="UnityEngine.ParticleSystemModule">
+      <HintPath>..\lib\UnityEngine.ParticleSystemModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -92,15 +75,11 @@
   <ItemGroup>
     <Compile Include="API\Abstract\UKProxy.cs" />
     <Compile Include="API\Abstract\UKStatic.cs" />
-    <Compile Include="API\Proxies\Components\Game\UKProxyStyleHUD.cs" />
-    <Compile Include="API\Proxies\Components\Game\UKProxyCameraController.cs" />
     <Compile Include="API\Proxies\Components\Unity\UKProxyAnimator.cs" />
     <Compile Include="API\Proxies\Components\Unity\UKProxyAudioSource.cs" />
     <Compile Include="API\Proxies\Components\Game\UKProxyEnemy.cs" />
     <Compile Include="API\Proxies\Components\Unity\UKProxyCollider.cs" />
     <Compile Include="API\Proxies\Components\Unity\UKProxyLight.cs" />
-    <Compile Include="API\Proxies\Components\Unity\UKProxyTrailRenderer.cs" />
-    <Compile Include="API\Proxies\Components\Unity\UKProxyParticleSystem.cs" />
     <Compile Include="API\Proxies\Components\Unity\UKProxyLineRenderer.cs" />
     <Compile Include="API\Proxies\Components\Game\UKProxyProjectile.cs" />
     <Compile Include="API\Proxies\Components\Unity\UKProxyMeshFilter.cs" />
@@ -112,8 +91,6 @@
     <Compile Include="API\Statics\UKStaticGameObject.cs" />
     <Compile Include="API\Statics\UKStaticInput.cs" />
     <Compile Include="API\Statics\UKStaticObject.cs" />
-    <Compile Include="API\Statics\UKStaticStyleHUD.cs" />
-    <Compile Include="API\Statics\UKStaticTime.cs" />
     <Compile Include="API\Statics\UKStaticPhysics.cs" />
     <Compile Include="API\Statics\UKStaticPlayer.cs" />
     <Compile Include="API\Statics\UKStaticRandom.cs" />
