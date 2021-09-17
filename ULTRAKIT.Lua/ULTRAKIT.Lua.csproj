@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3B43997E-DEE0-437B-A791-3F927974E1DA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ULTRAKIT.Lua</RootNamespace>
+    <AssemblyName>ULTRAKIT.Lua</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>embedded</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>embedded</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\lib\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\..\Desktop\Legit pelit!\ULTRAKILL.v7185467\ULTRAKILL.v7185467\ULTRAKILL_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="MoonSharp.Interpreter">
+      <HintPath>..\lib\MoonSharp.Interpreter.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Unity.InputSystem">
+      <HintPath>..\lib\Unity.InputSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\..\Desktop\Legit pelit!\ULTRAKILL.v7185467\ULTRAKILL.v7185467\ULTRAKILL_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AccessibilityModule">
+      <HintPath>..\..\..\..\Desktop\Legit pelit!\ULTRAKILL.v7185467\ULTRAKILL.v7185467\ULTRAKILL_Data\Managed\UnityEngine.AccessibilityModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Advertisements">
+      <HintPath>..\..\..\..\Desktop\Legit pelit!\ULTRAKILL.v7185467\ULTRAKILL.v7185467\ULTRAKILL_Data\Managed\UnityEngine.Advertisements.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AIModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Desktop\Legit pelit!\ULTRAKILL.v7185467\ULTRAKILL.v7185467\ULTRAKILL_Data\Managed\UnityEngine.AIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AndroidJNIModule">
+      <HintPath>..\..\..\..\Desktop\Legit pelit!\ULTRAKILL.v7185467\ULTRAKILL.v7185467\ULTRAKILL_Data\Managed\UnityEngine.AndroidJNIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\lib\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Desktop\Legit pelit!\ULTRAKILL.v7185467\ULTRAKILL.v7185467\ULTRAKILL_Data\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="API\Abstract\UKProxy.cs" />
+    <Compile Include="API\Abstract\UKStatic.cs" />
+    <Compile Include="API\Proxies\Components\Game\UKProxyStyleHUD.cs" />
+    <Compile Include="API\Proxies\Components\Game\UKProxyCameraController.cs" />
+    <Compile Include="API\Proxies\Components\Unity\UKProxyAnimator.cs" />
+    <Compile Include="API\Proxies\Components\Unity\UKProxyAudioSource.cs" />
+    <Compile Include="API\Proxies\Components\Game\UKProxyEnemy.cs" />
+    <Compile Include="API\Proxies\Components\Unity\UKProxyCollider.cs" />
+    <Compile Include="API\Proxies\Components\Unity\UKProxyLight.cs" />
+    <Compile Include="API\Proxies\Components\Unity\UKProxyTrailRenderer.cs" />
+    <Compile Include="API\Proxies\Components\Unity\UKProxyParticleSystem.cs" />
+    <Compile Include="API\Proxies\Components\Unity\UKProxyLineRenderer.cs" />
+    <Compile Include="API\Proxies\Components\Game\UKProxyProjectile.cs" />
+    <Compile Include="API\Proxies\Components\Unity\UKProxyMeshFilter.cs" />
+    <Compile Include="API\Proxies\Components\Unity\UKProxyRigidbody.cs" />
+    <Compile Include="API\Proxies\Components\Unity\UKProxyTransform.cs" />
+    <Compile Include="API\Proxies\UKProxyComponent.cs" />
+    <Compile Include="API\Proxies\UKProxyGameObject.cs" />
+    <Compile Include="API\Proxies\UKProxyObject.cs" />
+    <Compile Include="API\Statics\UKStaticGameObject.cs" />
+    <Compile Include="API\Statics\UKStaticInput.cs" />
+    <Compile Include="API\Statics\UKStaticObject.cs" />
+    <Compile Include="API\Statics\UKStaticStyleHUD.cs" />
+    <Compile Include="API\Statics\UKStaticTime.cs" />
+    <Compile Include="API\Statics\UKStaticPhysics.cs" />
+    <Compile Include="API\Statics\UKStaticPlayer.cs" />
+    <Compile Include="API\Statics\UKStaticRandom.cs" />
+    <Compile Include="API\UKLuaAPI.cs" />
+    <Compile Include="API\Statics\UKStaticAssetDatabase.cs" />
+    <Compile Include="AttributeHelper.cs" />
+    <Compile Include="Attributes\UKScriptCallbacks.cs" />
+    <Compile Include="ReflectionExtensions.cs" />
+    <Compile Include="ScriptHelper.cs" />
+    <Compile Include="Components\UKScriptRuntime.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DelegatePropertySnippet.snippet" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="API\UserDatas\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ULTRAKIT.Data\ULTRAKIT.Data.csproj">
+      <Project>{217f1312-b984-4739-a96f-34bcbe601735}</Project>
+      <Name>ULTRAKIT.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
