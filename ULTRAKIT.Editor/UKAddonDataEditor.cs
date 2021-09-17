@@ -13,22 +13,37 @@ namespace ULTRAKIT.EditorScripts
     [CustomEditor(typeof(UKAddonData))]
     public class UKAddonDataEditor : Editor
     {
+        string outputPath;
+
         public override void OnInspectorGUI()
         {
-            DrawDefaultInspector();
-            EditorGUILayout.Space();
-            if(GUILayout.Button("Export mod"))
-            {
-                //string assetBundleDirectory = "Assets/ExportTemp";
-                //if (!Directory.Exists(Application.streamingAssetsPath))
-                //{
-                //    Directory.CreateDirectory(assetBundleDirectory);
-                //}
-                //BuildPipeline.BuildAssetBundles(assetBundleDirectory, BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
+            var data = target as UKAddonData;
+            var assetPath = UnityEditor.AssetDatabase.GetAssetPath(data.GetInstanceID());
 
-                var data = target as UKAddonData;
-                var assetPath = UnityEditor.AssetDatabase.GetAssetPath(data.GetInstanceID());
-                var outputPath = EditorUtility.SaveFilePanel("Export mod", "Assets", data.ModName, "");
+            EditorGUILayout.LabelField("ADDON DATA", EditorStyles.boldLabel);
+            DrawDefaultInspector();
+            EditorGUILayout.Space(20);
+
+            EditorGUILayout.LabelField("EXPORT", EditorStyles.boldLabel);
+            EditorGUILayout.BeginHorizontal();
+
+            // Doesn't prompt user on export if export path field has a value
+            outputPath = EditorGUILayout.TextField(outputPath);
+            if (GUILayout.Button("Browse"))
+            {
+                outputPath = EditorUtility.SaveFilePanel("Export mod", "Assets", data.ModName, "ukaddon");
+            }
+            EditorGUILayout.EndHorizontal();
+
+
+            if(GUILayout.Button("Export mod"))
+            {   
+                if(outputPath == null || outputPath.Length == 0)
+                {
+                    EditorUtility.DisplayDialog("Invalid Path", "Please choose a valid export directory", "Ok");
+                }
+                
+
                 var assetLabel = UnityEditor.AssetDatabase.GetImplicitAssetBundleName(assetPath);
                 BuildAssetBundleByName(assetLabel, outputPath);
             }

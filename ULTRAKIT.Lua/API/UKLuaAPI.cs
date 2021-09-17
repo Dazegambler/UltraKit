@@ -84,6 +84,7 @@ namespace ULTRAKIT.Lua.API
             RegisterUnityStruct<Color>();
             RegisterUnityStruct<Mathf>();
             RegisterUnityStruct<Bounds>();
+            RegisterUnityStruct<ParticleSystem.EmissionModule>();
 
             UserData.RegisterType<Collision>();
 
