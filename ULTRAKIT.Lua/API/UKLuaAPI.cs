@@ -152,17 +152,6 @@ namespace ULTRAKIT.Lua.API
         }
 
         /// <summary>
-        /// Registers an enum to be inserted into the script
-        /// </summary>
-        /// <typeparam name="T">The struct to be registered</typeparam>
-        public static void RegisterEnum<T>()
-            where T : Enum
-        {
-            UserData.RegisterType<T>();
-            luaStructs.Add(typeof(T));
-        }
-
-        /// <summary>
         /// A wrapper function to allow calls to UserData.RegisterProxy with runtime types.
         /// </summary>
         /// <typeparam name="TProxy">The proxy type to be registered</typeparam>
