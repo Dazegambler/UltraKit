@@ -13,33 +13,37 @@ namespace ULTRAKIT.EditorScripts
     [CustomEditor(typeof(UKAddonData))]
     public class UKAddonDataEditor : Editor
     {
+        static string outputPath = "";
+
         public override void OnInspectorGUI()
         {
-            DrawDefaultInspector();
-            EditorGUILayout.Space();
-            if(GUILayout.Button("Export mod"))
-            {
-                //string assetBundleDirectory = "Assets/ExportTemp";
-                //if (!Directory.Exists(Application.streamingAssetsPath))
-                //{
-                //    Directory.CreateDirectory(assetBundleDirectory);
-                //}
-                //BuildPipeline.BuildAssetBundles(assetBundleDirectory, BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
+            var data = target as UKAddonData;
+            var assetPath = UnityEditor.AssetDatabase.GetAssetPath(data.GetInstanceID());
 
-                var data = target as UKAddonData;
-                var assetPath = UnityEditor.AssetDatabase.GetAssetPath(data.GetInstanceID());
-                
-                // Doesn't prompt user on export if export path field has a value
-                string outputPath = data.ExportPath == null || data.ExportPath.Length == 0 
-                    ? EditorUtility.SaveFilePanel("Export mod", "Assets", data.ModName, "") 
-                    : data.ExportPath;
-                
-                // Saves the selected path to the field
-                if (data.ExportPath == null || data.ExportPath.Length == 0)
+            EditorGUILayout.LabelField("ADDON DATA", EditorStyles.boldLabel);
+            DrawDefaultInspector();
+            EditorGUILayout.Space(20);
+
+            EditorGUILayout.LabelField("EXPORT", EditorStyles.boldLabel);
+            EditorGUILayout.BeginHorizontal();
+
+            // Doesn't prompt user on export if export path field has a value
+            outputPath = EditorGUILayout.TextField(outputPath);
+            if (GUILayout.Button("Browse"))
+            {
+                outputPath = EditorUtility.SaveFilePanel("Export mod", "Assets", data.ModName, "ukaddon");
+            }
+            EditorGUILayout.EndHorizontal();
+
+
+            if(GUILayout.Button("Export mod"))
+            {   
+                if(outputPath == null || outputPath.Length == 0)
                 {
-                    EditorUtility.SetDirty(target);
-                    data.ExportPath = outputPath;
+                    EditorUtility.DisplayDialog("Invalid Path", "Please choose a valid export directory", "Ok");
+                    return;
                 }
+                
 
                 var assetLabel = UnityEditor.AssetDatabase.GetImplicitAssetBundleName(assetPath);
                 BuildAssetBundleByName(assetLabel, outputPath);
@@ -48,6 +52,14 @@ namespace ULTRAKIT.EditorScripts
 
         public static void BuildAssetBundleByName(string name, string outputPath)
         {
+            if (File.Exists(outputPath))
+            {
+                if (!EditorUtility.DisplayDialog("Replace File", $@"File '{Path.GetFileName(outputPath)}' already exists. Would you like to replace it?", "Yes", "No"))
+                {
+                    return;
+                }
+            }
+
             var tempPath = @"Assets/_tempexport";
             if (Directory.Exists(tempPath))
             {
@@ -55,7 +67,6 @@ namespace ULTRAKIT.EditorScripts
             }
 
             Directory.CreateDirectory(tempPath);
-
 
             var build = new AssetBundleBuild();
             build.assetBundleName = name;

@@ -17,12 +17,17 @@ namespace ULTRAKIT.Lua.API.Proxies.Components
         }
 
         public Rigidbody rigidbody => target.GetComponent<Rigidbody>();
-
+        public bool dead => target.dead;
+        public float health => target.health;
+        public string enemyType => target.enemyType.ToString();
+        
         public void Damage(float damage) => target.DeliverDamage(target.gameObject, Vector3.zero, target.transform.position, damage, false);
         public void Damage(float damage, Vector3 force) => target.DeliverDamage(target.gameObject, force, target.transform.position, damage, false);
         public void Damage(float damage, Vector3 force, GameObject targetObj) => target.DeliverDamage(targetObj, force, targetObj.transform.position, damage, false);
         public void Damage(float damage, Vector3 point, Vector3 force, GameObject targetObj) => target.DeliverDamage(targetObj, force, point, damage, false);
-
+        public void Explode() => target.Explode();
+        public void Splatter() => target.Splatter();
+        
         public void ForceAir(Script s, bool forced)
         {
             if(target.gce == null)
