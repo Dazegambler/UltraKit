@@ -21,5 +21,7 @@ namespace ULTRAKIT.Lua.API.Statics
             get => MonoSingleton<GunControl>.Instance.enabled;
             set => MonoSingleton<GunControl>.Instance.enabled = value;
         }
+        
+        public void CameraShake(float amount) => MonoSingleton<CameraController>.Instance.CameraShake(amount);
     }
 }
