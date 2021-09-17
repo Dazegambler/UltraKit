@@ -91,6 +91,7 @@
     <Compile Include="Components\UKScript.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScriptableObjects\Registry\UKContent.cs" />
+    <Compile Include="ScriptableObjects\Registry\UKContentSkin.cs" />
     <Compile Include="ScriptableObjects\Registry\UKContentSpawnable.cs" />
     <Compile Include="ScriptableObjects\Registry\UKContentWeapon.cs" />
     <Compile Include="ScriptableObjects\UKAddonData.cs" />
