@@ -15,6 +15,17 @@ namespace ULTRAKIT.Lua.API.Statics
         public Transform head => MonoSingleton<CameraController>.Instance.transform;
         public Transform body => MonoSingleton<NewMovement>.Instance.transform;
         public Rigidbody rigidbody => MonoSingleton<NewMovement>.Instance.rb;
+        public CameraController camera => MonoSingleton<CameraController>.Instance;
+        public StyleHUD styleHUD 
+        {
+            get 
+            {
+                Debug.Log("Got request for a stylehud");
+                Debug.Log(MonoSingleton<StyleHUD>.Instance);
+                return MonoSingleton<StyleHUD>.Instance;
+            }
+        }
+
 
         public bool canSwitchWeapon
         {
