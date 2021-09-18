@@ -108,17 +108,17 @@ namespace ULTRAKIT.Lua.Components
             FuzzyCall(runtime.Globals, "OnCollisionExit", other);
         }
 
-        void OnTriggerEnter(Collision other)
+        void OnTriggerEnter(Collider other)
         {
             FuzzyCall(runtime.Globals, "OnTriggerEnter", other);
         }
 
-        void OnTriggerStay(Collision other)
+        void OnTriggerStay(Collider other)
         {
             FuzzyCall(runtime.Globals, "OnTriggerStay", other);
         }
 
-        void OnTriggerExit(Collision other)
+        void OnTriggerExit(Collider other)
         {
             FuzzyCall(runtime.Globals, "OnTriggerExit", other);
         }
