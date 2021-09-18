@@ -27,12 +27,12 @@ namespace ULTRAKIT.Lua.API.Proxies
         // BroadcastMessage
         public bool CompareTag(string tag) => target.CompareTag(tag);
         public Component GetComponent(string typeName) => target.GetComponent(typeName);
-        public Component GetComponentInParent(string typeName) => target.GetComponentsInParent<Component>()?.Where(t => t.GetType().Name == typeName)?.First();
-        public Component GetComponentInChildren(string typeName) => target.GetComponentsInChildren<Component>()?.Where(t => t.GetType().Name == typeName)?.First();
+        public Component GetComponentInParent(string typeName) => target.GetComponentsInParent<Component>()?.Where(t => t.GetType().Name == typeName)?.FirstOrDefault();
+        public Component GetComponentInChildren(string typeName) => target.GetComponentsInChildren<Component>()?.Where(t => t.GetType().Name == typeName)?.FirstOrDefault();
 
         // Returns (Component, bool)
         public DynValue TryGetComponent(string typeName) {
-            var component = target.GetComponents<Component>()?.Where(t => t.GetType().Name == typeName)?.First();
+            var component = target.GetComponents<Component>()?.Where(t => t.GetType().Name == typeName)?.FirstOrDefault();
             var success = component != null;
 
             if (component == null)
