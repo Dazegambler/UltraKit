@@ -18,6 +18,7 @@ namespace ULTRAKIT.Lua.API.Statics
         public UKProxyEnemy enemy;
         public UKProxyProjectile projectile;
         public Transform transform;
+        public GameObject gameObject;
 
         public UKHitResult(Vector3 point, Vector3 normal, Transform transform, UKProxyEnemy enemy, UKProxyProjectile projectile)
         {
@@ -26,6 +27,7 @@ namespace ULTRAKIT.Lua.API.Statics
             this.enemy = enemy;
             this.projectile = projectile;
             this.transform = transform;
+            this.gameObject = transform.gameObject;
         }
 
         public UKHitResult(UKHitResult other)
@@ -33,6 +35,7 @@ namespace ULTRAKIT.Lua.API.Statics
             this.point = other.point;
             this.normal = other.normal;
             this.transform = other.transform;
+            this.gameObject = other.gameObject;
             this.enemy = other.enemy;
             this.projectile = other.projectile;
         }
