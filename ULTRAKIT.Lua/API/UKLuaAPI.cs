@@ -102,10 +102,11 @@ namespace ULTRAKIT.Lua.API
             UserData.RegisterType<StyleHUD>();
             UserData.RegisterType<RenderTexture>();
 
-            // TODO: evaluate if we should expose these as a whole
+            // TODO: evaluate if we should expose these as a whole. Probably no harm if it can't majorly fuck up the system or saves
             UserData.RegisterType<Camera>();
             UserData.RegisterType<Texture2D>();
             UserData.RegisterType<Sprite>();
+            UserData.RegisterType<NewMovement>();
 
             // Register all types with MoonsharpUserData attribute
             UserData.RegisterAssembly();
