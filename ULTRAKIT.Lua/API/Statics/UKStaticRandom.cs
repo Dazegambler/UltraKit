@@ -9,6 +9,6 @@ namespace ULTRAKIT.Lua.API.Statics
 
         public float Range(float min, float max) => Random.Range(min, max);
 
-        public int Range(int min, int max) => Random.Range(min, max);
+        public int RangeInt(int min, int max) => Random.Range(min, max);
     }
 }
