@@ -14,12 +14,11 @@ Comes installed with a physgun and gravity gun to play with!
   <p align="center">
     <img alt="HOW TO INSTALL ULTRAKILL MODS WITH BEPINEX]" src="https://user-images.githubusercontent.com/27899907/132107380-d55c608f-c7d9-45ec-adce-3502734eae45.png" width=400/>
 </p>
-2 - Download the UltraMod loader from https://github.com/Dazegambler/UltraMod/releases
+2 - Download this repository
 
-3 - Take the contents of the UltraMod zip file and drag them all directly into the ULTRAKILL installation directory (NOT THE BEPINEX PLUGINS FOLDER)! Replace all files when prompted. 
+3 - Take the contents of the "build" folder and drag them all into (your Ultrakill installation folder)/BepInEx/plugins. Replace all files when prompted. 
 
-4 - Run the game, and all should work! If not, feel free to DM or ping Heckteck#0512 on Discord
-
+4 - Run the game, and all should work! If not, feel free to DM or ping Heckteck#0512 or m1ksu#6548 on Discord, or join the Ultrakill Discord server at https://discord.gg/HXpXUrd54f where you can usually find us in the #ultramods channel. 
 
 
 # Credits
