@@ -101,6 +101,7 @@ namespace ULTRAKIT.Lua.API
             UserData.RegisterType<LineRenderer>();
             UserData.RegisterType<StyleHUD>();
             UserData.RegisterType<RenderTexture>();
+            UserData.RegisterType<ScanningStuff>();
 
             // TODO: evaluate if we should expose these as a whole. Probably no harm if it can't majorly fuck up the system or saves
             UserData.RegisterType<Camera>();

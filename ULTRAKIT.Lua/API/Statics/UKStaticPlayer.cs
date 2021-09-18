@@ -18,6 +18,7 @@ namespace ULTRAKIT.Lua.API.Statics
         public CameraController camera => MonoSingleton<CameraController>.Instance;
         public NewMovement movement => MonoSingleton<NewMovement>.Instance;
         public StyleHUD styleHUD => MonoSingleton<StyleHUD>.Instance;
+        public ScanningStuff scanningStuff => MonoSingleton<ScanningStuff>.Instance;
 
         public bool canSwitchWeapon
         {
