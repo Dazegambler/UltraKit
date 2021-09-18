@@ -99,6 +99,12 @@ namespace ULTRAKIT.Lua.API
             UserData.RegisterType<MeshRenderer>();
             UserData.RegisterType<LineRenderer>();
             UserData.RegisterType<StyleHUD>();
+            UserData.RegisterType<RenderTexture>();
+
+            // TODO: evaluate if we should expose these as a whole
+            UserData.RegisterType<Camera>();
+            UserData.RegisterType<Texture2D>();
+            UserData.RegisterType<Sprite>();
 
             // Register all types with MoonsharpUserData attribute
             UserData.RegisterAssembly();
