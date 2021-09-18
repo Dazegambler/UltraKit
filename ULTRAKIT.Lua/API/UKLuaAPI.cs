@@ -9,6 +9,7 @@ using ULTRAKIT.Lua.API.Proxies;
 using ULTRAKIT.Lua.Attributes;
 using ULTRAKIT.Lua.Components;
 using UnityEngine;
+using MoonSharp.Interpreter.Serialization;
 
 namespace ULTRAKIT.Lua.API
 {
@@ -78,6 +79,9 @@ namespace ULTRAKIT.Lua.API
         public static void Initialize()
         {
             harmony.PatchAll();
+
+            Table dump = UserData.GetDescriptionOfRegisteredTypes(true);
+            System.IO.File.WriteAllText(@"C:\testdump.lua", dump.Serialize());
 
             RegisterUnityStruct<Vector3>();
             RegisterUnityStruct<Vector2>();
