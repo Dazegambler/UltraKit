@@ -46,17 +46,19 @@ namespace ULTRAKIT.EditorScripts
                 
 
                 var assetLabel = UnityEditor.AssetDatabase.GetImplicitAssetBundleName(assetPath);
-                BuildAssetBundleByName(assetLabel, outputPath);
+                var buildFailed = !BuildAssetBundleByName(assetLabel, outputPath);
+                if (buildFailed) Debug.LogError("Mod export failed.");
             }
         }
 
-        public static void BuildAssetBundleByName(string name, string outputPath)
+        // Rerturns true on success
+        public static bool BuildAssetBundleByName(string name, string outputPath)
         {
             if (File.Exists(outputPath))
             {
                 if (!EditorUtility.DisplayDialog("Replace File", $@"File '{Path.GetFileName(outputPath)}' already exists. Would you like to replace it?", "Yes", "No"))
                 {
-                    return;
+                    return false;
                 }
             }
 
@@ -74,12 +76,21 @@ namespace ULTRAKIT.EditorScripts
 
             BuildPipeline.BuildAssetBundles(tempPath, new AssetBundleBuild[] { build }, BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows);
 
-            File.Copy($@"{tempPath}/{name}", outputPath, true);
+            try
+            {
+                File.Copy($@"{tempPath}/{name}", outputPath, true);
+            }
+            catch (ArgumentException)
+            {
+                Debug.LogError("Assetbundle has no name. Did you forget to assign one to the folder in the editor?");
+                return false;
+            }
 
             Directory.Delete(tempPath, true);
 
             UnityEditor.AssetDatabase.Refresh();
             Debug.Log($@"Mod export successful at {outputPath}");
+            return true;
         }
     }
 }
