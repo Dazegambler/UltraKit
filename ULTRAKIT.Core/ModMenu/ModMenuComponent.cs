@@ -33,7 +33,6 @@ namespace ULTRAKIT.Core.ModMenu
                 var list = ULTRAKIT.Loader.AddonLoader.addons;
                 guirect.height = 60 + 35 * list.Count();
                 GUI.skin = CoreContent.UIBundle.LoadAsset<GUISkin>("UIUltraMod");
-                Debug.Log("bundle" + CoreContent.UIBundle);
                 GUI.Window(0, guirect, AddonsMenu, "");
 
                 Rect reloadNotifierRect = new Rect(
