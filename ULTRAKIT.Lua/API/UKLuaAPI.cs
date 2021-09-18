@@ -80,8 +80,8 @@ namespace ULTRAKIT.Lua.API
         {
             harmony.PatchAll();
 
-            Table dump = UserData.GetDescriptionOfRegisteredTypes(true);
-            System.IO.File.WriteAllText(@"C:\testdump.lua", dump.Serialize());
+            //Table dump = UserData.GetDescriptionOfRegisteredTypes(true);
+            //System.IO.File.WriteAllText(@"C:\testdump.lua", dump.Serialize());
 
             RegisterUnityStruct<Vector3>();
             RegisterUnityStruct<Vector2>();
