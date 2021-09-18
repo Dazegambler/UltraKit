@@ -23,7 +23,7 @@ namespace ULTRAKIT.Core.BossSpawns
             Loader.Addon b = new Loader.Addon();
 
             b.Data = new Data.UKAddonData();
-            b.Data.ModName = "Bosses";
+            b.Data.ModName = "Bosses (internal)";
             b.Data.Author = "UltraKit";
             b.Data.ModDesc = "Contains Enemies that cannot be spawned by the spawner arm";
 
@@ -56,7 +56,6 @@ namespace ULTRAKIT.Core.BossSpawns
 
             a.Prefab = PrefabFind(Enemy);
             a.Icon = CoreContent.UIBundle.LoadAsset<Sprite>($"{Enemy}");
-
             return a;
         }
         public static GameObject PrefabFind(string name)

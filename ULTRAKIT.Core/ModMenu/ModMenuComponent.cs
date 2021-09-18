@@ -1,12 +1,14 @@
-﻿using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
+using System.Linq;
 
 namespace ULTRAKIT.Core.ModMenu
 {
     public class ModMenuComponent : MonoBehaviour
     {
         // Loads GuiSkin in Built-in Asset Bundle
-        GUISkin skin = CoreContent.UIBundle.LoadAsset<GUISkin>("UIUltraMod");
+        //GUISkin skin = CoreContent.UIBundle.LoadAsset<GUISkin>("UIUltraMod");
+            // Absolutely not!! This shit breaks when you reload the mods
 
         // These two are automatically filled in; the button to access the mod list should only show when optionsMenu is active
         public GameObject pauseMenu, optionsMenu;
@@ -14,8 +16,10 @@ namespace ULTRAKIT.Core.ModMenu
         // Use this to decide whether to show the mod list or not
         public bool active;
 
+        const float addonMenuWidth = 240;
+
         Rect
-            guirect = new Rect(20 / (Screen.width / 1920), 40 / (Screen.height / 1080), 155, 60),
+            guirect = new Rect(20 / (Screen.width / 1920), 40 / (Screen.height / 1080), addonMenuWidth, 60),
             wind;
         Rect
             _scroll = Rect.zero;
@@ -27,8 +31,18 @@ namespace ULTRAKIT.Core.ModMenu
             if (pauseMenu.activeInHierarchy)
             {
                 var list = ULTRAKIT.Loader.AddonLoader.addons;
-                GUI.skin = skin;
-                GUI.Window(0, wind, AddonsMenu, "");
+                guirect.height = 60 + 35 * list.Count();
+                GUI.skin = CoreContent.UIBundle.LoadAsset<GUISkin>("UIUltraMod");
+                Debug.Log("bundle" + CoreContent.UIBundle);
+                GUI.Window(0, guirect, AddonsMenu, "");
+
+                Rect reloadNotifierRect = new Rect(
+                    position: guirect.min + new Vector2(addonMenuWidth+10,0),
+                    size: new Vector2(
+                        x: 1000 / (Screen.width / 1920), 
+                        y: 60 / (Screen.height / 1080)));
+
+                GUI.Label(reloadNotifierRect, "Press F8 to\nreload addons\nat any time");
             }
             else
             {
@@ -42,7 +56,7 @@ namespace ULTRAKIT.Core.ModMenu
             {
                 var list = ULTRAKIT.Loader.AddonLoader.addons;
 
-                if (GUI.Button(new Rect(5, 5, 140, 50), $"Addons:{list.Count}"))
+                if (GUI.Button(new Rect(5, 5, addonMenuWidth - 10, 50), $"Addons:{list.Count}"))
                 {
                 }
 
@@ -50,13 +64,12 @@ namespace ULTRAKIT.Core.ModMenu
 
                 if (active)
                 {
-
                     if (list.Count > 20)
                     {
                         Scroll = GUI.BeginScrollView(new Rect(5, 60, 155, 800), Scroll, _scroll, false, false);
                         for (int i = 0; i < list.Count; i++)
                         {
-                            if (GUI.Button(new Rect(5, 60 + (35 * (i)), 140, 30), list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod"))
+                            if (GUI.Button(new Rect(5, 60 + (35 * (i)), addonMenuWidth - 10, 30), list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod"))
                             {
                                 Debug.LogWarning($"{list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod"} Selected");
                             }
@@ -76,7 +89,8 @@ namespace ULTRAKIT.Core.ModMenu
                     {
                         for (int i = 0; i < list.Count; i++)
                         {
-                            if (GUI.Button(new Rect(5, 60 + (35 * (i)), 140, 30), list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod"))
+                            // This doesn't seem to trigger
+                            if (GUI.Button(new Rect(5, 60 + (35 * (i)), addonMenuWidth - 10, 30), list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod"))
                             {
                                 Debug.LogWarning($"{list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod"} Selected");
                             }

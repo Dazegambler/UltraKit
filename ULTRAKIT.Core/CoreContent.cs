@@ -9,10 +9,11 @@ namespace ULTRAKIT.Core
     public static class CoreContent
     {
         //TODO: rename?
-        public static AssetBundle UIBundle = LoadAssetBundle(Properties.Resource1.ULTRAKIT);
+        public static AssetBundle UIBundle;
 
         public static void Initialize()
         {
+            UIBundle = LoadAssetBundle(Properties.Resource1.ULTRAKIT);
             AddonLoader.harmony.PatchAll();
 
             ModMenuInjector.Initialize();
