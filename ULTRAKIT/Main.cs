@@ -1,5 +1,6 @@
 ﻿using BepInEx;
 using System.IO;
+using System.Linq;
 using ULTRAKIT.Core;
 using ULTRAKIT.Loader;
 using ULTRAKIT.Lua.API;
@@ -16,7 +17,6 @@ namespace ULTRAKIT
 
         public void Start()
         {
-
             CoreContent.Initialize();
             UKLuaAPI.Initialize();
             AddonLoader.Initialize(BundlePath);
@@ -32,17 +32,21 @@ namespace ULTRAKIT
                     addon.Bundle.Unload(true);
                 }
                 AddonLoader.registry.Clear();
+
+                CoreContent.Initialize();
                 AddonLoader.LoadAllAddons(BundlePath);
 
-                var gs = MonoSingleton<GunSetter>.Instance;
-
-                var storedSlot = gs.gunc.currentSlot;
-                var storedVariant = gs.gunc.currentVariation;
-                gs.ResetWeapons();
-                
-                gs.gunc.currentSlot = storedSlot;
-                gs.gunc.currentVariation = storedVariant;
-                gs.gunc.YesWeapon();
+                // This is expected to throw an error since there's not always a gunsetter present (eg. in menus)
+                try
+                {
+                    var gs = MonoSingleton<GunSetter>.Instance;
+                    var storedSlot = gs.gunc.currentSlot;
+                    var storedVariant = gs.gunc.currentVariation;
+                    gs.ResetWeapons();
+                    gs.gunc.currentSlot = storedSlot;
+                    gs.gunc.currentVariation = storedVariant;
+                    gs.gunc.YesWeapon();
+                } catch {}
             }
         }
 

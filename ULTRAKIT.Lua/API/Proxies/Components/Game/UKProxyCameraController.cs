@@ -14,7 +14,7 @@ namespace ULTRAKIT.Lua.API.Proxies.Components
         public UKProxyCameraController(CameraController target) : base(target)
         {
         }
-
+        public float FOV { get => Camera.main.fieldOfView; set => Camera.main.fieldOfView = value; } // VERTICAL
         public void CameraShake(float amount) => target.CameraShake(amount);
         public void SlowDown(float amount) => target.SlowDown(amount);
         public void Zoom(float amount) => target.Zoom(amount);
