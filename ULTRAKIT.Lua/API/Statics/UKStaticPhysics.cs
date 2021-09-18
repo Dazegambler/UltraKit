@@ -47,6 +47,20 @@ namespace ULTRAKIT.Lua.API.Statics
 
         // EnemyTrigger, Projectile, Environment
         const int DefaultCastMask = (1 << 12) | (1 << 14) | (1 << 8);
+        
+        public Collider[] OverlapSphere(Vector3 pos, float radius, int layermask, bool triggerinteraction = false)
+        {
+            if (triggerinteraction)
+            {
+                return Physics.OverlapSphere(pos, radius, layermask, QueryTriggerInteraction.Collide);
+            }
+            else
+            {
+                return Physics.OverlapSphere(pos, radius, layermask, QueryTriggerInteraction.Ignore);
+            }
+        }
+        public Collider[] OverlapSphere(Vector3 pos, float radius, int layermask) => Physics.OverlapSphere(pos, radius, layermask);
+        public Collider[] OverlapSphere(Vector3 pos, float radius) => Physics.OverlapSphere(pos, radius);
 
         public UKHitResult Raycast(Vector3 point, Vector3 dir, float maxDistance = Mathf.Infinity, int layerMask = DefaultCastMask, bool ignoreTriggers = true)
         {
