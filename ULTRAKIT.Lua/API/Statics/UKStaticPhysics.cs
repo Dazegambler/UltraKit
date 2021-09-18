@@ -45,10 +45,10 @@ namespace ULTRAKIT.Lua.API.Statics
         // EnemyTrigger, Projectile, Environment
         const int DefaultCastMask = (1 << 12) | (1 << 14) | (1 << 8);
 
-        public UKHitResult Raycast(Vector3 point, Vector3 dir, float maxDistance = Mathf.Infinity, int layerMask = DefaultCastMask)
+        public UKHitResult Raycast(Vector3 point, Vector3 dir, float maxDistance = Mathf.Infinity, int layerMask = DefaultCastMask, bool ignoreTriggers = true)
         {
             RaycastHit hit;
-            if (Physics.Raycast(point, dir, out hit, maxDistance, layerMask))
+            if (Physics.Raycast(point, dir, out hit, maxDistance, layerMask, ignoreTriggers ? QueryTriggerInteraction.Ignore : QueryTriggerInteraction.Collide))
             {
                 var enemyIdentifier = hit.transform.GetComponentInChildren<EnemyIdentifier>() ?? hit.transform.GetComponentInParent<EnemyIdentifier>();
 
