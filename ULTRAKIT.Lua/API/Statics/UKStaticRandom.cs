@@ -8,5 +8,7 @@ namespace ULTRAKIT.Lua.API.Statics
         public override string name => "Random";
 
         public float Range(float min, float max) => Random.Range(min, max);
+
+        public int Range(int min, int max) => Random.Range(min, max);
     }
 }
