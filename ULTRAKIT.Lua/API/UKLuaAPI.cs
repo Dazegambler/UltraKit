@@ -93,6 +93,11 @@ namespace ULTRAKIT.Lua.API
             RegisterUnityStruct<SpriteMaskInteraction>();
             RegisterUnityStruct<SpriteSortPoint>();
 
+            // This is an interesting method
+            // Doesn't exactly work but worth looking into if we want to ease the burden of component exposure (or exposure of anything else)
+            //foreach (var type in AttributeHelper.GetDerivedTypes(typeof(Component)))
+            //    UserData.RegisterType(type);
+
             UserData.RegisterType<Collision>();
             UserData.RegisterType<ParticleSystem>();
             UserData.RegisterType<SpriteRenderer>();
@@ -102,6 +107,7 @@ namespace ULTRAKIT.Lua.API
             UserData.RegisterType<StyleHUD>();
             UserData.RegisterType<RenderTexture>();
             UserData.RegisterType<ScanningStuff>();
+            UserData.RegisterType<AnimationCurve>();
 
             // TODO: evaluate if we should expose these as a whole. Probably no harm if it can't majorly fuck up the system or saves
             UserData.RegisterType<Camera>();
@@ -193,6 +199,7 @@ namespace ULTRAKIT.Lua.API
             c.runtime.Options.DebugPrint = (Action<string>)Debug.Log;
             c.runtime.Globals["gameObject"] = c.gameObject;
             c.runtime.Globals["transform"] = c.transform;
+            c.runtime.Globals["addon"] = c.addon;
 
             // Statics
             foreach (var pair in luaStatics)

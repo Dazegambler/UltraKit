@@ -3,24 +3,29 @@ using ULTRAKIT.Data;
 using ULTRAKIT.Data.Components;
 using ULTRAKIT.Lua.API;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace ULTRAKIT.Lua.Components
 {
     public class UKScriptRuntime : MonoBehaviour
     {
+        public static List<UKScriptRuntime> Instances = new List<UKScriptRuntime>();
+
         public UKScript data;
         public Script runtime;
+        public UKAddonData addon;
 
         public static void Create(UKAddonData addon, UKScript orig)
         {
             var r = orig.gameObject.AddComponent<UKScriptRuntime>();
+            r.addon = addon;
         }
 
         public static void Create(UKAddonData data, GameObject go)
         {
             foreach (var script in go.GetComponentsInChildren<UKScript>(true))
             {
-                Debug.Log(script.sourceCode.name);
+                //Debug.Log(script.sourceCode.name);
                 Create(data, script);
             }
         }
@@ -74,6 +79,7 @@ namespace ULTRAKIT.Lua.Components
                 var func = runtime.LoadString(data.sourceCode.text);
                 UKLuaAPI.ConstructScript(this);
                 FuzzyCall(func);
+                Instances.Add(this);
             } catch(SyntaxErrorException e)
             {
                 //TODO: propper logging
@@ -82,8 +88,14 @@ namespace ULTRAKIT.Lua.Components
             }
         }
 
+        void Start()
+        {
+            FuzzyCall(runtime.Globals, "Start");
+        }
+
         void OnDestroy()
         {
+            Instances.Remove(this);
             UKLuaAPI.DestructScript(this);
         }
 
@@ -131,6 +143,18 @@ namespace ULTRAKIT.Lua.Components
             {
                 FuzzyCall(runtime.Globals, "Update", Time.deltaTime);
             }
+        }
+
+        void LateUpdate()
+        {
+            if (!MonoSingleton<OptionsManager>.Instance.paused)
+                FuzzyCall(runtime.Globals, "LateUpdate", Time.deltaTime);
+        }
+
+        void FixedUpdate()
+        {
+            if (!MonoSingleton<OptionsManager>.Instance.paused)
+                FuzzyCall(runtime.Globals, "FixedUpdate");
         }
 
         void OnDisable()

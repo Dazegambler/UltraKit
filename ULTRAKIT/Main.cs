@@ -31,6 +31,10 @@ namespace ULTRAKIT
                     AddonLoader.registry[addon].Clear();
                     addon.Bundle.Unload(true);
                 }
+
+                Lua.API.Statics.UKStaticRegistry.addonData.Clear();
+                Lua.API.Statics.UKStaticRegistry.sharedData.Clear();
+
                 AddonLoader.registry.Clear();
 
                 CoreContent.Initialize();

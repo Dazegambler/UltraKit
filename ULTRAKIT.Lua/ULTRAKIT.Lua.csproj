@@ -88,6 +88,7 @@
     <Compile Include="API\Proxies\UKProxyComponent.cs" />
     <Compile Include="API\Proxies\UKProxyGameObject.cs" />
     <Compile Include="API\Proxies\UKProxyObject.cs" />
+    <Compile Include="API\Statics\UKStaticRegistry.cs" />
     <Compile Include="API\Statics\UKStaticGameObject.cs" />
     <Compile Include="API\Statics\UKStaticInput.cs" />
     <Compile Include="API\Statics\UKStaticObject.cs" />
