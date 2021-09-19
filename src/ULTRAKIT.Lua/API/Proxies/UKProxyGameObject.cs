@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using MoonSharp.Interpreter;
+using System.Linq;
+using ULTRAKIT.Lua.Components;
+using UnityEngine;
 
 namespace ULTRAKIT.Lua.API.Proxies
 {
@@ -6,6 +9,15 @@ namespace ULTRAKIT.Lua.API.Proxies
     {
         public UKProxyGameObject(GameObject target) : base(target)
         {
+        }
+
+        public Table[] GetScripts(string name) {
+            return target.GetComponents<UKScriptRuntime>().Where(s => s.data.sourceCode.name == name).Select(s => s.runtime.Globals).ToArray();
+        }
+
+        public Table GetScript(string name)
+        {
+            return GetScripts(name).First();
         }
 
         #region Properties

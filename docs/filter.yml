@@ -1,0 +1,10 @@
+apiRules:
+  - exclude:
+    uidRegex: ^ULTRAKIT\.Data
+    type: Namespace
+  - exclude:
+    uidRegex: ^ULTRAKIT\.Lua
+    type: Namespace
+  - exclude:
+    uidRegex: ^ULTRAKIT\.Lua\.API\.Abstract
+    type: Namespace
