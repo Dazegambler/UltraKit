@@ -58,6 +58,48 @@ namespace ULTRAKIT.Core.BossSpawns
             a.Icon = CoreContent.UIBundle.LoadAsset<Sprite>($"{Enemy}");
             return a;
         }
+        public static void V2dif(bool greed)
+        {
+            var v2 = PrefabFind("V2").GetComponent<V2>();
+            var mch = PrefabFind("V2").GetComponent<Machine>();
+            List<GameObject> weps = new List<GameObject>(v2.weapons);
+
+            GameObject nail = null;
+            if(nail == null)
+            {
+                foreach (Transform obj in v2.gameObject.GetComponentsInChildren<Transform>(true))
+                {
+                    switch (obj.name)
+                    {
+                        case "Nailgun":
+                            nail = obj.gameObject;
+                            break;
+                    }
+                }
+            }
+            if(greed == true)
+            {
+                v2.secondEncounter = true;
+                mch.health = 80f;
+                nail.SetActive(true);
+                if (weps.Contains(nail) == false)
+                {
+                    weps.Add(nail);
+                    v2.weapons = weps.ToArray();
+                }
+            }
+            else
+            {
+                v2.secondEncounter = false;
+                mch.health = 40f;
+                nail.SetActive(false);
+                if (weps.Contains(nail) == true)
+                {
+                    weps.Remove(nail);
+                    v2.weapons = weps.ToArray();
+                }
+            }
+        }
         public static GameObject PrefabFind(string name)
         {
             //Find set Object in the prefabs
@@ -187,4 +229,5 @@ namespace ULTRAKIT.Core.BossSpawns
             }
         }
     }
+
 }

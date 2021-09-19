@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using ULTRAKIT.Loader;
 using System.Linq;
 
 namespace ULTRAKIT.Core.ModMenu
@@ -18,6 +19,8 @@ namespace ULTRAKIT.Core.ModMenu
 
         const float addonMenuWidth = 240;
 
+        Loader.Addon Selected;
+
         Rect
             guirect = new Rect(20 / (Screen.width / 1920), 40 / (Screen.height / 1080), addonMenuWidth, 60),
             wind;
@@ -35,6 +38,24 @@ namespace ULTRAKIT.Core.ModMenu
                 GUI.skin = CoreContent.UIBundle.LoadAsset<GUISkin>("UIUltraMod");
                 GUI.Window(0, guirect, AddonsMenu, "");
 
+                if (Selected != null)
+                {
+                    GUI.Label(new Rect(addonMenuWidth + 25, 100, 1000, 30), $"{Selected.Data.ModName}");
+                    GUI.Box(new Rect(addonMenuWidth+25,130,addonMenuWidth+10,110),"");
+                    if (GUI.Button(new Rect(addonMenuWidth + 30, 135, addonMenuWidth, 30), "SPAWN INFO"))
+                    {
+                        GameObject.Instantiate(Info(Selected), GameObject.Find("Player").transform.position,Quaternion.identity);
+                    }
+                    if (GUI.Button(new Rect(addonMenuWidth + 30, 170, addonMenuWidth, 30), "ENABLE/DISABLE"))
+                    {
+                        Selected.enabled = !Selected.enabled;
+                    }
+                    if (GUI.Button(new Rect(addonMenuWidth + 30, 205, addonMenuWidth, 30), "CLOSE"))
+                    {
+                        Selected = null;
+                    }
+                }
+
                 Rect reloadNotifierRect = new Rect(
                     position: guirect.min + new Vector2(addonMenuWidth+10,0),
                     size: new Vector2(
@@ -47,6 +68,43 @@ namespace ULTRAKIT.Core.ModMenu
             {
                 active = false;
             }
+        }
+
+        private GameObject Info(Addon _addon)
+        {
+            GameObject a = CoreContent.UIBundle.LoadAsset<GameObject>("InfoTab");
+            string info = $"{_addon.Data.ModName}\nBy {_addon.Data.Author}\n{_addon.Data.ModDesc}";
+
+            a.layer = 22;
+
+            if (a.TryGetComponent<ItemIdentifier>(out var b) == false)
+            {
+                a.AddComponent<ItemIdentifier>();
+            }
+            var item = a.GetComponent<ItemIdentifier>();
+            item.itemType = ItemType.Readable;
+            item.putDownPosition = Vector3.zero;
+            item.putDownRotation = Vector3.zero;
+            item.noHoldingAnimation = true;
+            item.putDownScale = new Vector3(a.transform.localScale.x, a.transform.localScale.y, a.transform.localScale.z);
+            item.pickUpSound = new GameObject();
+
+            if(a.TryGetComponent<Readable>(out var c) == false)
+            {
+                a.AddComponent<Readable>();
+            }
+            var read = a.GetComponent<Readable>();
+            read.SetPrivate("content",info);
+            read.SetPrivate("instantScan",true);
+
+            if(a.TryGetComponent<CheckForScroller>(out var d) == false)
+            {
+                a.AddComponent<CheckForScroller>();
+            }
+            var scroller = a.GetComponent<CheckForScroller>();
+            scroller.checkOnCollision = true;
+
+            return a;
         }
 
         void AddonsMenu(int id)
@@ -70,6 +128,7 @@ namespace ULTRAKIT.Core.ModMenu
                         {
                             if (GUI.Button(new Rect(5, 60 + (35 * (i)), addonMenuWidth - 10, 30), list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod"))
                             {
+                                Selected = list.ElementAt(i);
                                 Debug.LogWarning($"{list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod"} Selected");
                             }
                             _scroll = new Rect(5, 60, 155, 95 + (35 * i));
@@ -88,10 +147,21 @@ namespace ULTRAKIT.Core.ModMenu
                     {
                         for (int i = 0; i < list.Count; i++)
                         {
-                            // This doesn't seem to trigger
-                            if (GUI.Button(new Rect(5, 60 + (35 * (i)), addonMenuWidth - 10, 30), list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod"))
+                            if(list.ElementAt(i).enabled == false)
                             {
-                                Debug.LogWarning($"{list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod"} Selected");
+                                if (GUI.Button(new Rect(5, 60 + (35 * (i)), addonMenuWidth - 10, 30), $"<color=grey>{list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod "}</color>"))
+                                {
+                                    Selected = list.ElementAt(i);
+                                    Debug.LogWarning($"{list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod"} Selected");
+                                }
+                            }
+                            else
+                            {
+                                if (GUI.Button(new Rect(5, 60 + (35 * (i)), addonMenuWidth - 10, 30), list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod "))
+                                {
+                                    Selected = list.ElementAt(i);
+                                    Debug.LogWarning($"{list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod"} Selected");
+                                }
                             }
                             wind.height = 95 + (35 * i);//95 + (35 * i)
                         }
