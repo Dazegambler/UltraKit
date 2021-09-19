@@ -19,7 +19,7 @@ Comes installed with a physgun and gravity gun to play with!
 
 3 - Take the contents of the "build" folder and drag them all into (your Ultrakill installation folder)/BepInEx/plugins. Replace all files when prompted. 
 
-4 - Run the game, and all should work! If not, feel free to DM or ping Heckteck#0512 or m1ksu#6548 on Discord, or join the Ultrakill Discord server at https://discord.gg/HXpXUrd54f where you can usually find us in the #ultramods channel. 
+4 - Run the game, and all should work! If not, feel free to DM or ping Heckteck#0512 or m1ksu#6548 on Discord, or join the Ultrakill Discord server at where you can usually find us in the #ultramods channel. 
 
 
 # Credits
