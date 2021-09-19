@@ -61,7 +61,7 @@ namespace ULTRAKIT.Loader.Registries
 
                         foreach (var c in go.GetComponentsInChildren<Renderer>(true))
                         {
-                            Debug.Log(c.gameObject.name);
+                            //Debug.Log(c.gameObject.name);
                             c.gameObject.layer = LayerMask.NameToLayer("AlwaysOnTop");
 
                             var glow = c.gameObject.GetComponent<UKGlow>();

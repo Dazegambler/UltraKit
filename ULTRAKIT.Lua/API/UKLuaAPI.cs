@@ -9,6 +9,7 @@ using ULTRAKIT.Lua.API.Proxies;
 using ULTRAKIT.Lua.Attributes;
 using ULTRAKIT.Lua.Components;
 using UnityEngine;
+using MoonSharp.Interpreter.Serialization;
 
 namespace ULTRAKIT.Lua.API
 {
@@ -99,6 +100,14 @@ namespace ULTRAKIT.Lua.API
             UserData.RegisterType<MeshRenderer>();
             UserData.RegisterType<LineRenderer>();
             UserData.RegisterType<StyleHUD>();
+            UserData.RegisterType<RenderTexture>();
+            UserData.RegisterType<ScanningStuff>();
+
+            // TODO: evaluate if we should expose these as a whole. Probably no harm if it can't majorly fuck up the system or saves
+            UserData.RegisterType<Camera>();
+            UserData.RegisterType<Texture2D>();
+            UserData.RegisterType<Sprite>();
+            UserData.RegisterType<NewMovement>();
 
             // Register all types with MoonsharpUserData attribute
             UserData.RegisterAssembly();

@@ -16,7 +16,9 @@ namespace ULTRAKIT.Lua.API.Statics
         public Transform body => MonoSingleton<NewMovement>.Instance.transform;
         public Rigidbody rigidbody => MonoSingleton<NewMovement>.Instance.rb;
         public CameraController camera => MonoSingleton<CameraController>.Instance;
+        public NewMovement movement => MonoSingleton<NewMovement>.Instance;
         public StyleHUD styleHUD => MonoSingleton<StyleHUD>.Instance;
+        public ScanningStuff scanningStuff => MonoSingleton<ScanningStuff>.Instance;
 
         public bool canSwitchWeapon
         {

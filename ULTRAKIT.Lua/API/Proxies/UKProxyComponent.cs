@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using MoonSharp.Interpreter;
 
 namespace ULTRAKIT.Lua.API.Proxies
 {
@@ -13,6 +14,8 @@ namespace ULTRAKIT.Lua.API.Proxies
         public UKProxyComponentAbstract(T target) : base(target)
         {
         }
+
+        private Type toType(string typeName) => Type.GetType($"UnityEngine.{typeName}, UnityEngine"); // I long for the sweet release of death
 
         #region Properties
         public GameObject gameObject => target.gameObject;
@@ -24,12 +27,24 @@ namespace ULTRAKIT.Lua.API.Proxies
         // BroadcastMessage
         public bool CompareTag(string tag) => target.CompareTag(tag);
         public Component GetComponent(string typeName) => target.GetComponent(typeName);
-        //TODO: GetComponentInChildren, GetComponentInParent, GetComponents, GetComponentsInChildren, GetComponentsInParent
+        public Component GetComponentInParent(string typeName) => target.GetComponentsInParent<Component>()?.Where(t => t.GetType().Name == typeName)?.FirstOrDefault();
+        public Component GetComponentInChildren(string typeName) => target.GetComponentsInChildren<Component>()?.Where(t => t.GetType().Name == typeName)?.FirstOrDefault();
+
+        // Returns (Component, bool)
+        public DynValue TryGetComponent(string typeName) {
+            var component = target.GetComponents<Component>()?.Where(t => t.GetType().Name == typeName)?.FirstOrDefault();
+            var success = component != null;
+
+            if (component == null)
+                return DynValue.NewTuple(DynValue.Nil, DynValue.NewBoolean(success));
+            else
+                return DynValue.NewTuple(UserData.Create(component), DynValue.NewBoolean(success));
+        }
+        public Component[] GetComponents(string typeName) => target.GetComponents(toType(typeName));
+        public Component[] GetComponentsInChildren(string typeName) => target.GetComponentsInChildren<Component>()?.Where(t => t.GetType().Name == typeName).ToArray();
+        public Component[] GetComponentsInParent(string typeName) => target.GetComponentsInChildren<Component>()?.Where(t => t.GetType().Name == typeName).ToArray();
         //SendMessage, SendMessageUpwards
-        //TryGetComponent
         #endregion
-
-
     }
 
     public class UKProxyComponent : UKProxyComponentAbstract<Component>
