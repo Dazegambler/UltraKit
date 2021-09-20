@@ -98,6 +98,12 @@ namespace ULTRAKIT.Loader
             registry[a].AddRange(a.Bundle.LoadAllAssets<UKContentWeapon>());
             registry[a].AddRange(a.Bundle.LoadAllAssets<UKContentSpawnable>());
 
+            // Injection of persistent GameObjects into the scene
+            var persistentAddons = a.Bundle.LoadAllAssets<UKContentPersistent>();
+            PersistentsInstantiator.InstantiatePersistents(persistentAddons);
+
+            registry[a].AddRange(persistentAddons);
+
             return a;
         }
 

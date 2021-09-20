@@ -87,6 +87,7 @@
     <Compile Include="AddonLoader.cs" />
     <Compile Include="Injectors\CyberGrindInjector.cs" />
     <Compile Include="Injectors\ShopInjector.cs" />
+    <Compile Include="PersistentsInstantiator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Injectors\SpawnableInjector.cs" />
     <Compile Include="Injectors\WeaponInjector.cs" />

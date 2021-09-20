@@ -2,10 +2,12 @@
 using System.IO;
 using System.Linq;
 using ULTRAKIT.Core;
+using ULTRAKIT.Data.ScriptableObjects.Registry;
 using ULTRAKIT.Loader;
 using ULTRAKIT.Lua.API;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 namespace ULTRAKIT
 {
@@ -26,6 +28,23 @@ namespace ULTRAKIT
         {
             if (Keyboard.current.f8Key.wasPressedThisFrame)
             {
+                // Delete persistent prefabs
+                foreach (var ukContents in AddonLoader.registry.Values)
+                {
+                    // Fancy talk for "is List<UKContent> actually List<UKContentPersistent>"
+                    if (ukContents.GetType().IsAssignableFrom(typeof(List<UKContentPersistent>)))
+                    {
+                        Debug.Log("m1ksu your thing worked!!");
+                        // WAIT. Addons think that they load in at game start...
+                        // And could behave badly if they get chucked into the game midway through.
+                        // So I need to implement a way for the objects to ignore reloading if the game is goin...
+                        // But what if the addon has an error? Or the user wants to unload?
+                        // For this we have...
+                        // TODO: fix this
+                        ukContents.ForEach(go=>Destroy(go as UKContentPersistent));
+                    }
+                }
+                
                 foreach(var addon in AddonLoader.registry.Keys)
                 {
                     AddonLoader.registry[addon].Clear();
@@ -40,18 +59,28 @@ namespace ULTRAKIT
                 CoreContent.Initialize();
                 AddonLoader.LoadAllAddons(BundlePath);
 
-                // This is expected to throw an error since there's not always a gunsetter present (eg. in menus)
-                try
-                {
-                    var gs = MonoSingleton<GunSetter>.Instance;
-                    var storedSlot = gs.gunc.currentSlot;
-                    var storedVariant = gs.gunc.currentVariation;
-                    gs.ResetWeapons();
-                    gs.gunc.currentSlot = storedSlot;
-                    gs.gunc.currentVariation = storedVariant;
-                    gs.gunc.YesWeapon();
-                } catch {}
+                RefreshGuns();
             }
+        }
+
+        private void RefreshGuns()
+        {
+            // This is expected to throw an error since there's not always a GunSetter present (eg. in menus)
+            try
+            {
+                var gs = MonoSingleton<GunSetter>.Instance;
+                var storedSlot = gs.gunc.currentSlot;
+                var storedVariant = gs.gunc.currentVariation;
+                gs.ResetWeapons();
+                gs.gunc.currentSlot = storedSlot;
+                gs.gunc.currentVariation = storedVariant;
+                gs.gunc.YesWeapon();        
+            } catch {}
+        }
+
+        private void RefreshPersistents()
+        {
+            
         }
 
 
