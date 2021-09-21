@@ -45,11 +45,17 @@ namespace ULTRAKIT.EditorScripts
         {
             CreateObject<UKAddonData>("New Addon Data");
         }
-
+        
+        [MenuItem("Assets/ULTRAKIT/New Persistent Prefab")]
+        public static void Prefab()
+        {
+            CreateObject<UKContentPersistent>("New Persistent Prefab");
+        }
+        
         [MenuItem("Assets/ULTRAKIT/New Weapon")]
         public static void Weapon()
         {
-            CreateObject<UKContentWeapon>("New Weapon");
+            CreateObject<UKContentWeapon>("New Persistent Prefab");
         }
 
         [MenuItem("Assets/ULTRAKIT/New Spawnable")]

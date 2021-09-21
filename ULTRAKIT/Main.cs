@@ -21,6 +21,7 @@ namespace ULTRAKIT
         {
             CoreContent.Initialize();
             UKLuaAPI.Initialize();
+            Debug.Log("ok here we go");
             AddonLoader.Initialize(BundlePath);
         }
 
@@ -29,8 +30,9 @@ namespace ULTRAKIT
             if (Keyboard.current.f8Key.wasPressedThisFrame)
             {
                 // Delete persistent prefabs
-                foreach (var ukContents in AddonLoader.registry.Values)
+                /*foreach (var ukContents in AddonLoader.registry.Values)
                 {
+                    
                     // Fancy talk for "is List<UKContent> actually List<UKContentPersistent>"
                     if (ukContents.GetType().IsAssignableFrom(typeof(List<UKContentPersistent>)))
                     {
@@ -43,7 +45,8 @@ namespace ULTRAKIT
                         // TODO: fix this
                         ukContents.ForEach(go=>Destroy(go as UKContentPersistent));
                     }
-                }
+                    
+                }*/
                 
                 foreach(var addon in AddonLoader.registry.Keys)
                 {

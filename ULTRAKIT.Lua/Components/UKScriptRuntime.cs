@@ -14,19 +14,21 @@ namespace ULTRAKIT.Lua.Components
         public UKScript data;
         public Script runtime;
         public UKAddonData addon;
+        public bool callUpdateWhilePaused;
 
-        public static void Create(UKAddonData addon, UKScript orig)
+        public static void Create(UKAddonData addon, UKScript orig, bool callUpdateWhilePaused) 
         {
             var r = orig.gameObject.AddComponent<UKScriptRuntime>();
             r.addon = addon;
+            r.callUpdateWhilePaused = callUpdateWhilePaused;
         }
 
-        public static void Create(UKAddonData data, GameObject go)
+        public static void Create(UKAddonData data, GameObject go, bool callUpdateWhilePaused = false)
         {
             foreach (var script in go.GetComponentsInChildren<UKScript>(true))
             {
                 //Debug.Log(script.sourceCode.name);
-                Create(data, script);
+                Create(data, script, callUpdateWhilePaused);
             }
         }
 
@@ -139,7 +141,7 @@ namespace ULTRAKIT.Lua.Components
         {
             UKLuaAPI.UpdateScript(this);
 
-            if (!MonoSingleton<OptionsManager>.Instance.paused)
+            if (callUpdateWhilePaused || !MonoSingleton<OptionsManager>.Instance.paused)
             {
                 FuzzyCall(runtime.Globals, "Update", Time.deltaTime);
             }
@@ -147,13 +149,13 @@ namespace ULTRAKIT.Lua.Components
 
         void LateUpdate()
         {
-            if (!MonoSingleton<OptionsManager>.Instance.paused)
+            if (callUpdateWhilePaused || !MonoSingleton<OptionsManager>.Instance.paused)
                 FuzzyCall(runtime.Globals, "LateUpdate", Time.deltaTime);
         }
 
         void FixedUpdate()
         {
-            if (!MonoSingleton<OptionsManager>.Instance.paused)
+            if (callUpdateWhilePaused || !MonoSingleton<OptionsManager>.Instance.paused)
                 FuzzyCall(runtime.Globals, "FixedUpdate");
         }
 

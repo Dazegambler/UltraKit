@@ -100,7 +100,8 @@ namespace ULTRAKIT.Loader
 
             // Injection of persistent GameObjects into the scene
             var persistentAddons = a.Bundle.LoadAllAssets<UKContentPersistent>();
-            PersistentsInstantiator.InstantiatePersistents(persistentAddons);
+            Debug.LogWarning($"{persistentAddons.Length} persistent contents found");
+            PersistentsInstantiator.InstantiatePersistents(a);
 
             registry[a].AddRange(persistentAddons);
 
