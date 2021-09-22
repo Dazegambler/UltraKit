@@ -79,6 +79,29 @@ namespace ULTRAKIT.Lua.API.Statics
             return null;
         }
 
+        public UKHitResult[] RaycastAll(Vector3 point, Vector3 dir, float maxDistance = Mathf.Infinity, int layerMask = DefaultCastMask, bool ignoreTriggers = true)
+        {
+            var all = Physics.RaycastAll(point, dir, maxDistance, layerMask, ignoreTriggers ? QueryTriggerInteraction.Ignore : QueryTriggerInteraction.Collide);
+            if(all.Length == 0)
+            {
+                return null;
+            }
+            var hitresults = new UKHitResult[all.Length];
+            for (int i = 0; i < all.Length; i++)
+            {
+                var hit = all[i];
+                var enemyIdentifier = hit.transform.GetComponentInChildren<EnemyIdentifier>() ?? hit.transform.GetComponentInParent<EnemyIdentifier>();
+                
+                var res = new UKHitResult(hit.point, hit.normal, hit.transform,
+                    new UKProxyEnemy(enemyIdentifier),
+                    new UKProxyProjectile(hit.transform.GetComponentInChildren<Projectile>()));
+                
+                hitresults[i] = res;
+            }
+
+            return hitresults;
+        }
+
         public UKHitResult Linecast(Vector3 start, Vector3 end, int layerMask = DefaultCastMask)
         {
             var diff = end - start;
