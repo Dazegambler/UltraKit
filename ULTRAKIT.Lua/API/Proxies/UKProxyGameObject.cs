@@ -29,9 +29,24 @@ namespace ULTRAKIT.Lua.API.Proxies
         #region Instance Methods
         //TODO: AddComponent
         public bool CompareTag(string tag) => target.CompareTag(tag);
-        public Component GetComponent(string typeName) => target.GetComponent(typeName);
-        //TODO: GetComponentInChildren, GetComponentInParent, GetComponents, GetComponentsInChildren, GetComponentsInParent
         public void SetActive(bool value) => target.SetActive(value);
+        
+        // Copied from UKProxyComponent.cs
+        public Component GetComponent(string typeName) => target.GetComponent(typeName);
+        public Component GetComponentInParent(string typeName) => target.GetComponentsInParent<Component>()?.Where(t => t.GetType().Name == typeName)?.FirstOrDefault();
+        public Component GetComponentInChildren(string typeName) => target.GetComponentsInChildren<Component>()?.Where(t => t.GetType().Name == typeName)?.FirstOrDefault();
+        public Component[] GetComponents(string typeName) => target.GetComponents<Component>()?.Where(t => t.GetType().Name == typeName).ToArray();
+        public Component[] GetComponentsInChildren(string typeName) => target.GetComponentsInChildren<Component>()?.Where(t => t.GetType().Name == typeName).ToArray();
+        public Component[] GetComponentsInParent(string typeName) => target.GetComponentsInChildren<Component>()?.Where(t => t.GetType().Name == typeName).ToArray();
+        public DynValue TryGetComponent(string typeName) {
+            var component = target.GetComponents<Component>()?.Where(t => t.GetType().Name == typeName)?.FirstOrDefault();
+            var success = component != null;
+
+            if (component == null)
+                return DynValue.NewTuple(DynValue.Nil, DynValue.NewBoolean(success));
+            else
+                return DynValue.NewTuple(UserData.Create(component), DynValue.NewBoolean(success));
+        }
         #endregion
     }
 }
