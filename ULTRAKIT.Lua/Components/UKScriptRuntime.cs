@@ -18,25 +18,24 @@ namespace ULTRAKIT.Lua.Components
         public bool callUpdateWhilePaused;
         public bool initialized;
 
-        public static void Create(UKAddonData addon, UKScript orig, bool callUpdateWhilePaused) 
+        public static void Create(UKAddonData addon, UKScript orig, bool callUpdateWhilePaused)
         {
             var r = orig.gameObject.AddComponent<UKScriptRuntime>();
             r.addon = addon;
             r.callUpdateWhilePaused = callUpdateWhilePaused;
             r.data = r.GetComponent<UKScript>();
             r.runtime = new Script(CoreModules.Preset_SoftSandbox);
+
             r.initialized = true;
             r.enabled = true;
             r.Awake();
             r.OnEnable();
-            Debug.Log("INITIALIZED!");
         }
 
         public static void Create(UKAddonData data, GameObject go, bool callUpdateWhilePaused = false)
         {
             foreach (var script in go.GetComponentsInChildren<UKScript>(true))
             {
-                //Debug.Log(script.sourceCode.name);
                 Create(data, script, callUpdateWhilePaused);
             }
         }
@@ -80,52 +79,25 @@ namespace ULTRAKIT.Lua.Components
                 //TODO: proper logging
             }
         }
-        
+
         void Awake()
         {
             if (initialized == false) return;
-            
+
             Instances.Add(this);
-             try
-             {
-                 var func = runtime.LoadString(data.sourceCode.text);
-                 UKLuaAPI.ConstructScript(this);
-                 FuzzyCall(func);
-             } catch(SyntaxErrorException e)
-             {
-                 //TODO: propper logging
-                 Debug.LogError($"(ULTRAKIT Lua) {data.sourceCode.name} - SYNTAX ERROR: {e.DecoratedMessage}");
-                 this.enabled = false;
-             }           
-            Debug.LogError("M1KSU GET RID OF THE COROUTINES");
-            Debug.LogError("M1KSU GET RID OF THE COROUTINES");
-            Debug.LogError("M1KSU GET RID OF THE COROUTINES");
-            Debug.LogError("M1KSU GET RID OF THE COROUTINES");
-            Debug.LogError("M1KSU GET RID OF THE COROUTINES");
-            Debug.LogError("M1KSU GET RID OF THE COROUTINES");
-            Debug.LogError("M1KSU GET RID OF THE COROUTINES");
-            //data = GetComponent<UKScript>();
-            //runtime = new Script(CoreModules.Preset_SoftSandbox);
-
-            // StartCoroutine(AwakeAfterInit());
+            try
+            {
+                var func = runtime.LoadString(data.sourceCode.text);
+                UKLuaAPI.ConstructScript(this);
+                FuzzyCall(func);
+            }
+            catch (SyntaxErrorException e)
+            {
+                //TODO: propper logging
+                Debug.LogError($"(ULTRAKIT Lua) {data.sourceCode.name} - SYNTAX ERROR: {e.DecoratedMessage}");
+                this.enabled = false;
+            }
         }
-
-        // IEnumerator AwakeAfterInit()
-        // {
-        //     yield return new WaitUntil(() => initialized == true);
-        //     
-        //     try
-        //     {
-        //         var func = runtime.LoadString(data.sourceCode.text);
-        //         UKLuaAPI.ConstructScript(this);
-        //         FuzzyCall(func);
-        //     } catch(SyntaxErrorException e)
-        //     {
-        //         //TODO: propper logging
-        //         Debug.LogError($"(ULTRAKIT Lua) {data.sourceCode.name} - SYNTAX ERROR: {e.DecoratedMessage}");
-        //         this.enabled = false;
-        //     }
-        // }
 
         void Start()
         {
@@ -142,15 +114,8 @@ namespace ULTRAKIT.Lua.Components
         void OnEnable()
         {
             if (!initialized) return;
-            // StartCoroutine(OnEnableAfterInit());
             FuzzyCall(runtime.Globals, "OnEnable");
         }
-
-        // IEnumerator OnEnableAfterInit()
-        // {
-        //     yield return new WaitUntil(() => initialized == true);
-        //     FuzzyCall(runtime.Globals, "OnEnable");
-        // }
 
         void OnCollisionEnter(Collision other)
         {
@@ -185,7 +150,7 @@ namespace ULTRAKIT.Lua.Components
         void Update()
         {
             if (!initialized) return;
-            
+
             UKLuaAPI.UpdateScript(this);
 
             if (callUpdateWhilePaused || !MonoSingleton<OptionsManager>.Instance.paused)
@@ -197,7 +162,7 @@ namespace ULTRAKIT.Lua.Components
         void LateUpdate()
         {
             if (!initialized) return;
-            
+
             if (callUpdateWhilePaused || !MonoSingleton<OptionsManager>.Instance.paused)
                 FuzzyCall(runtime.Globals, "LateUpdate", Time.deltaTime);
         }
@@ -205,7 +170,7 @@ namespace ULTRAKIT.Lua.Components
         void FixedUpdate()
         {
             if (!initialized) return;
-            
+
             if (callUpdateWhilePaused || !MonoSingleton<OptionsManager>.Instance.paused)
                 FuzzyCall(runtime.Globals, "FixedUpdate");
         }
