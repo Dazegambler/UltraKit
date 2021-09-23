@@ -89,8 +89,8 @@ namespace ULTRAKIT.Loader
             a.Bundle = AssetBundle.LoadFromFile(filePath);
             a.Data = a.Bundle.LoadAllAssets<UKAddonData>()[0];
             
-            if (a.Data.GenerateDataFolder) CreateAddonDataDirectory(a);
-            Debug.Log(a.Data.GenerateDataFolder);
+            // if (a.Data.GenerateDataFolder) CreateAddonDataDirectory(a);
+            // Debug.Log(a.Data.GenerateDataFolder);
 
             registry.Add(a, new List<UKContent>());
             registry[a].AddRange(a.Bundle.LoadAllAssets<UKContentWeapon>());
