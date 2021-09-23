@@ -47,18 +47,10 @@ namespace ULTRAKIT.Lua.API.Statics
 
         // EnemyTrigger, Projectile, Environment
         const int DefaultCastMask = (1 << 12) | (1 << 14) | (1 << 8);
-        
-        public Collider[] OverlapSphere(Vector3 pos, float radius, int layermask, bool triggerinteraction = false)
-        {
-            if (triggerinteraction)
-            {
-                return Physics.OverlapSphere(pos, radius, layermask, QueryTriggerInteraction.Collide);
-            }
-            else
-            {
-                return Physics.OverlapSphere(pos, radius, layermask, QueryTriggerInteraction.Ignore);
-            }
-        }
+        public float gravity => Physics.gravity.y;
+        public Collider[] OverlapSphere(Vector3 pos, float radius, int layermask, bool ignoreTriggers = true) =>
+                Physics.OverlapSphere(pos, radius, layermask, ignoreTriggers ? QueryTriggerInteraction.Ignore : QueryTriggerInteraction.Collide);
+
         public Collider[] OverlapSphere(Vector3 pos, float radius, int layermask) => Physics.OverlapSphere(pos, radius, layermask);
         public Collider[] OverlapSphere(Vector3 pos, float radius) => Physics.OverlapSphere(pos, radius);
 
@@ -75,10 +67,75 @@ namespace ULTRAKIT.Lua.API.Statics
                     new UKProxyProjectile(hit.transform.GetComponentInChildren<Projectile>()));
                 return res;
             }
+            
+            return null;
+        }
+
+        public UKHitResult[] RaycastAll(Vector3 point, Vector3 dir, float maxDistance = Mathf.Infinity, int layerMask = DefaultCastMask, bool ignoreTriggers = true)
+        {
+            var all = Physics.RaycastAll(point, dir, maxDistance, layerMask, ignoreTriggers ? QueryTriggerInteraction.Ignore : QueryTriggerInteraction.Collide);
+            if(all.Length == 0)
+            {
+                return null;
+            }
+            var hitresults = new UKHitResult[all.Length];
+            for (int i = 0; i < all.Length; i++)
+            {
+                var hit = all[i];
+                var enemyIdentifier = hit.transform.GetComponentInChildren<EnemyIdentifier>() ?? hit.transform.GetComponentInParent<EnemyIdentifier>();
+                
+                var res = new UKHitResult(hit.point, hit.normal, hit.transform,
+                    new UKProxyEnemy(enemyIdentifier),
+                    new UKProxyProjectile(hit.transform.GetComponentInChildren<Projectile>()));
+                
+                hitresults[i] = res;
+            }
+
+            return hitresults;
+        }
+
+        public UKHitResult SphereCast(Vector3 point, float radius, Vector3 dir, float maxDistance = Mathf.Infinity, int layerMask = DefaultCastMask, bool ignoreTriggers = true)
+        {
+            if (Physics.SphereCast(point, radius, dir, out var hit, maxDistance, layerMask, ignoreTriggers ? QueryTriggerInteraction.Ignore : QueryTriggerInteraction.Collide))
+            {
+                var enemyIdentifier = hit.transform.GetComponentInChildren<EnemyIdentifier>() ?? hit.transform.GetComponentInParent<EnemyIdentifier>();
+
+                var res = new UKHitResult(
+                    hit.point, hit.normal, hit.transform,
+                    new UKProxyEnemy(enemyIdentifier), 
+                    new UKProxyProjectile(hit.transform.GetComponentInChildren<Projectile>()));
+                return res;
+            }
 
             return null;
         }
 
+        public UKHitResult[] SphereCastAll(Vector3 point, float radius, Vector3 dir, float maxDistance = Mathf.Infinity, int layerMask = DefaultCastMask, bool ignoreTriggers = true)
+        {
+            var all = Physics.SphereCastAll(point, radius, dir, maxDistance, layerMask, ignoreTriggers ? QueryTriggerInteraction.Ignore : QueryTriggerInteraction.Collide);
+            if(all.Length == 0)
+            {
+                return null;
+            }
+            var hitresults = new UKHitResult[all.Length];
+            for (int i = 0; i < all.Length; i++)
+            {
+                var hit = all[i];
+                var enemyIdentifier = hit.transform.GetComponentInChildren<EnemyIdentifier>() ?? hit.transform.GetComponentInParent<EnemyIdentifier>();
+                
+                var res = new UKHitResult(hit.point, hit.normal, hit.transform,
+                    new UKProxyEnemy(enemyIdentifier),
+                    new UKProxyProjectile(hit.transform.GetComponentInChildren<Projectile>()));
+                
+                hitresults[i] = res;
+            }
+            
+            return hitresults;
+        }
+
+        public bool CheckSphere(Vector3 position, float radius, int layerMask = DefaultCastMask, bool ignoreTriggers = true) =>
+                Physics.CheckSphere(position, radius, layerMask, ignoreTriggers ? QueryTriggerInteraction.Ignore : QueryTriggerInteraction.Collide);
+        
         public UKHitResult Linecast(Vector3 start, Vector3 end, int layerMask = DefaultCastMask)
         {
             var diff = end - start;
