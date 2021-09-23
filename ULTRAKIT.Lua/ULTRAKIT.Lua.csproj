@@ -117,6 +117,7 @@
     <Compile Include="API\Statics\UKStaticAssetDatabase.cs" />
     <Compile Include="AttributeHelper.cs" />
     <Compile Include="Attributes\UKScriptCallbacks.cs" />
+    <Compile Include="CoolLogger.cs" />
     <Compile Include="ReflectionExtensions.cs" />
     <Compile Include="ScriptHelper.cs" />
     <Compile Include="Components\UKScriptRuntime.cs" />

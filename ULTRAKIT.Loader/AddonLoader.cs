@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using ULTRAKIT.Data;
 using ULTRAKIT.Data.ScriptableObjects.Registry;
+using Debug = ULTRAKIT.Lua.Debug;
 using UnityEngine;
 
 namespace ULTRAKIT.Loader
@@ -59,7 +60,7 @@ namespace ULTRAKIT.Loader
         {
             if (!Directory.Exists(filePath))
             {
-                Debug.LogWarning($"Addons Directory Not Found...Creating Directory at {filePath}");
+                Debug.LogWarning($"Addons directory not found... creating directory at {filePath}");
                 Directory.CreateDirectory(filePath);
             }
 
@@ -97,12 +98,9 @@ namespace ULTRAKIT.Loader
             registry[a].AddRange(a.Bundle.LoadAllAssets<UKContentSpawnable>());
 
             // Injection of persistent GameObjects into the scene
-            Debug.Log("Instantiating persistent addons.");
             PersistentsInstantiator.InstantiatePersistents(a);
-            Debug.Log("Instantiated.");
             var persistentAddons = a.Bundle.LoadAllAssets<UKContentPersistent>();
             registry[a].AddRange(persistentAddons);
-            Debug.Log("Added to range.");
 
             return a;
         }

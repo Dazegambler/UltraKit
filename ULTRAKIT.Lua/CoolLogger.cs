@@ -1,28 +1,50 @@
 using System;
+using MoonSharp.Interpreter;
+using ULTRAKIT.Data.Components;
 using ULTRAKIT.Lua.Components;
 
 namespace ULTRAKIT.Lua
 {
-    public class CoolLogger
+    public static class Debug
     {
-        public static void Log(UKScriptRuntime c, string msg)
+        // https://i.redd.it/83jbj28hnq461.png
+        
+        private const string nl = "\n";
+        private const string in_str = "[Info   :  Ultrakit] ";
+        private const string wr_str = "[Warning:  Ultrakit] ";
+        private const string er_str = "[Error  :  Ultrakit] ";
+        private static Action<string, ConsoleColor> wrt = BCE.console.Write;
+        
+        public static void Log(string msg, UKScriptRuntime c = null)
         {
-            var mod = Trimmy(c);
-            BCE.console.Write($"\n[UKAddon: {mod}] ", ConsoleColor.Cyan);
-            BCE.console.Write($"{msg}\n", ConsoleColor.White);
-        }
-
-        public static void LogError(UKScriptRuntime c, string msg, string type)
-        {
-            var mod = Trimmy(c);
-            BCE.console.Write($"\n[UKAddon: {mod}] {type}: ", ConsoleColor.DarkRed);
-            BCE.console.Write($"{msg}\n", ConsoleColor.Red);
+            wrt(ad_str(c) ?? in_str, c ? ConsoleColor.Cyan : ConsoleColor.White);
+            wrt(msg+nl, ConsoleColor.Gray);
         }
         
-        private static string Trimmy(UKScriptRuntime c)
+        public static void LogWarning(string msg, UKScriptRuntime c = null)
         {
+            wrt(ad_str(c) ?? wr_str, ConsoleColor.Yellow);
+            wrt(msg+nl, ConsoleColor.Yellow);
+        }
+        
+        public static void LogError(string msg, UKScriptRuntime c = null)
+        {
+            wrt(ad_str(c) == null ? er_str : ad_str(c), ConsoleColor.DarkRed);
+            wrt(msg+nl, ConsoleColor.Red);
+        }
+
+        public static void LogError(InterpreterException e, UKScriptRuntime c, string t, UKScript d)
+        {
+            LogError($"{t} in script \"{d.sourceCode.name}\": {e.DecoratedMessage}", c);
+        }
+        
+        
+        private static string ad_str(UKScriptRuntime c)
+        {
+            if (!c) return null;
             var mod = c.addon.ModName.Trim();
-            return mod.Length <= 9 ? mod : mod.Remove(6) + "...";
+            var str = mod.Length > 9 ? mod.Remove(8) + "…" : mod;
+            return $"[UKAddon: {str}] ";
         }
     }
 }

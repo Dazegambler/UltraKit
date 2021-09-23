@@ -128,7 +128,7 @@ namespace ULTRAKIT.Lua.API
                 
                 if(inst.name == null)
                 {
-                    Debug.LogError($"HECKTECK FORGOT TO GIVE {staticType.Name} A STATIC NAME, GO SHOUT AT HIM ON DISCORD RIGHT NOW");
+                    UnityEngine.Debug.LogError($"HECKTECK FORGOT TO GIVE {staticType.Name} A STATIC NAME, GO SHOUT AT HIM ON DISCORD RIGHT NOW");
                     continue;
                 }
 
@@ -198,7 +198,7 @@ namespace ULTRAKIT.Lua.API
         public static void ConstructScript(UKScriptRuntime c)
         {
             // Globals
-            c.runtime.Options.DebugPrint = s => CoolLogger.Log(c, s);
+            c.runtime.Options.DebugPrint = s => Debug.Log(s, c);
             c.runtime.Globals["gameObject"] = c.gameObject;
             c.runtime.Globals["transform"] = c.transform;
             c.runtime.Globals["addon"] = c.addon;
