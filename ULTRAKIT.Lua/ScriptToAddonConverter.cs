@@ -10,15 +10,6 @@ namespace ULTRAKIT.Lua
     // But feel free to move it around...
     public class ScriptToAddonConverter
     {
-        public static UKAddonData GetAddonFromScript(Script script)
-        {
-            Debug.Log("Getting a call!");
-            Debug.Log("In the inventory we have:");
-            foreach (var instance in UKScriptRuntime.Instances)
-            {
-                Debug.Log(instance.addon == null);
-            }
-            return UKScriptRuntime.Instances.First(t => t.runtime == script).addon;
-        } 
+        public static UKAddonData GetAddonFromScript(Script script) => UKScriptRuntime.Instances.First(t => t.runtime == script).addon;
     }
 }
