@@ -15,8 +15,6 @@ namespace ULTRAKIT.Lua.API.Proxies
         {
         }
 
-        private Type toType(string typeName) => Type.GetType($"UnityEngine.{typeName}, UnityEngine"); // I long for the sweet release of death
-
         #region Properties
         public GameObject gameObject => target.gameObject;
         public string tag => target.tag;
@@ -40,7 +38,7 @@ namespace ULTRAKIT.Lua.API.Proxies
             else
                 return DynValue.NewTuple(UserData.Create(component), DynValue.NewBoolean(success));
         }
-        public Component[] GetComponents(string typeName) => target.GetComponents(toType(typeName));
+        public Component[] GetComponents(string typeName) => target.GetComponents<Component>()?.Where(t => t.GetType().Name == typeName).ToArray();
         public Component[] GetComponentsInChildren(string typeName) => target.GetComponentsInChildren<Component>()?.Where(t => t.GetType().Name == typeName).ToArray();
         public Component[] GetComponentsInParent(string typeName) => target.GetComponentsInChildren<Component>()?.Where(t => t.GetType().Name == typeName).ToArray();
         //SendMessage, SendMessageUpwards
