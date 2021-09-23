@@ -39,6 +39,12 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>..\lib\Assembly-CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="BCE, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\lib\BCE.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx, Version=5.4.9.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\lib\BepInEx.dll</HintPath>
+    </Reference>
     <Reference Include="MoonSharp.Interpreter">
       <HintPath>..\lib\MoonSharp.Interpreter.dll</HintPath>
     </Reference>
@@ -53,6 +59,9 @@
     <Reference Include="System.Xml" />
     <Reference Include="Unity.InputSystem">
       <HintPath>..\lib\Unity.InputSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\lib\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
