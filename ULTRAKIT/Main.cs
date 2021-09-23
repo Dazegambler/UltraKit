@@ -1,13 +1,10 @@
 ﻿using BepInEx;
-using System.IO;
-using System.Linq;
 using ULTRAKIT.Core;
 using ULTRAKIT.Data.ScriptableObjects.Registry;
 using ULTRAKIT.Loader;
 using ULTRAKIT.Lua.API;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections.Generic;
 
 namespace ULTRAKIT
 {
@@ -24,26 +21,15 @@ namespace ULTRAKIT
 
         public void Update()
         {
+            // Addon refresh
             if (Keyboard.current.f8Key.wasPressedThisFrame)
             {
-                // Delete persistent prefabs
-                /*foreach (var ukContents in AddonLoader.registry.Values)
-                {
-                    
-                    // Fancy talk for "is List<UKContent> actually List<UKContentPersistent>"
-                    if (ukContents.GetType().IsAssignableFrom(typeof(List<UKContentPersistent>)))
-                    {
-                        Debug.Log("m1ksu your thing worked!!");
-                        // WAIT. Addons think that they load in at game start...
-                        // And could behave badly if they get chucked into the game midway through.
-                        // So I need to implement a way for the objects to ignore reloading if the game is goin...
-                        // But what if the addon has an error? Or the user wants to unload?
-                        // For this we have...
-                        // TODO: fix this
-                        ukContents.ForEach(go=>Destroy(go as UKContentPersistent));
-                    }
-                    
-                }*/
+                // JetBrains Rider is suggesting me to turn this into a LINQ expression.
+                // You better pray to God that I don't.
+                foreach (var ukContents in AddonLoader.registry.Values)
+                    foreach (var content in ukContents)
+                        if (content is UKContentPersistent persistent) 
+                            Destroy(persistent.Prefab);
                 
                 foreach(var addon in AddonLoader.registry.Keys)
                 {
@@ -53,7 +39,7 @@ namespace ULTRAKIT
 
                 Lua.API.Statics.UKStaticRegistry.addonData.Clear();
                 Lua.API.Statics.UKStaticRegistry.sharedData.Clear();
-
+                
                 AddonLoader.registry.Clear();
 
                 CoreContent.Initialize();
@@ -63,7 +49,7 @@ namespace ULTRAKIT
             }
         }
 
-        private void RefreshGuns()
+        private static void RefreshGuns()
         {
             // This is expected to throw an error since there's not always a GunSetter present (eg. in menus)
             try
@@ -78,13 +64,7 @@ namespace ULTRAKIT
             } catch {}
         }
 
-        private void RefreshPersistents()
-        {
-            
-        }
-
-
-        void OnApplicationQuit()
+        private void OnApplicationQuit()
         {
             // Ensures that the mod can be uninstalled without issue
             PlayerPrefs.SetInt("CurSlo", 1);
