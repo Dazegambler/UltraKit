@@ -1,4 +1,5 @@
 bin
 .vs
+.idea
 obj
 lib/Assembly-CSharp.dll
