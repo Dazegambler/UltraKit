@@ -47,7 +47,8 @@ namespace ULTRAKIT.Lua.API.Statics
         [UKScriptConstructor]
         void Construct(UKScriptRuntime s)
         {
-            bindings.Add(s.runtime, new List<UKBinding>());
+            if (!bindings.ContainsKey(s.runtime)) // This function is executing multiple times for me. WTF?
+                bindings.Add(s.runtime, new List<UKBinding>());
         }
 
         [UKScriptDestructor]

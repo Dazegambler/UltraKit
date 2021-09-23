@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using MoonSharp.Interpreter;
 using ULTRAKIT.Data;
 using ULTRAKIT.Data.Components;
@@ -29,7 +30,7 @@ namespace ULTRAKIT.Lua.Components
             r.data = r.GetComponent<UKScript>();
             r.runtime = new Script(CoreModules.Preset_SoftSandbox);
             // r.logger = BepInEx.Logging.Logger.CreateLogSource(r.addon.ModName);
-
+            
             r.initialized = true;
             r.enabled = true;
             r.Awake();
@@ -91,8 +92,8 @@ namespace ULTRAKIT.Lua.Components
         void Awake()
         {
             if (initialized == false) return;
-
-            Instances.Add(this);
+            if (!Instances.Contains(this)) Instances.Add(this);
+            
             try
             {
                 var func = runtime.LoadString(data.sourceCode.text);

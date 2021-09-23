@@ -204,12 +204,14 @@ namespace ULTRAKIT.Lua.API
             // Statics
             foreach (var pair in luaStatics)
             {
+                if (c.runtime.Globals[pair.Key] != null) continue;
                 c.runtime.Globals[pair.Key] = pair.Value;
             }
 
             // Structs
             foreach(var structType in luaStructs)
             {
+                if (c.runtime.Globals[structType.Name] != null) continue;
                 c.runtime.Globals[structType.Name] = structType;
             }
 
@@ -227,7 +229,6 @@ namespace ULTRAKIT.Lua.API
             
             void Invoke(ScriptExecutionContext ctx, DynValue func, float time)
             {
-                Debug.AAA();
                 if (func.Type != DataType.Function)
                 {
                     c.LuaError(ScriptRuntimeException.AttemptToCallNonFunc(func.Type));
@@ -237,15 +238,9 @@ namespace ULTRAKIT.Lua.API
                 ctx.OwnerScript.GetRuntime().Invoke(func, time);
             }
 
-            void tInvoke(DynValue dyn, float fl)
-            {
-                Debug.Log(dyn.ToString() + fl.ToString());
-            }
-
             c.runtime.Globals["Destroy"] = (Action<Object>)Object.Destroy;
             c.runtime.Globals["printError"] = (Action<Script, string>)PrintError;
             c.runtime.Globals["Invoke"] = (Action<ScriptExecutionContext, DynValue, float>)Invoke;
-            // c.runtime.Globals["Invoke"] = (Action<DynValue, float>)tInvoke;
         }
 
         ///<summary>
