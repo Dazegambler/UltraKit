@@ -10,6 +10,7 @@ using ULTRAKIT.Lua.Attributes;
 using ULTRAKIT.Lua.Components;
 using UnityEngine;
 using MoonSharp.Interpreter.Serialization;
+using UnityEngine.UI;
 
 namespace ULTRAKIT.Lua.API
 {
@@ -86,6 +87,7 @@ namespace ULTRAKIT.Lua.API
             RegisterUnityStruct<Color>();
             RegisterUnityStruct<Mathf>();
             RegisterUnityStruct<Bounds>();
+            RegisterUnityStruct<Rect>();
             RegisterUnityStruct<ParticleSystem.EmissionModule>();
 
             RegisterUnityStruct<SpriteDrawMode>();
@@ -108,8 +110,7 @@ namespace ULTRAKIT.Lua.API
             UserData.RegisterType<RenderTexture>();
             UserData.RegisterType<ScanningStuff>();
             UserData.RegisterType<AnimationCurve>();
-
-            // TODO: evaluate if we should expose these as a whole. Probably no harm if it can't majorly fuck up the system or saves
+            UserData.RegisterType<Image>();
             UserData.RegisterType<Camera>();
             UserData.RegisterType<Texture2D>();
             UserData.RegisterType<Sprite>();
