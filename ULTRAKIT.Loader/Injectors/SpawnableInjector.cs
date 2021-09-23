@@ -154,16 +154,17 @@ namespace ULTRAKIT.Loader.Registries
                 }
 
                 __instance.StopAllCoroutines();
-                __instance.StartCoroutine("HandClosedAnimationThingy");
+                __instance.StartCoroutine("HandClosedAnimationThing");
 
                 ___jabSound.Play();
                 ___armAnimator.SetTrigger(Animator.StringToHash("Punch"));
                 RaycastHit raycastHit;
-                if (Physics.Raycast(__instance.cameraCtrl.transform.position, __instance.cameraCtrl.transform.forward, out raycastHit, 50f, ___raycastLayers))
+                if (Physics.Raycast(__instance.cameraCtrl.transform.position, __instance.cameraCtrl.transform.forward, out raycastHit, 100f, ___raycastLayers))
                 {
                     var goreZone = __instance.GetType().GetMethod("GetGoreZone", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(__instance, new object[] { }) as GoreZone;
                     var go = GameObject.Instantiate<GameObject>(___currentObject.gameObject, raycastHit.point, Quaternion.identity, goreZone.transform);
                     go.transform.forward = -MonoSingleton<NewMovement>.Instance.transform.forward;
+                    go.SetActive(true);
                 }
             }
             if (MonoSingleton<InputManager>.Instance.InputSource.Fire2.WasPerformedThisFrame)

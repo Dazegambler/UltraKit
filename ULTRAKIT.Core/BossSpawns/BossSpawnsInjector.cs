@@ -35,6 +35,7 @@ namespace ULTRAKIT.Core.BossSpawns
 
             Loader.AddonLoader.registry.Add(b, new List<UKContent>());
             Loader.AddonLoader.registry[b].AddRange(Enemies());
+            Loader.AddonLoader.registry[b].Add(GreedV2());
         }
 
         public static List<UKContentSpawnable> Enemies()
@@ -58,14 +59,26 @@ namespace ULTRAKIT.Core.BossSpawns
             a.Icon = CoreContent.UIBundle.LoadAsset<Sprite>($"{Enemy}");
             return a;
         }
-        public static void V2dif(bool greed)
+        static UKContentSpawnable GreedV2()
         {
-            var v2 = PrefabFind("V2").GetComponent<V2>();
-            var mch = PrefabFind("V2").GetComponent<Machine>();
+            UKContentSpawnable a = ScriptableObject.CreateInstance<UKContentSpawnable>();
+
+            a.Name = "V2Greed";
+
+            a.type = Type.Enemy;
+
+            a.Icon = CoreContent.UIBundle.LoadAsset<Sprite>("V2Greed");
+
+            a.Prefab = GameObject.Instantiate(PrefabFind("V2"));
+            GameObject.DontDestroyOnLoad(a.Prefab);
+            a.Prefab.SetActive(false);
+
+            var v2 = a.Prefab.GetComponent<V2>();
+            var mch = a.Prefab.GetComponent<Machine>();
             List<GameObject> weps = new List<GameObject>(v2.weapons);
 
             GameObject nail = null;
-            if(nail == null)
+            if (nail == null)
             {
                 foreach (Transform obj in v2.gameObject.GetComponentsInChildren<Transform>(true))
                 {
@@ -77,28 +90,16 @@ namespace ULTRAKIT.Core.BossSpawns
                     }
                 }
             }
-            if(greed == true)
+            v2.secondEncounter = true;
+            mch.health = 80f;
+            nail.SetActive(true);
+            if (weps.Contains(nail) == false)
             {
-                v2.secondEncounter = true;
-                mch.health = 80f;
-                nail.SetActive(true);
-                if (weps.Contains(nail) == false)
-                {
-                    weps.Add(nail);
-                    v2.weapons = weps.ToArray();
-                }
+                weps.Add(nail);
+                v2.weapons = weps.ToArray();
             }
-            else
-            {
-                v2.secondEncounter = false;
-                mch.health = 40f;
-                nail.SetActive(false);
-                if (weps.Contains(nail) == true)
-                {
-                    weps.Remove(nail);
-                    v2.weapons = weps.ToArray();
-                }
-            }
+
+            return a;
         }
         public static GameObject PrefabFind(string name)
         {
