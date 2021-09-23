@@ -6,6 +6,7 @@ namespace ULTRAKIT.Data
     {
         public string ModName;
         public string Author;
+        // public bool GenerateDataFolder;
 
         [TextArea]
         public string ModDesc;

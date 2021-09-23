@@ -44,6 +44,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -64,12 +65,18 @@
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\lib\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\lib\UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.ParticleSystemModule">
       <HintPath>..\lib\UnityEngine.ParticleSystemModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\lib\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +95,7 @@
     <Compile Include="API\Proxies\UKProxyComponent.cs" />
     <Compile Include="API\Proxies\UKProxyGameObject.cs" />
     <Compile Include="API\Proxies\UKProxyObject.cs" />
+    <Compile Include="API\Statics\UKStaticFileLoader.cs" />
     <Compile Include="API\Statics\UKStaticRegistry.cs" />
     <Compile Include="API\Statics\UKStaticGameObject.cs" />
     <Compile Include="API\Statics\UKStaticInput.cs" />
@@ -104,6 +112,7 @@
     <Compile Include="ScriptHelper.cs" />
     <Compile Include="Components\UKScriptRuntime.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScriptToAddonConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DelegatePropertySnippet.snippet" />
