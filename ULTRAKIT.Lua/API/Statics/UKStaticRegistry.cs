@@ -31,14 +31,15 @@ namespace ULTRAKIT.Lua.API.Statics
 
         public DynValue Get(Script script, string name)
         {
-            var addon = ScriptToAddonConverter.GetAddonFromScript(script).GetInstanceID();
+            var runtime = ScriptToAddonConverter.GetRuntimeFromScript(script);
+            var addon = runtime.addon.GetInstanceID();
             try
             {
                 return addonData[(addon, name)];
             }
             catch (KeyNotFoundException)
             {
-                Debug.LogError("Key not found in database.");
+                Debug.LogError("Key not found in database.", ScriptToAddonConverter.GetRuntimeFromScript(script));
                 return null;
             }
         }
@@ -68,7 +69,7 @@ namespace ULTRAKIT.Lua.API.Statics
             }
             catch (KeyNotFoundException)
             {
-                Debug.LogError("Key not found in database.");
+                Debug.LogError("Key not found in database.", ScriptToAddonConverter.GetRuntimeFromScript(script));
                 return null;
             }
         }
