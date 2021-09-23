@@ -11,5 +11,6 @@ namespace ULTRAKIT.Lua
     public class ScriptToAddonConverter
     {
         public static UKAddonData GetAddonFromScript(Script script) => UKScriptRuntime.Instances.First(t => t.runtime == script).addon;
+        public static UKScriptRuntime GetRuntimeFromScript(Script script) => UKScriptRuntime.Instances.First(t => t.runtime == script);
     }
 }
