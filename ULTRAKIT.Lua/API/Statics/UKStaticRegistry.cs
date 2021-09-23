@@ -17,7 +17,8 @@ namespace ULTRAKIT.Lua.API.Statics
 
         public void Set(Script script, string name, DynValue value)
         {
-            var addon = GetAddonFromScript(script);
+            var addon = ScriptToAddonConverter.GetAddonFromScript(script).GetInstanceID();
+            
             try
             {
                 addonData.Add((addon, name), value);
@@ -30,7 +31,7 @@ namespace ULTRAKIT.Lua.API.Statics
 
         public DynValue Get(Script script, string name)
         {
-            var addon = GetAddonFromScript(script);
+            var addon = ScriptToAddonConverter.GetAddonFromScript(script).GetInstanceID();
             try
             {
                 return addonData[(addon, name)];
@@ -72,6 +73,5 @@ namespace ULTRAKIT.Lua.API.Statics
             }
         }
 
-        int GetAddonFromScript(Script script) => Components.UKScriptRuntime.Instances.Where(t => t.runtime == script).First().addon.GetInstanceID();
     }
 }
