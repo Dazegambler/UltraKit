@@ -197,16 +197,8 @@ namespace ULTRAKIT.Lua.API
         ///</summary>
         public static void ConstructScript(UKScriptRuntime c)
         {
-            var log = new Action<string>(msg =>
-            {
-                var mod = c.addon.ModName.Trim();
-                var str = mod.Length <= 9 ? mod: mod.Remove(6) + "..."; 
-                BCE.console.Write($"\n[UKAddon: {str}] ", ConsoleColor.Cyan);
-                BCE.console.Write(msg, ConsoleColor.White);
-            });
-            
             // Globals
-            c.runtime.Options.DebugPrint = log;
+            c.runtime.Options.DebugPrint = s => CoolLogger.Log(c, s);
             c.runtime.Globals["gameObject"] = c.gameObject;
             c.runtime.Globals["transform"] = c.transform;
             c.runtime.Globals["addon"] = c.addon;

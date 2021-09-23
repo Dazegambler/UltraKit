@@ -5,6 +5,7 @@ using ULTRAKIT.Data.Components;
 using ULTRAKIT.Lua.API;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 namespace ULTRAKIT.Lua.Components
 {
@@ -56,7 +57,8 @@ namespace ULTRAKIT.Lua.Components
             catch (ScriptRuntimeException e)
             {
                 //TODO: propper logging
-                Debug.LogError($"(ULTRAKIT Lua) RUNTIME ERROR: {data.sourceCode.name} - {e.DecoratedMessage}");
+                CoolLogger.LogError(this, e.DecoratedMessage, "RUNTIME ERROR");
+                // Debug.LogError($"(ULTRAKIT Lua) RUNTIME ERROR: {data.sourceCode.name} - {e.DecoratedMessage}");
             }
         }
 
@@ -71,7 +73,8 @@ namespace ULTRAKIT.Lua.Components
                 catch (ScriptRuntimeException e)
                 {
                     //TODO: propper logging
-                    Debug.LogError($"(ULTRAKIT Lua) RUNTIME ERROR: {data.sourceCode.name} - {e.DecoratedMessage}");
+                    CoolLogger.LogError(this, e.DecoratedMessage, "RUNTIME ERROR");
+                    // Debug.LogError($"(ULTRAKIT Lua) RUNTIME ERROR: {data.sourceCode.name} - {e.DecoratedMessage}");
                 }
             }
             else
@@ -94,7 +97,8 @@ namespace ULTRAKIT.Lua.Components
             catch (SyntaxErrorException e)
             {
                 //TODO: propper logging
-                Debug.LogError($"(ULTRAKIT Lua) {data.sourceCode.name} - SYNTAX ERROR: {e.DecoratedMessage}");
+                CoolLogger.LogError(this, e.DecoratedMessage, "SYNTAX ERROR");
+                // Debug.LogError($"(ULTRAKIT Lua) {data.sourceCode.name} - SYNTAX ERROR: {e.DecoratedMessage}");
                 this.enabled = false;
             }
         }
@@ -115,6 +119,7 @@ namespace ULTRAKIT.Lua.Components
         {
             if (!initialized) return;
             FuzzyCall(runtime.Globals, "OnEnable");
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
         void OnCollisionEnter(Collision other)
@@ -178,6 +183,13 @@ namespace ULTRAKIT.Lua.Components
         void OnDisable()
         {
             FuzzyCall(runtime.Globals, "OnDisable");
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+
+        void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            FuzzyCall(runtime.Globals, "OnSceneLoaded");
+            Debug.Log(scene.name);
         }
     }
 }

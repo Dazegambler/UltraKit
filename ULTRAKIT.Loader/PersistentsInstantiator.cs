@@ -12,6 +12,7 @@ namespace ULTRAKIT.Loader
             foreach (var persistent in a.Bundle.LoadAllAssets<UKContentPersistent>())
             {
                 var go = Object.Instantiate(persistent.Prefab);
+                persistent.Prefab = go;
                 Object.DontDestroyOnLoad(go);
                 UKScriptRuntime.Create(a.Data, go, true);
             }
