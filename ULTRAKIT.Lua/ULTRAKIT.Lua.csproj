@@ -119,10 +119,9 @@
     <Compile Include="Attributes\UKScriptCallbacks.cs" />
     <Compile Include="CoolLogger.cs" />
     <Compile Include="ReflectionExtensions.cs" />
-    <Compile Include="ScriptHelper.cs" />
+    <Compile Include="ScriptExtensions.cs" />
     <Compile Include="Components\UKScriptRuntime.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScriptToAddonConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DelegatePropertySnippet.snippet" />

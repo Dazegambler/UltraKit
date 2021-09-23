@@ -4,14 +4,14 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
+using BCE;
 using ULTRAKIT.Lua.API.Abstract;
 using ULTRAKIT.Lua.API.Proxies;
 using ULTRAKIT.Lua.Attributes;
 using ULTRAKIT.Lua.Components;
 using UnityEngine;
-using MoonSharp.Interpreter.Serialization;
 using UnityEngine.UI;
-using BCE;
+using Object = UnityEngine.Object;
 
 namespace ULTRAKIT.Lua.API
 {
@@ -197,12 +197,10 @@ namespace ULTRAKIT.Lua.API
         ///</summary>
         public static void ConstructScript(UKScriptRuntime c)
         {
-            // Globals
             c.runtime.Options.DebugPrint = s => Debug.Log(s, c);
-            c.runtime.Globals["gameObject"] = c.gameObject;
-            c.runtime.Globals["transform"] = c.transform;
-            c.runtime.Globals["addon"] = c.addon;
-
+            
+            SetGlobals(c);
+            
             // Statics
             foreach (var pair in luaStatics)
             {
@@ -216,6 +214,38 @@ namespace ULTRAKIT.Lua.API
             }
 
             constructMethods?.Invoke(c);
+        }
+
+        private static void SetGlobals(UKScriptRuntime c)
+        {
+            // Global variables
+            c.runtime.Globals["gameObject"] = c.gameObject;
+            c.runtime.Globals["transform"] = c.transform;
+            
+            // Global methods
+            void PrintError(Script script, string s) => Debug.LogError(s, script.GetRuntime());
+            
+            void Invoke(ScriptExecutionContext ctx, DynValue func, float time)
+            {
+                Debug.AAA();
+                if (func.Type != DataType.Function)
+                {
+                    c.LuaError(ScriptRuntimeException.AttemptToCallNonFunc(func.Type));
+                    return;
+                }
+                
+                ctx.OwnerScript.GetRuntime().Invoke(func, time);
+            }
+
+            void tInvoke(DynValue dyn, float fl)
+            {
+                Debug.Log(dyn.ToString() + fl.ToString());
+            }
+
+            c.runtime.Globals["Destroy"] = (Action<Object>)Object.Destroy;
+            c.runtime.Globals["printError"] = (Action<Script, string>)PrintError;
+            c.runtime.Globals["Invoke"] = (Action<ScriptExecutionContext, DynValue, float>)Invoke;
+            // c.runtime.Globals["Invoke"] = (Action<DynValue, float>)tInvoke;
         }
 
         ///<summary>

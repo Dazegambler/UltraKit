@@ -62,7 +62,7 @@ namespace ULTRAKIT.Lua.Components
                 //TODO: propper logging
                 // logger.LogError($"RUNTIME ERROR: {data.sourceCode.name} - {e.DecoratedMessage}");
                 
-                LuaError(e);
+                this.LuaError(e);
                 // Debug.LogError($"(ULTRAKIT Lua) RUNTIME ERROR: {data.sourceCode.name} - {e.DecoratedMessage}");
             }
         }
@@ -79,7 +79,7 @@ namespace ULTRAKIT.Lua.Components
                 {
                     //TODO: propper logging
                     // logger.LogError($"RUNTIME ERROR: {data.sourceCode.name} - {e.DecoratedMessage}");
-                    LuaError(e);
+                    this.LuaError(e);
                 }
             }
             else
@@ -88,9 +88,6 @@ namespace ULTRAKIT.Lua.Components
             }
         }
 
-        public void LuaError(SyntaxErrorException   e) => Debug.LogError(e, this, "SYNTAX ERROR", data);
-        public void LuaError(ScriptRuntimeException e) => Debug.LogError(e, this, "RUNTIME ERROR", data);
-        
         void Awake()
         {
             if (initialized == false) return;
@@ -106,7 +103,7 @@ namespace ULTRAKIT.Lua.Components
             {
                 //TODO: propper logging
                 // logger.LogError($"RUNTIME ERROR: {data.sourceCode.name} - {e.DecoratedMessage}");
-                LuaError(e);
+                this.LuaError(e);
                 enabled = false;
             }
         }
@@ -198,6 +195,17 @@ namespace ULTRAKIT.Lua.Components
         {
             FuzzyCall(runtime.Globals, "OnSceneLoaded");
             Debug.Log(scene.name);
+        }
+
+        public void Invoke(DynValue func, float delay)
+        {
+            StartCoroutine(Delay());
+            
+            IEnumerator Delay()
+            {
+                yield return new WaitForSeconds(delay);
+                func.Function.Call();
+            }
         }
     }
 }
