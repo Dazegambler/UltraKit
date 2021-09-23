@@ -39,11 +39,12 @@ namespace ULTRAKIT.Lua
             LogError($"{t} in script \"{d.sourceCode.name}\": {e.DecoratedMessage ?? e.Message}", c);
         }
 
-        public static void AAA(string m = "AAA",
+        public static void AAA(object msg = null,
             [CallerFilePath]   string f = "",
             [CallerMemberName] string n = "",
             [CallerLineNumber] int l = 0)
         {
+            var m = msg as string ?? "AAA";
             var c1 = ConsoleColor.White;
             var c2 = ConsoleColor.Green;
             wrt(db_str, c1);
