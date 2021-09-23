@@ -15,14 +15,11 @@ namespace ULTRAKIT
     public class Plugin : BaseUnityPlugin
     {
 
-        public static string BundlePath = Directory.GetCurrentDirectory() + "/AssetBundles";
-
         public void Start()
         {
             CoreContent.Initialize();
             UKLuaAPI.Initialize();
-            Debug.Log("ok here we go");
-            AddonLoader.Initialize(BundlePath);
+            AddonLoader.Initialize(AddonLoader.BundlePath);
         }
 
         public void Update()
@@ -60,7 +57,7 @@ namespace ULTRAKIT
                 AddonLoader.registry.Clear();
 
                 CoreContent.Initialize();
-                AddonLoader.LoadAllAddons(BundlePath);
+                AddonLoader.LoadAllAddons(AddonLoader.BundlePath);
 
                 RefreshGuns();
             }
