@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
 using MoonSharp.Interpreter;
 using ULTRAKIT.Data;
 using ULTRAKIT.Data.Components;
 using ULTRAKIT.Lua.API;
 using UnityEngine;
-using System.Collections.Generic;
-using BepInEx.Logging;
 using UnityEngine.SceneManagement;
 
 namespace ULTRAKIT.Lua.Components
 {
     public class UKScriptRuntime : MonoBehaviour
     {
-        public static List<UKScriptRuntime> Instances = new List<UKScriptRuntime>();
+        public static readonly List<UKScriptRuntime> Instances = new List<UKScriptRuntime>();
 
         public UKScript data;
         public Script runtime;
@@ -28,7 +26,10 @@ namespace ULTRAKIT.Lua.Components
             r.addon = addon;
             r.callUpdateWhilePaused = callUpdateWhilePaused;
             r.data = r.GetComponent<UKScript>();
+            
             r.runtime = new Script(CoreModules.Preset_SoftSandbox);
+            
+            // This is for proper logging. But our logging is COOL
             // r.logger = BepInEx.Logging.Logger.CreateLogSource(r.addon.ModName);
             
             r.initialized = true;

@@ -7,6 +7,7 @@ using System.Reflection;
 using BCE;
 using ULTRAKIT.Lua.API.Abstract;
 using ULTRAKIT.Lua.API.Proxies;
+using ULTRAKIT.Lua.API.Statics;
 using ULTRAKIT.Lua.Attributes;
 using ULTRAKIT.Lua.Components;
 using UnityEngine;
@@ -231,16 +232,35 @@ namespace ULTRAKIT.Lua.API
             {
                 if (func.Type != DataType.Function)
                 {
-                    c.LuaError(ScriptRuntimeException.AttemptToCallNonFunc(func.Type));
+                    ctx.LuaError(ScriptRuntimeException.AttemptToCallNonFunc(func.Type));
                     return;
                 }
                 
                 ctx.OwnerScript.GetRuntime().Invoke(func, time);
             }
 
+            Sprite ImageFromBase64(string base64)
+            {
+                var imageBytes = Convert.FromBase64String(base64);
+                var tex = new Texture2D(2, 2);
+                tex.LoadImage(imageBytes);
+                var sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
+                return sprite;
+            }
+
+            Sprite LoadImage(ScriptExecutionContext ctx, string path)
+            {
+                var img = UKStaticFileLoader.LoadImage(ctx, path);
+                if (img is null) return null;
+                var rect = new Rect(0, 0, img.width, img.height);
+                return Sprite.Create(img, rect, Vector2.one/2);
+            }
+                
             c.runtime.Globals["Destroy"] = (Action<Object>)Object.Destroy;
             c.runtime.Globals["printError"] = (Action<Script, string>)PrintError;
             c.runtime.Globals["Invoke"] = (Action<ScriptExecutionContext, DynValue, float>)Invoke;
+            c.runtime.Globals["ImageFromBase64"] = (Func<string, Sprite>)ImageFromBase64;
+            c.runtime.Globals["LoadImage"] = (Func<ScriptExecutionContext, string, Sprite>)LoadImage;
         }
 
         ///<summary>

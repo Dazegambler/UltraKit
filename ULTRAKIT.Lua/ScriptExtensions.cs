@@ -17,6 +17,7 @@ namespace ULTRAKIT.Lua
         public static UKScript        GetUKScript(this Script script) => script.GetRuntime().data;
 
         // Extensions for UKScriptRuntime
+        [Obsolete("Use extension method ScriptExecutionContext.LuaError() instead")]
         public static void LuaError(this UKScriptRuntime runtime, InterpreterException e) => Debug.LogException(e, runtime);
 
         // Extensions for ScriptExecutionContext
