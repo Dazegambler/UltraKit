@@ -21,13 +21,11 @@ namespace ULTRAKIT.Core.ModMenu
 
         Loader.Addon Selected;
 
-        Rect
-            guirect = new Rect(20 / (Screen.width / 1920), 40 / (Screen.height / 1080), addonMenuWidth, 60),
-            wind;
-        Rect
-            _scroll = Rect.zero;
-        Vector2
-            Scroll = Vector2.zero;
+        Rect guirect = new Rect(20 / (Screen.width / 1920), 40 / (Screen.height / 1080), addonMenuWidth, 60);
+        Rect wind;
+
+        Rect _scroll = Rect.zero;
+        Vector2 Scroll = Vector2.zero;
 
         void OnGUI()
         {
@@ -48,7 +46,7 @@ namespace ULTRAKIT.Core.ModMenu
                     }
                     if (GUI.Button(new Rect(addonMenuWidth + 30, 170, addonMenuWidth, 30), "ENABLE/DISABLE"))
                     {
-                        Selected.enabled = !Selected.enabled;
+                        Selected.Enabled = !Selected.Enabled;
                     }
                     if (GUI.Button(new Rect(addonMenuWidth + 30, 205, addonMenuWidth, 30), "CLOSE"))
                     {
@@ -147,7 +145,7 @@ namespace ULTRAKIT.Core.ModMenu
                     {
                         for (int i = 0; i < list.Count; i++)
                         {
-                            if(list.ElementAt(i).enabled == false)
+                            if(list.ElementAt(i).Enabled == false)
                             {
                                 if (GUI.Button(new Rect(5, 60 + (35 * (i)), addonMenuWidth - 10, 30), $"<color=grey>{list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod "}</color>"))
                                 {

@@ -6,7 +6,7 @@ namespace ULTRAKIT.Loader
     public class Addon
     {
         public UKAddonData Data;
-        public bool enabled;
+        public bool Enabled;
         public string Path;
         public AssetBundle Bundle;
     }

@@ -68,7 +68,7 @@ namespace ULTRAKIT.Loader
                 Directory.CreateDirectory(FilePath);
             }
 
-            var files = Directory.GetFiles(FilePath, "*.*", SearchOption.AllDirectories);
+            var files = Directory.GetFiles(FilePath, "*.ukaddon", SearchOption.AllDirectories);
             foreach (string file in files)
             {
                 Debug.LogWarning($"LOADING ADDON:{file}");
@@ -93,6 +93,7 @@ namespace ULTRAKIT.Loader
             a.Path = FilePath;
             a.Bundle = AssetBundle.LoadFromFile(FilePath);
             a.Data = a.Bundle.LoadAllAssets<UKAddonData>()[0];
+            a.Enabled = true;
 
             registry.Add(a, new List<UKContent>());
             registry[a].AddRange(a.Bundle.LoadAllAssets<UKContentWeapon>());

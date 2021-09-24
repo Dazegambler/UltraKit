@@ -26,12 +26,10 @@ namespace ULTRAKIT.Core.BossSpawns
             b.Data.ModName = "Bosses (internal)";
             b.Data.Author = "UltraKit";
             b.Data.ModDesc = "Contains Enemies that cannot be spawned by the spawner arm";
-
             b.Bundle = CoreContent.UIBundle;///SINCE EVERYTHING WILL BE REGISTERED OUTSIDE OF THE ADDON I'LL JUST USE THE UI BUNDLE
-
             b.Path = "Internal";
+            b.Enabled = true;
 
-            b.enabled = true;
 
             Loader.AddonLoader.registry.Add(b, new List<UKContent>());
             Loader.AddonLoader.registry[b].AddRange(Enemies());
