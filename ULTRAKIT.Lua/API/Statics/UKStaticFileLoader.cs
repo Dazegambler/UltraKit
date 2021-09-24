@@ -127,9 +127,11 @@ namespace ULTRAKIT.Lua.API.Statics
         #endregion
 
         #region Audio loading
-        private static readonly Queue<AudioClip> AudioClips = new Queue<AudioClip>();
+        private static readonly Queue<AudioClip> AudioClipsQueue = new Queue<AudioClip>();
+        private static readonly Dictionary<string, AudioClip> AudioClipsDict = new Dictionary<string, AudioClip>();
         
-        public static void LoadAudio(ScriptExecutionContext ctx, string path, ref DynValue variable)
+        // Choice to use queue or dictionary
+        public static void LoadAudio(ScriptExecutionContext ctx, string path, string key = null)
         {
             var filePath = GetFullPath(ctx, path);
             
@@ -141,7 +143,7 @@ namespace ULTRAKIT.Lua.API.Statics
             try
             {
                 var req = UnityWebRequestMultimedia.GetAudioClip("file:///" + filePath, AudioType.WAV);
-                ctx.GetRuntime().StartCoroutine(GetAudioClip(req));
+                ctx.GetRuntime().StartCoroutine(GetAudioClip(req, key));
             }
             catch (Exception e)
             {
@@ -149,11 +151,14 @@ namespace ULTRAKIT.Lua.API.Statics
             }
         }
 
-        public static AudioClip RetrieveClip(ScriptExecutionContext ctx)
+        public static AudioClip RetrieveClip(ScriptExecutionContext ctx, string key = null)
         {
             try
             {
-                var clip = AudioClips.Dequeue();
+                if (key == null) return AudioClipsQueue.Dequeue();
+                
+                var clip = AudioClipsDict[key];
+                AudioClipsDict.Remove(key);
                 return clip;
             }
             catch
@@ -163,13 +168,18 @@ namespace ULTRAKIT.Lua.API.Statics
 
             return null;
         }
-        
-        private static IEnumerator GetAudioClip(UnityWebRequest req)
+
+        private static IEnumerator GetAudioClip(UnityWebRequest req, string key)
         {
             yield return req.SendWebRequest();
             var clip = DownloadHandlerAudioClip.GetContent(req);
-            AudioClips.Enqueue(clip);
+
+            if (key == null)
+                AudioClipsQueue.Enqueue(clip);
+            else
+                AudioClipsDict[key] = clip;
         }
+
         #endregion
     }
 }
