@@ -28,7 +28,7 @@ namespace ULTRAKIT.Loader
     }
     public static class AddonLoader
     {
-        public static readonly string BundlePath = Directory.GetCurrentDirectory() + "/AssetBundles";
+        public static readonly string BundlePath = Directory.GetCurrentDirectory() + "/Addons";
         
         public static List<Addon> addons => registry.Keys.ToList();
         public static Dictionary<Addon, List<UKContent>> registry = new Dictionary<Addon, List<UKContent>>();
@@ -74,7 +74,7 @@ namespace ULTRAKIT.Loader
                 Directory.CreateDirectory(filePath);
             }
 
-            var files = Directory.GetFiles(FilePath, "*.ukaddon", SearchOption.AllDirectories);
+            var files = Directory.GetFiles(filePath, "*.ukaddon", SearchOption.AllDirectories);
             foreach (string file in files)
             {
                 Debug.Log($"LOADING ADDON:{file}", null, ConsoleColor.Yellow);

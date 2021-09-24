@@ -60,7 +60,7 @@ namespace ULTRAKIT.Lua.API.Statics
         [UKScriptUpdater]
         void Update(UKScriptRuntime s)
         {
-            if (!s.initialized || !bindings.ContainsKey(s.runtime)) return;
+            if (!bindings.ContainsKey(s.runtime)) return;
             
             foreach (var b in bindings[s.runtime])
             {

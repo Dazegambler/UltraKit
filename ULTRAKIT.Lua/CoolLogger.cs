@@ -11,10 +11,10 @@ namespace ULTRAKIT.Lua
     {
         // https://i.redd.it/83jbj28hnq461.png
         private const string nl = "\n";
-        private const string in_str = "[Info   :  Ultrakit] ";
-        private const string wr_str = "[Warning:  Ultrakit] ";
-        private const string er_str = "[Error  :  Ultrakit] ";
-        private const string db_str = "[Debug  :  Ultrakit] ";
+        private const string in_str = "[Info   :  ULTRAKIT] ";
+        private const string wr_str = "[Warning:  ULTRAKIT] ";
+        private const string er_str = "[Error  :  ULTRAKIT] ";
+        private const string db_str = "[Debug  :  ULTRAKIT] ";
         private static Action<string, ConsoleColor> wrt = BCE.console.Write;
         private static Func<InterpreterException, string> er_type = e => e is SyntaxErrorException ? "SYNTAX ERROR" : "RUNTIME ERROR";
         private static Func<ScriptExecutionContext, string> fmt_loc = ctx => ctx.CallingLocation?.FormatLocation(ctx.OwnerScript)+' ';

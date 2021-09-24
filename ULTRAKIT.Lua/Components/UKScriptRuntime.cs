@@ -17,25 +17,20 @@ namespace ULTRAKIT.Lua.Components
         public Script runtime;
         public UKAddonData addon;
         public bool callUpdateWhilePaused;
-        public bool initialized;
         // public ManualLogSource logger; 
 
         public static void Create(UKAddonData addon, UKScript orig, bool callUpdateWhilePaused)
         {
+            var origActive = orig.gameObject.activeSelf;
+
+            orig.gameObject.SetActive(false);
+
             var r = orig.gameObject.AddComponent<UKScriptRuntime>();
+            r.data = orig;
             r.addon = addon;
             r.callUpdateWhilePaused = callUpdateWhilePaused;
-            r.data = r.GetComponent<UKScript>();
-            
-            r.runtime = new Script(CoreModules.Preset_SoftSandbox);
-            
-            // This is for proper logging. But our logging is COOL
-            // r.logger = BepInEx.Logging.Logger.CreateLogSource(r.addon.ModName);
-            
-            r.initialized = true;
-            r.enabled = true;
-            r.Awake();
-            r.OnEnable();
+
+            orig.gameObject.SetActive(origActive);
         }
 
         public static void Create(UKAddonData data, GameObject go, bool callUpdateWhilePaused = false)
@@ -60,10 +55,7 @@ namespace ULTRAKIT.Lua.Components
                 }
             }
             catch (ScriptRuntimeException e)
-            {
-                //TODO: propper logging
-                // logger.LogError($"RUNTIME ERROR: {data.sourceCode.name} - {e.DecoratedMessage}");
-                
+            {   
                 this.LuaError(e);
                 // Debug.LogError($"(ULTRAKIT Lua) RUNTIME ERROR: {data.sourceCode.name} - {e.DecoratedMessage}");
             }
@@ -92,9 +84,9 @@ namespace ULTRAKIT.Lua.Components
 
         void Awake()
         {
-            if (initialized == false) return;
             if (!Instances.Contains(this)) Instances.Add(this);
-            
+            runtime = new Script(CoreModules.Preset_SoftSandbox);
+
             try
             {
                 var func = runtime.LoadString(data.sourceCode.text);
@@ -124,7 +116,6 @@ namespace ULTRAKIT.Lua.Components
         //Script Callbacks
         void OnEnable()
         {
-            if (!initialized) return;
             FuzzyCall(runtime.Globals, "OnEnable");
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
@@ -161,8 +152,6 @@ namespace ULTRAKIT.Lua.Components
 
         void Update()
         {
-            if (!initialized) return;
-
             UKLuaAPI.UpdateScript(this);
 
             if (callUpdateWhilePaused || !MonoSingleton<OptionsManager>.Instance.paused)
@@ -173,16 +162,12 @@ namespace ULTRAKIT.Lua.Components
 
         void LateUpdate()
         {
-            if (!initialized) return;
-
             if (callUpdateWhilePaused || !MonoSingleton<OptionsManager>.Instance.paused)
                 FuzzyCall(runtime.Globals, "LateUpdate", Time.deltaTime);
         }
 
         void FixedUpdate()
         {
-            if (!initialized) return;
-
             if (callUpdateWhilePaused || !MonoSingleton<OptionsManager>.Instance.paused)
                 FuzzyCall(runtime.Globals, "FixedUpdate");
         }

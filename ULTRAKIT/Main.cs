@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using BepInEx;
 using Humanizer;
@@ -17,8 +18,6 @@ namespace ULTRAKIT
     [BepInPlugin("ULTRAKIT", "ULTRAKIT", "1.0.0")]
     public class Plugin : BaseUnityPlugin
     {
-
-        public static string BundlePath = Directory.GetCurrentDirectory() + "/AssetBundles";
 
         public void Start()
         {
