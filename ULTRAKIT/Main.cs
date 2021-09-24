@@ -31,12 +31,10 @@ namespace ULTRAKIT
         {
             if (Keyboard.current.f8Key.wasPressedThisFrame && (AssistController.Instance?.cheatsEnabled ?? false))
             {
-                // JetBrains Rider is suggesting me to turn this into a LINQ expression.
-                // You better pray to God that I don't.
-                foreach (var ukContents in AddonLoader.registry.Values)
-                foreach (var content in ukContents)
-                    if (content is UKContentPersistent persistent)
-                        Destroy(persistent.Prefab);
+                foreach(var persistent in AddonLoader.GetAll<UKContentPersistent>())
+                {
+                    Destroy(persistent.Prefab);
+                }
 
                 foreach (var addon in AddonLoader.registry.Keys)
                 {
@@ -59,6 +57,7 @@ namespace ULTRAKIT
         private static void RefreshGuns()
         {
             // This is expected to throw an error since there's not always a GunSetter present (eg. in menus)
+            // we should probably just check if gs == null then?
             try
             {
                 var gs = MonoSingleton<GunSetter>.Instance;

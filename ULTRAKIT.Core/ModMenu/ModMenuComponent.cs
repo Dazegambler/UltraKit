@@ -127,7 +127,6 @@ namespace ULTRAKIT.Core.ModMenu
                             if (GUI.Button(new Rect(5, 60 + (35 * (i)), addonMenuWidth - 10, 30), list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod"))
                             {
                                 Selected = list.ElementAt(i);
-                                Debug.LogWarning($"{list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod"} Selected");
                             }
                             _scroll = new Rect(5, 60, 155, 95 + (35 * i));
                             if (wind.height > 800)
@@ -150,7 +149,6 @@ namespace ULTRAKIT.Core.ModMenu
                                 if (GUI.Button(new Rect(5, 60 + (35 * (i)), addonMenuWidth - 10, 30), $"<color=grey>{list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod "}</color>"))
                                 {
                                     Selected = list.ElementAt(i);
-                                    Debug.LogWarning($"{list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod"} Selected");
                                 }
                             }
                             else
@@ -158,7 +156,6 @@ namespace ULTRAKIT.Core.ModMenu
                                 if (GUI.Button(new Rect(5, 60 + (35 * (i)), addonMenuWidth - 10, 30), list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod "))
                                 {
                                     Selected = list.ElementAt(i);
-                                    Debug.LogWarning($"{list.ElementAt(i)?.Data?.ModName ?? "Unnamed Mod"} Selected");
                                 }
                             }
                             wind.height = 95 + (35 * i);//95 + (35 * i)
