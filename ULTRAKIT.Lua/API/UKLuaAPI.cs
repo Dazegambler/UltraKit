@@ -115,6 +115,8 @@ namespace ULTRAKIT.Lua.API
             UserData.RegisterType<Camera>();
             UserData.RegisterType<Texture2D>();
             UserData.RegisterType<Sprite>();
+            UserData.RegisterType<AudioSource>();
+            UserData.RegisterType<AudioClip>();
 
             // ULTRAKILL CLASSES.
             UserData.RegisterType<NewMovement>();

@@ -1,20 +1,25 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using MoonSharp.Interpreter;
 using ULTRAKIT.Lua.API.Abstract;
 using System.IO;
 using System.Runtime.Remoting.Contexts;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace ULTRAKIT.Lua.API.Statics
 {
     public class UKStaticFileLoader : UKStatic
     {
+
         public static readonly string AddonDataFolder = Directory.GetCurrentDirectory() + "\\Addons\\Resources";
         
         public override string name => "FileLoader";
 
         #region Helper methods
-        private static string GetPath(ScriptExecutionContext ctx, string path) 
+        private static string GetFullPath(ScriptExecutionContext ctx, string path) 
             => $@"{GetAddonFolder(ctx.OwnerScript)}\{path.Trim()}";
         
         private static string GetAddonFolder(Script script)
@@ -41,7 +46,7 @@ namespace ULTRAKIT.Lua.API.Statics
         private static bool ValidatePath(string path, Script script)
         {
             var addonFolder = new Uri(GetAddonFolder(script), UriKind.Absolute);
-            var pathToFile = new Uri(addonFolder, path);
+            var pathToFile = new Uri(addonFolder, path.Trim());
             var fileIsInAddonFolder = pathToFile.AbsolutePath.StartsWith(addonFolder.AbsolutePath);
             
             return fileIsInAddonFolder;
@@ -50,7 +55,7 @@ namespace ULTRAKIT.Lua.API.Statics
         #region Text loading
         public static string LoadText(ScriptExecutionContext ctx, string path)
         {
-            var filePath = GetPath(ctx, path);
+            var filePath = GetFullPath(ctx, path);
             
             if (!ValidatePath(path.Trim(), ctx.OwnerScript))
             {
@@ -73,9 +78,9 @@ namespace ULTRAKIT.Lua.API.Statics
         #region Image loading
         public static Texture2D LoadTexture(ScriptExecutionContext ctx, string path)
         {
-            var filePath = GetPath(ctx, path);
+            var filePath = GetFullPath(ctx, path);
             
-            if (!ValidatePath(path.Trim(), ctx.OwnerScript))
+            if (!ValidatePath(path, ctx.OwnerScript))
             {
                 ctx.LuaError(NoAccessException);
                 return null;
@@ -118,6 +123,52 @@ namespace ULTRAKIT.Lua.API.Statics
             if (img is null) return null;
             var rect = new Rect(0, 0, img.width, img.height);
             return Sprite.Create(img, rect, Vector2.one/2);
+        }
+        #endregion
+
+        #region Audio loading
+        private static readonly Queue<AudioClip> AudioClips = new Queue<AudioClip>();
+        
+        public static void LoadAudio(ScriptExecutionContext ctx, string path, ref DynValue variable)
+        {
+            var filePath = GetFullPath(ctx, path);
+            
+            if (!ValidatePath(path, ctx.OwnerScript))
+            {
+                ctx.LuaError(NoAccessException);
+            }
+
+            try
+            {
+                var req = UnityWebRequestMultimedia.GetAudioClip("file:///" + filePath, AudioType.WAV);
+                ctx.GetRuntime().StartCoroutine(GetAudioClip(req));
+            }
+            catch (Exception e)
+            {
+                ctx.LuaError(e);
+            }
+        }
+
+        public static AudioClip RetrieveClip(ScriptExecutionContext ctx)
+        {
+            try
+            {
+                var clip = AudioClips.Dequeue();
+                return clip;
+            }
+            catch
+            {
+                // ignored
+            }
+
+            return null;
+        }
+        
+        private static IEnumerator GetAudioClip(UnityWebRequest req)
+        {
+            yield return req.SendWebRequest();
+            var clip = DownloadHandlerAudioClip.GetContent(req);
+            AudioClips.Enqueue(clip);
         }
         #endregion
     }
