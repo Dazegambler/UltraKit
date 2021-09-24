@@ -9,7 +9,7 @@ namespace ULTRAKIT.Loader.Injectors
         [HarmonyPostfix]
         public static void SetInfoPost(AssistController __instance)
         {
-            __instance.majorEnabled = true;
+            __instance.cheatsEnabled = true;
         }
     }
 }
