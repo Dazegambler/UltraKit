@@ -17,11 +17,12 @@ namespace ULTRAKIT.Lua
         private const string db_str = "[Debug  :  Ultrakit] ";
         private static Action<string, ConsoleColor> wrt = BCE.console.Write;
         private static Func<InterpreterException, string> er_type = e => e is SyntaxErrorException ? "SYNTAX ERROR" : "RUNTIME ERROR";
+        private static Func<ScriptExecutionContext, string> fmt_loc = ctx => ctx.CallingLocation.FormatLocation(ctx.OwnerScript);
         
-        public static void Log(object msg, UKScriptRuntime c = null)
+        public static void Log(object msg, UKScriptRuntime c = null, ConsoleColor color = ConsoleColor.Gray)
         {
             wrt(ad_str(c) ?? in_str, c ? ConsoleColor.Blue : ConsoleColor.White);
-            wrt(msg+nl, ConsoleColor.Gray);
+            wrt(msg+nl, color);
         }
         
         public static void LogWarning(object msg, UKScriptRuntime c = null)
@@ -41,16 +42,12 @@ namespace ULTRAKIT.Lua
         
         public static void LogException(InterpreterException e, UKScriptRuntime c) 
             => LogException(er_type(e), c.data, e.DecoratedMessage ?? e.Message, c);
-        // LogError($"{er_type(e)} in script \"{c.data.sourceCode.name}\": {e.DecoratedMessage ?? e.Message}", c);
         
         public static void LogException(InterpreterException e, ScriptExecutionContext ctx) 
-            => LogException(er_type(e), ctx.GetUKScript(), e.DecoratedMessage ?? ctx.CallingLocation.FormatLocation(ctx.OwnerScript)+e.Message, ctx.GetRuntime());
-        // var str = $"{er_type(e)} in script \"{ctx.GetUKScript().sourceCode.name}\": {e.DecoratedMessage ?? ctx.CallingLocation.FormatLocation(ctx.OwnerScript)}: {e.Message}";
-        // LogError(str, ctx.GetRuntime());
+            => LogException(er_type(e), ctx.GetUKScript(), e.DecoratedMessage ?? fmt_loc(ctx)+' '+e.Message, ctx.GetRuntime());
         
         public static void LogException(Exception e, ScriptExecutionContext ctx) 
-            => LogException("ERROR", ctx.GetUKScript(), ctx.CallingLocation.FormatLocation(ctx.OwnerScript)+e.Message, ctx.GetRuntime());
-        // LogError($"ERROR in script \"{ctx.GetUKScript().sourceCode.name}\": {e.Message}", ctx.GetRuntime());
+            => LogException("ERROR", ctx.GetUKScript(), fmt_loc(ctx)+' '+e.Message, ctx.GetRuntime());
         
         public static void AAA(object msg = null,
             [CallerFilePath]   string f = "",

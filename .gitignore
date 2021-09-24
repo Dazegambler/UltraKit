@@ -6,3 +6,4 @@ lib/Assembly-CSharp.dll
 *.Dotsettings.user
 build/onbuild.bat
 build/i sleep.bat
+build/Humanizer.xml
