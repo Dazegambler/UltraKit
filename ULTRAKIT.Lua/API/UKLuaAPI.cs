@@ -92,6 +92,7 @@ namespace ULTRAKIT.Lua.API
             RegisterUnityStruct<SpriteTileMode>();
             RegisterUnityStruct<SpriteMaskInteraction>();
             RegisterUnityStruct<SpriteSortPoint>();
+            RegisterUnityStruct<ForceMode>();
 
             // This is an interesting method
             // Doesn't exactly work but worth looking into if we want to ease the burden of component exposure (or exposure of anything else)
