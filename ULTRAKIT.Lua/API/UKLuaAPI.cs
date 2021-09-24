@@ -104,16 +104,18 @@ namespace ULTRAKIT.Lua.API
             UserData.RegisterType<TrailRenderer>();
             UserData.RegisterType<MeshRenderer>();
             UserData.RegisterType<LineRenderer>();
-            UserData.RegisterType<StyleHUD>();
             UserData.RegisterType<RenderTexture>();
-            UserData.RegisterType<ScanningStuff>();
             UserData.RegisterType<AnimationCurve>();
 
             // TODO: evaluate if we should expose these as a whole. Probably no harm if it can't majorly fuck up the system or saves
             UserData.RegisterType<Camera>();
             UserData.RegisterType<Texture2D>();
             UserData.RegisterType<Sprite>();
+
+            // ULTRAKILL CLASSES.
             UserData.RegisterType<NewMovement>();
+            UserData.RegisterType<StyleHUD>();
+            UserData.RegisterType<ScanningStuff>();
 
             // Register all types with MoonsharpUserData attribute
             UserData.RegisterAssembly();
