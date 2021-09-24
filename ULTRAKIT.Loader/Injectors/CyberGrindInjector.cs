@@ -1,4 +1,6 @@
 ﻿using HarmonyLib;
+using System.Linq;
+using UnityEngine;
 
 namespace ULTRAKIT.Loader.Injectors
 {
@@ -9,7 +11,10 @@ namespace ULTRAKIT.Loader.Injectors
         [HarmonyPostfix]
         public static void SetInfoPost(AssistController __instance)
         {
-            __instance.cheatsEnabled = true;
+            if (AddonLoader.registry.Keys.Any((a) => a.Enabled))
+            {
+                __instance.cheatsEnabled = true;
+            }
         }
     }
 }
