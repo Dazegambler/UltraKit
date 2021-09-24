@@ -7,7 +7,7 @@ namespace ULTRAKIT
 {
     public static class UpdateChecker
     {
-        private static void PrintStatus()
+        public static void PrintStatus()
         {
             // Get time when local built dlls were last modified
             var assemblyPath = System.Reflection.Assembly.GetAssembly(typeof(Plugin)).Location;
