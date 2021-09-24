@@ -180,8 +180,7 @@ namespace ULTRAKIT.Lua.Components
 
         void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            FuzzyCall(runtime.Globals, "OnSceneLoaded");
-            Debug.Log(scene.name);
+            FuzzyCall(runtime.Globals, "OnSceneLoaded", scene.name);
         }
 
         public void Invoke(DynValue func, float delay)
