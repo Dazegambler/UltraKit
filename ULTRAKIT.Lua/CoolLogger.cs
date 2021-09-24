@@ -17,7 +17,7 @@ namespace ULTRAKIT.Lua
         private const string db_str = "[Debug  :  Ultrakit] ";
         private static Action<string, ConsoleColor> wrt = BCE.console.Write;
         private static Func<InterpreterException, string> er_type = e => e is SyntaxErrorException ? "SYNTAX ERROR" : "RUNTIME ERROR";
-        private static Func<ScriptExecutionContext, string> fmt_loc = ctx => ctx.CallingLocation.FormatLocation(ctx.OwnerScript);
+        private static Func<ScriptExecutionContext, string> fmt_loc = ctx => ctx.CallingLocation?.FormatLocation(ctx.OwnerScript)+' ';
         
         public static void Log(object msg, UKScriptRuntime c = null, ConsoleColor color = ConsoleColor.Gray)
         {
@@ -47,14 +47,14 @@ namespace ULTRAKIT.Lua
             => LogException(er_type(e), ctx.GetUKScript(), e.DecoratedMessage ?? fmt_loc(ctx)+' '+e.Message, ctx.GetRuntime());
         
         public static void LogException(Exception e, ScriptExecutionContext ctx) 
-            => LogException("ERROR", ctx.GetUKScript(), fmt_loc(ctx)+' '+e.Message, ctx.GetRuntime());
+            => LogException("ERROR", ctx.GetUKScript(), fmt_loc(ctx)+e.Message, ctx.GetRuntime());
         
         public static void AAA(object msg = null,
             [CallerFilePath]   string f = "",
             [CallerMemberName] string n = "",
             [CallerLineNumber] int l = 0)
         {
-            var m = msg as string ?? "AAA";
+            var m = msg?.ToString() ?? "AAA";
             var c1 = ConsoleColor.White;
             var c2 = ConsoleColor.Green;
             wrt(db_str, c1);
