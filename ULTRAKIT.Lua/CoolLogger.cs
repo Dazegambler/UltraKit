@@ -44,7 +44,7 @@ namespace ULTRAKIT.Lua
             => LogException(er_type(e), c.data, e.DecoratedMessage ?? e.Message, c);
         
         public static void LogException(InterpreterException e, ScriptExecutionContext ctx) 
-            => LogException(er_type(e), ctx.GetUKScript(), e.DecoratedMessage ?? fmt_loc(ctx)+' '+e.Message, ctx.GetRuntime());
+            => LogException(er_type(e), ctx.GetUKScript(), e.DecoratedMessage ?? fmt_loc(ctx)+e.Message, ctx.GetRuntime());
         
         public static void LogException(Exception e, ScriptExecutionContext ctx) 
             => LogException("ERROR", ctx.GetUKScript(), fmt_loc(ctx)+e.Message, ctx.GetRuntime());
