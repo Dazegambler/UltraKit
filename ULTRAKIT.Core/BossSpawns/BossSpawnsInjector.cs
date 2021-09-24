@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using System.Collections.Generic;
+using ULTRAKIT.Data;
 using ULTRAKIT.Data.ScriptableObjects.Registry;
 using UnityEngine;
 
@@ -22,7 +23,7 @@ namespace ULTRAKIT.Core.BossSpawns
         {
             Loader.Addon b = new Loader.Addon();
 
-            b.Data = new Data.UKAddonData();
+            b.Data = ScriptableObject.CreateInstance<UKAddonData>();
             b.Data.ModName = "Bosses (internal)";
             b.Data.Author = "UltraKit";
             b.Data.ModDesc = "Contains Enemies that cannot be spawned by the spawner arm";

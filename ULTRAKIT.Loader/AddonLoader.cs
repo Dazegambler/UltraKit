@@ -15,9 +15,10 @@ namespace ULTRAKIT.Loader
         public static List<T> GetAll<T>(this Addon a)
             where T : UKContent
         {
+            var res = AddonLoader.registry[a].Where(k => k is T).ToList();
+            
             if (a.Enabled)
             {
-                var res = AddonLoader.registry[a].Where(k => k is T).ToList();
                 return res.Cast<T>().ToList();
             }
             else
@@ -28,7 +29,7 @@ namespace ULTRAKIT.Loader
     }
     public static class AddonLoader
     {
-        public static readonly string BundlePath = Directory.GetCurrentDirectory() + "/Addons";
+        public static readonly string BundlePath = Directory.GetCurrentDirectory() + @"\Addons";
         
         public static List<Addon> addons => registry.Keys.ToList();
         public static Dictionary<Addon, List<UKContent>> registry = new Dictionary<Addon, List<UKContent>>();
@@ -59,9 +60,11 @@ namespace ULTRAKIT.Loader
             // FilePath = addon folder (has folders for each addon inside)
             // Loop over all folders at FilePath
             // Call LoadAddon on every folder
-            Debug.LogWarning("LOADING ADDONS...");
+            Debug.Log("Loading addons...", null, ConsoleColor.Green);
             LoadAllAddons(filePath);
-            Debug.LogWarning("...FINISHED LOADING ADDONS");
+            Debug.Log("Finished loading addons!", null, ConsoleColor.Green);
+
+            PersistentInjector.Initialize();
 
             harmony.PatchAll();
         }
@@ -70,14 +73,14 @@ namespace ULTRAKIT.Loader
         {
             if (!Directory.Exists(filePath))
             {
-                Debug.LogWarning($"Addons directory not found... creating directory at {filePath}");
+                Debug.Log($"Addons directory not found... creating directory at {filePath}", null, ConsoleColor.Yellow);
                 Directory.CreateDirectory(filePath);
             }
 
             var files = Directory.GetFiles(filePath, "*.ukaddon", SearchOption.AllDirectories);
             foreach (string file in files)
             {
-                Debug.Log($"LOADING ADDON:{file}", null, ConsoleColor.Yellow);
+                Debug.Log($"{file}", null, ConsoleColor.Green);
 
                 try
                 {
@@ -108,16 +111,11 @@ namespace ULTRAKIT.Loader
             registry.Add(a, new List<UKContent>());
             registry[a].AddRange(a.Bundle.LoadAllAssets<UKContentWeapon>());
             registry[a].AddRange(a.Bundle.LoadAllAssets<UKContentSpawnable>());
-
-            // Injection of persistent GameObjects into the scene
-            PersistentsInstantiator.InstantiatePersistents(a);
-            var persistentAddons = a.Bundle.LoadAllAssets<UKContentPersistent>();
-            registry[a].AddRange(persistentAddons);
+            registry[a].AddRange(a.Bundle.LoadAllAssets<UKContentPersistent>());
 
             return a;
         }
 
-        // work in progress
         private static void CreateAddonDataDirectory(Addon addon)
         {
             // creates folder named the addon's name into the folder
@@ -127,7 +125,7 @@ namespace ULTRAKIT.Loader
             var path = $@"{dataFolder}/{addon.Data.ModName}";
             if (Directory.Exists(path)) return;
             
-            Debug.Log($@"Created new addon data directory at {path} for {addon.Data.name}");
+            Debug.Log($@"Created new addon data directory at {path} for {addon.Data.name}", null, ConsoleColor.Green);
             Directory.CreateDirectory(path);
         }
     }
