@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using MoonSharp.Interpreter;
 using ULTRAKIT.Data.Components;
@@ -15,30 +16,42 @@ namespace ULTRAKIT.Lua
         private const string er_str = "[Error  :  Ultrakit] ";
         private const string db_str = "[Debug  :  Ultrakit] ";
         private static Action<string, ConsoleColor> wrt = BCE.console.Write;
+        private static Func<InterpreterException, string> er_type = e => e is SyntaxErrorException ? "SYNTAX ERROR" : "RUNTIME ERROR";
         
-        public static void Log(string msg, UKScriptRuntime c = null)
+        public static void Log(object msg, UKScriptRuntime c = null)
         {
             wrt(ad_str(c) ?? in_str, c ? ConsoleColor.Blue : ConsoleColor.White);
             wrt(msg+nl, ConsoleColor.Gray);
         }
         
-        public static void LogWarning(string msg, UKScriptRuntime c = null)
+        public static void LogWarning(object msg, UKScriptRuntime c = null)
         {
             wrt(ad_str(c) ?? wr_str, ConsoleColor.Yellow);
             wrt(msg+nl, ConsoleColor.Yellow);
         }
         
-        public static void LogError(string msg, UKScriptRuntime c = null)
+        public static void LogError(object msg, UKScriptRuntime c = null)
         {
             wrt(ad_str(c) ?? er_str, ConsoleColor.DarkRed);
             wrt(msg+nl, ConsoleColor.Red);
         }
 
-        public static void LogError(InterpreterException e, UKScriptRuntime c, string t, UKScript d)
-        {
-            LogError($"{t} in script \"{d.sourceCode.name}\": {e.DecoratedMessage ?? e.Message}", c);
-        }
-
+        private static void LogException(string er, UKScript src, string msg, UKScriptRuntime c) =>
+            LogError($"{er} in script \"{src.sourceCode.name}\": {msg}", c);
+        
+        public static void LogException(InterpreterException e, UKScriptRuntime c) 
+            => LogException(er_type(e), c.data, e.DecoratedMessage ?? e.Message, c);
+        // LogError($"{er_type(e)} in script \"{c.data.sourceCode.name}\": {e.DecoratedMessage ?? e.Message}", c);
+        
+        public static void LogException(InterpreterException e, ScriptExecutionContext ctx) 
+            => LogException(er_type(e), ctx.GetUKScript(), e.DecoratedMessage ?? ctx.CallingLocation.FormatLocation(ctx.OwnerScript)+e.Message, ctx.GetRuntime());
+        // var str = $"{er_type(e)} in script \"{ctx.GetUKScript().sourceCode.name}\": {e.DecoratedMessage ?? ctx.CallingLocation.FormatLocation(ctx.OwnerScript)}: {e.Message}";
+        // LogError(str, ctx.GetRuntime());
+        
+        public static void LogException(Exception e, ScriptExecutionContext ctx) 
+            => LogException("ERROR", ctx.GetUKScript(), ctx.CallingLocation.FormatLocation(ctx.OwnerScript)+e.Message, ctx.GetRuntime());
+        // LogError($"ERROR in script \"{ctx.GetUKScript().sourceCode.name}\": {e.Message}", ctx.GetRuntime());
+        
         public static void AAA(object msg = null,
             [CallerFilePath]   string f = "",
             [CallerMemberName] string n = "",
@@ -54,7 +67,7 @@ namespace ULTRAKIT.Lua
             wrt(" at ", c1);
             wrt($"line {l}", c2);
             wrt(" of ", c1);
-            wrt(f+nl, c2);
+            wrt(f.Split('\\').Last()+nl, c2);
         }
         
         private static string ad_str(UKScriptRuntime c)
@@ -64,5 +77,6 @@ namespace ULTRAKIT.Lua
             var str = mod.Length > 9 ? mod.Remove(8) + "…" : mod;
             return $"[UKAddon: {str}] ";
         }
+
     }
 }
