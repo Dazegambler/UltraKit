@@ -1,32 +1,48 @@
-﻿using MoonSharp.Interpreter;
+﻿using System.Collections;
+using System.Collections.Generic;
+using MoonSharp.Interpreter;
 using ULTRAKIT.Data;
 using ULTRAKIT.Data.Components;
 using ULTRAKIT.Lua.API;
 using UnityEngine;
-using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 namespace ULTRAKIT.Lua.Components
 {
     public class UKScriptRuntime : MonoBehaviour
     {
-        public static List<UKScriptRuntime> Instances = new List<UKScriptRuntime>();
+        public static readonly List<UKScriptRuntime> Instances = new List<UKScriptRuntime>();
 
         public UKScript data;
         public Script runtime;
         public UKAddonData addon;
+        public bool callUpdateWhilePaused;
+        public bool initialized;
+        // public ManualLogSource logger; 
 
-        public static void Create(UKAddonData addon, UKScript orig)
+        public static void Create(UKAddonData addon, UKScript orig, bool callUpdateWhilePaused)
         {
             var r = orig.gameObject.AddComponent<UKScriptRuntime>();
             r.addon = addon;
+            r.callUpdateWhilePaused = callUpdateWhilePaused;
+            r.data = r.GetComponent<UKScript>();
+            
+            r.runtime = new Script(CoreModules.Preset_SoftSandbox);
+            
+            // This is for proper logging. But our logging is COOL
+            // r.logger = BepInEx.Logging.Logger.CreateLogSource(r.addon.ModName);
+            
+            r.initialized = true;
+            r.enabled = true;
+            r.Awake();
+            r.OnEnable();
         }
 
-        public static void Create(UKAddonData data, GameObject go)
+        public static void Create(UKAddonData data, GameObject go, bool callUpdateWhilePaused = false)
         {
             foreach (var script in go.GetComponentsInChildren<UKScript>(true))
             {
-                //Debug.Log(script.sourceCode.name);
-                Create(data, script);
+                Create(data, script, callUpdateWhilePaused);
             }
         }
 
@@ -46,7 +62,10 @@ namespace ULTRAKIT.Lua.Components
             catch (ScriptRuntimeException e)
             {
                 //TODO: propper logging
-                Debug.LogError($"(ULTRAKIT Lua) RUNTIME ERROR: {data.sourceCode.name} - {e.DecoratedMessage}");
+                // logger.LogError($"RUNTIME ERROR: {data.sourceCode.name} - {e.DecoratedMessage}");
+                
+                this.LuaError(e);
+                // Debug.LogError($"(ULTRAKIT Lua) RUNTIME ERROR: {data.sourceCode.name} - {e.DecoratedMessage}");
             }
         }
 
@@ -57,10 +76,12 @@ namespace ULTRAKIT.Lua.Components
                 try
                 {
                     runtime.Call(d, luap);
-                } catch(ScriptRuntimeException e)
+                }
+                catch (ScriptRuntimeException e)
                 {
                     //TODO: propper logging
-                    Debug.LogError($"(ULTRAKIT Lua) RUNTIME ERROR: {data.sourceCode.name} - {e.DecoratedMessage}");
+                    // logger.LogError($"RUNTIME ERROR: {data.sourceCode.name} - {e.DecoratedMessage}");
+                    this.LuaError(e);
                 }
             }
             else
@@ -71,20 +92,21 @@ namespace ULTRAKIT.Lua.Components
 
         void Awake()
         {
-            data = GetComponent<UKScript>();
-            runtime = new Script(CoreModules.Preset_SoftSandbox);
-
+            if (initialized == false) return;
+            if (!Instances.Contains(this)) Instances.Add(this);
+            
             try
             {
                 var func = runtime.LoadString(data.sourceCode.text);
                 UKLuaAPI.ConstructScript(this);
                 FuzzyCall(func);
-                Instances.Add(this);
-            } catch(SyntaxErrorException e)
+            }
+            catch (SyntaxErrorException e)
             {
                 //TODO: propper logging
-                Debug.LogError($"(ULTRAKIT Lua) {data.sourceCode.name} - SYNTAX ERROR: {e.DecoratedMessage}");
-                this.enabled = false;
+                // logger.LogError($"RUNTIME ERROR: {data.sourceCode.name} - {e.DecoratedMessage}");
+                this.LuaError(e);
+                enabled = false;
             }
         }
 
@@ -102,7 +124,9 @@ namespace ULTRAKIT.Lua.Components
         //Script Callbacks
         void OnEnable()
         {
+            if (!initialized) return;
             FuzzyCall(runtime.Globals, "OnEnable");
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
         void OnCollisionEnter(Collision other)
@@ -137,9 +161,11 @@ namespace ULTRAKIT.Lua.Components
 
         void Update()
         {
+            if (!initialized) return;
+
             UKLuaAPI.UpdateScript(this);
 
-            if (!MonoSingleton<OptionsManager>.Instance.paused)
+            if (callUpdateWhilePaused || !MonoSingleton<OptionsManager>.Instance.paused)
             {
                 FuzzyCall(runtime.Globals, "Update", Time.deltaTime);
             }
@@ -147,19 +173,41 @@ namespace ULTRAKIT.Lua.Components
 
         void LateUpdate()
         {
-            if (!MonoSingleton<OptionsManager>.Instance.paused)
+            if (!initialized) return;
+
+            if (callUpdateWhilePaused || !MonoSingleton<OptionsManager>.Instance.paused)
                 FuzzyCall(runtime.Globals, "LateUpdate", Time.deltaTime);
         }
 
         void FixedUpdate()
         {
-            if (!MonoSingleton<OptionsManager>.Instance.paused)
+            if (!initialized) return;
+
+            if (callUpdateWhilePaused || !MonoSingleton<OptionsManager>.Instance.paused)
                 FuzzyCall(runtime.Globals, "FixedUpdate");
         }
 
         void OnDisable()
         {
             FuzzyCall(runtime.Globals, "OnDisable");
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+
+        void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            FuzzyCall(runtime.Globals, "OnSceneLoaded");
+            Debug.Log(scene.name);
+        }
+
+        public void Invoke(DynValue func, float delay)
+        {
+            StartCoroutine(Delay());
+            
+            IEnumerator Delay()
+            {
+                yield return new WaitForSeconds(delay);
+                func.Function.Call();
+            }
         }
     }
 }

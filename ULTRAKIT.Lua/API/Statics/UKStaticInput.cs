@@ -47,7 +47,8 @@ namespace ULTRAKIT.Lua.API.Statics
         [UKScriptConstructor]
         void Construct(UKScriptRuntime s)
         {
-            bindings.Add(s.runtime, new List<UKBinding>());
+            if (!bindings.ContainsKey(s.runtime)) // This function is executing multiple times for me. WTF?
+                bindings.Add(s.runtime, new List<UKBinding>());
         }
 
         [UKScriptDestructor]
@@ -59,6 +60,8 @@ namespace ULTRAKIT.Lua.API.Statics
         [UKScriptUpdater]
         void Update(UKScriptRuntime s)
         {
+            if (!s.initialized || !bindings.ContainsKey(s.runtime)) return;
+            
             foreach (var b in bindings[s.runtime])
             {
                 if (b.wasPressedThisFrame && b.PressedCallback.IsNotNil())

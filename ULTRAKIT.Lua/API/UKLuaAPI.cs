@@ -4,12 +4,15 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
+using BCE;
 using ULTRAKIT.Lua.API.Abstract;
 using ULTRAKIT.Lua.API.Proxies;
+using ULTRAKIT.Lua.API.Statics;
 using ULTRAKIT.Lua.Attributes;
 using ULTRAKIT.Lua.Components;
 using UnityEngine;
-using MoonSharp.Interpreter.Serialization;
+using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 namespace ULTRAKIT.Lua.API
 {
@@ -86,6 +89,7 @@ namespace ULTRAKIT.Lua.API
             RegisterUnityStruct<Color>();
             RegisterUnityStruct<Mathf>();
             RegisterUnityStruct<Bounds>();
+            RegisterUnityStruct<Rect>();
             RegisterUnityStruct<ParticleSystem.EmissionModule>();
 
             RegisterUnityStruct<SpriteDrawMode>();
@@ -107,8 +111,7 @@ namespace ULTRAKIT.Lua.API
             UserData.RegisterType<LineRenderer>();
             UserData.RegisterType<RenderTexture>();
             UserData.RegisterType<AnimationCurve>();
-
-            // TODO: evaluate if we should expose these as a whole. Probably no harm if it can't majorly fuck up the system or saves
+            UserData.RegisterType<Image>();
             UserData.RegisterType<Camera>();
             UserData.RegisterType<Texture2D>();
             UserData.RegisterType<Sprite>();
@@ -129,7 +132,7 @@ namespace ULTRAKIT.Lua.API
                 
                 if(inst.name == null)
                 {
-                    Debug.LogError($"HECKTECK FORGOT TO GIVE {staticType.Name} A STATIC NAME, GO SHOUT AT HIM ON DISCORD RIGHT NOW");
+                    UnityEngine.Debug.LogError($"HECKTECK FORGOT TO GIVE {staticType.Name} A STATIC NAME, GO SHOUT AT HIM ON DISCORD RIGHT NOW");
                     continue;
                 }
 
@@ -198,25 +201,50 @@ namespace ULTRAKIT.Lua.API
         ///</summary>
         public static void ConstructScript(UKScriptRuntime c)
         {
-            // Globals
-            c.runtime.Options.DebugPrint = (Action<string>)Debug.Log;
-            c.runtime.Globals["gameObject"] = c.gameObject;
-            c.runtime.Globals["transform"] = c.transform;
-            c.runtime.Globals["addon"] = c.addon;
-
+            c.runtime.Options.DebugPrint = s => Debug.Log(s, c);
+            
+            SetGlobals(c);
+            
             // Statics
             foreach (var pair in luaStatics)
             {
+                if (c.runtime.Globals[pair.Key] != null) continue;
                 c.runtime.Globals[pair.Key] = pair.Value;
             }
 
             // Structs
             foreach(var structType in luaStructs)
             {
+                if (c.runtime.Globals[structType.Name] != null) continue;
                 c.runtime.Globals[structType.Name] = structType;
             }
 
             constructMethods?.Invoke(c);
+        }
+
+        private static void SetGlobals(UKScriptRuntime c)
+        {
+            // Global variables
+            c.runtime.Globals["gameObject"] = c.gameObject;
+            c.runtime.Globals["transform"] = c.transform;
+            
+            // Global methods
+            void PrintError(Script script, string s) => Debug.LogError(s, script.GetRuntime());
+            
+            void Invoke(ScriptExecutionContext ctx, DynValue func, float time)
+            {
+                if (func.Type != DataType.Function)
+                {
+                    ctx.LuaError(ScriptRuntimeException.AttemptToCallNonFunc(func.Type));
+                    return;
+                }
+                
+                ctx.OwnerScript.GetRuntime().Invoke(func, time);
+            }
+
+            c.runtime.Globals["Destroy"] = (Action<Object>)Object.Destroy;
+            c.runtime.Globals["printError"] = (Action<Script, string>)PrintError;
+            c.runtime.Globals["Invoke"] = (Action<ScriptExecutionContext, DynValue, float>)Invoke;
         }
 
         ///<summary>

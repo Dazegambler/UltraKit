@@ -31,3 +31,5 @@ Loader & Mod list: Dazegambler
 Content injection & Lua API: Heckteck
 
 Testing: Cecelune
+
+Stuff & things: m1ksu
