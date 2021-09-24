@@ -13,7 +13,7 @@ namespace ULTRAKIT
     public class Plugin : BaseUnityPlugin
     {
 
-        public static string BundlePath = Directory.GetCurrentDirectory() + "/AssetBundles";
+        public static string BundlePath = Directory.GetCurrentDirectory() + "/Addons";
 
         public void Start()
         {
