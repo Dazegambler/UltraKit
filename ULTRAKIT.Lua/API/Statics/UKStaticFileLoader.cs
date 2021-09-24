@@ -8,15 +8,14 @@ namespace ULTRAKIT.Lua.API.Statics
 {
     public class UKStaticFileLoader : UKStatic
     {
-        public static readonly string AddonDataFolder = Directory.GetCurrentDirectory() + "\\UltraKitAddonData";
-        public static readonly Uri AddonDataFolderUri = new Uri(AddonDataFolder, UriKind.Absolute);
+        public static readonly string AddonDataFolder = Directory.GetCurrentDirectory() + "\\Addons\\Resources";
         
         public override string name => "FileLoader";
 
         private static string GetAddonFolder(Script script)
         {
-            var addonName = script.GetAddon().ModName;
-            return $@"{AddonDataFolder}\{addonName}\";
+            var modName = script.GetAddon().ModName;
+            return $@"{AddonDataFolder}\{modName}\";
         }
 
         // Implement later

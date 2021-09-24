@@ -67,7 +67,7 @@ namespace ULTRAKIT.Loader
             var files = Directory.GetFiles(filePath, "*.*", SearchOption.AllDirectories);
             foreach (string file in files)
             {
-                Debug.LogWarning($"LOADING ADDON:{file}");
+                Debug.Log($"LOADING ADDON:{file}", null, ConsoleColor.Yellow);
 
                 try
                 {
@@ -90,8 +90,8 @@ namespace ULTRAKIT.Loader
             a.Bundle = AssetBundle.LoadFromFile(filePath);
             a.Data = a.Bundle.LoadAllAssets<UKAddonData>()[0];
             
-            // if (a.Data.GenerateDataFolder) CreateAddonDataDirectory(a);
-            // Debug.Log(a.Data.GenerateDataFolder);
+            // Give addons a toggle bool button to decide this? 
+            CreateAddonDataDirectory(a);
 
             registry.Add(a, new List<UKContent>());
             registry[a].AddRange(a.Bundle.LoadAllAssets<UKContentWeapon>());
@@ -106,16 +106,17 @@ namespace ULTRAKIT.Loader
         }
 
         // work in progress
-        // private static void CreateAddonDataDirectory(Addon addon)
-        // {
-        //     // creates folder named the addon's name into the folder
-        //     var dataFolder = Lua.API.Statics.UKStaticFileLoader.AddonDataFolder;
-        //     if (Directory.Exists(dataFolder)) Directory.CreateDirectory(dataFolder);
-        //     var path = $@"{dataFolder}/{addon.Data.ModName}";
-        //     if (Directory.Exists(path)) return;
-        //     
-        //     Debug.Log($@"Created new addon data directory at {path}");
-        //     Directory.CreateDirectory(path);
-        // }
+        private static void CreateAddonDataDirectory(Addon addon)
+        {
+            // creates folder named the addon's name into the folder
+            var dataFolder = Lua.API.Statics.UKStaticFileLoader.AddonDataFolder;
+            if (!Directory.Exists(dataFolder)) Directory.CreateDirectory(dataFolder);
+            
+            var path = $@"{dataFolder}/{addon.Data.ModName}";
+            if (Directory.Exists(path)) return;
+            
+            Debug.Log($@"Created new addon data directory at {path} for {addon.Data.name}");
+            Directory.CreateDirectory(path);
+        }
     }
 }
