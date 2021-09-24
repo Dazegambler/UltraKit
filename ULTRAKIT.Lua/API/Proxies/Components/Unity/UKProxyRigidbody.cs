@@ -138,9 +138,9 @@ namespace ULTRAKIT.Lua.API.Proxies.Components
         public void AddExplosionForce(float force, Vector3 explosionPosition, float explosionRadius) => target.AddExplosionForce(force, explosionPosition, explosionRadius);
         public void AddExplosionForce(float force, Vector3 explosionPosition, float explosionRadius, float upwardsModifier) => target.AddExplosionForce(force, explosionPosition, explosionRadius, upwardsModifier);
         public void AddForce(Vector3 force) => target.AddForce(force);
-        //public void AddForce(Vector3 force, ForceMode mode) => target.AddForce(force, mode);
+        public void AddForce(Vector3 force, ForceMode mode) => target.AddForce(force, mode);
         public void AddForceAtPosition(Vector3 force, Vector3 position) => target.AddForceAtPosition(force, position);
-        //public void AddForceAtPosition(Vector3 force, Vector3 position, ForceMode mode) => target.AddForceAtPosition(force, position, mode);
+        public void AddForceAtPosition(Vector3 force, Vector3 position, ForceMode mode) => target.AddForceAtPosition(force, position, mode);
         public void AddRelativeForce(Vector3 force) => target.AddRelativeForce(force);
         public void AddRelativeTorque(Vector3 torque) => target.AddRelativeTorque(torque);
         public void AddTorque(Vector3 torque) => target.AddTorque(torque);
