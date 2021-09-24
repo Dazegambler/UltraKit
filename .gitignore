@@ -7,3 +7,4 @@ lib/Assembly-CSharp.dll
 build/onbuild.bat
 build/i sleep.bat
 build/Humanizer.xml
+packages
