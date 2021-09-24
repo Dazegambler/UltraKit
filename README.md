@@ -1,9 +1,6 @@
 # ULTRAKIT
 A toolkit that can be used to add custom content to ULTRAKILL, such as custom weapons or spawnable objects.
 
-Comes installed with a physgun and gravity gun to play with!
-
-
 # Installation
 ### WARNING: THIS MOD IS IN AN EXPERIMENTAL PHASE, AND MAY ACCIDENTALLY MESS WITH YOUR GAME INSTALLATION! PLEASE ONLY INSTALL IT IF YOU ARE WILLING TO TAKE THIS RISK
 
