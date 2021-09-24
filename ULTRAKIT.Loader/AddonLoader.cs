@@ -14,8 +14,15 @@ namespace ULTRAKIT.Loader
         public static List<T> GetAll<T>(this Addon a)
             where T : UKContent
         {
-            var res = AddonLoader.registry[a].Where(k => k is T).ToList();
-            return res.Cast<T>().ToList();
+            if (a.Enabled)
+            {
+                var res = AddonLoader.registry[a].Where(k => k is T).ToList();
+                return res.Cast<T>().ToList();
+            }
+            else
+            {
+                return new List<T>();
+            }
         }
     }
     public static class AddonLoader
@@ -34,9 +41,12 @@ namespace ULTRAKIT.Loader
         {
             var res = new List<T>();
 
-            foreach (var val in registry.Values)
+            foreach (var pair in registry)
             {
-                res.AddRange(val.Where(k => k is T).ToList().Cast<T>());
+                if (pair.Key.Enabled)
+                {
+                    res.AddRange(pair.Value.Where(k => k is T).ToList().Cast<T>());
+                }
             }
 
             return res;
@@ -68,7 +78,7 @@ namespace ULTRAKIT.Loader
                 Directory.CreateDirectory(FilePath);
             }
 
-            var files = Directory.GetFiles(FilePath, "*.*", SearchOption.AllDirectories);
+            var files = Directory.GetFiles(FilePath, "*.ukaddon", SearchOption.AllDirectories);
             foreach (string file in files)
             {
                 Debug.LogWarning($"LOADING ADDON:{file}");
@@ -93,6 +103,7 @@ namespace ULTRAKIT.Loader
             a.Path = FilePath;
             a.Bundle = AssetBundle.LoadFromFile(FilePath);
             a.Data = a.Bundle.LoadAllAssets<UKAddonData>()[0];
+            a.Enabled = true;
 
             registry.Add(a, new List<UKContent>());
             registry[a].AddRange(a.Bundle.LoadAllAssets<UKContentWeapon>());

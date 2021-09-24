@@ -1,9 +1,6 @@
 # ULTRAKIT
 A toolkit that can be used to add custom content to ULTRAKILL, such as custom weapons or spawnable objects.
 
-Comes installed with a physgun and gravity gun to play with!
-
-
 # Installation
 ### WARNING: THIS MOD IS IN AN EXPERIMENTAL PHASE, AND MAY ACCIDENTALLY MESS WITH YOUR GAME INSTALLATION! PLEASE ONLY INSTALL IT IF YOU ARE WILLING TO TAKE THIS RISK
 
@@ -19,7 +16,9 @@ Comes installed with a physgun and gravity gun to play with!
 
 3 - Take the contents of the [latest release zip](https://github.com/Dazegambler/UltraKit/releases) and drag them all into your Ultrakill installation folder. Replace all files when prompted. 
 
-4 - Run the game, and all should work! If not, feel free to DM or ping Heckteck#0512 or m1ksu#6548 on Discord, or join the Ultrakill Discord server at where you can usually find us in the #ultramods channel. 
+4 - Start the game once. Inside the ULTRAKILL directory there should now be an Addons folder. This is where you will place any .ukaddon files.
+
+5 - Place your choice of addons in the folder, and all should work! If not, feel free to DM or ping Heckteck#0512 or m1ksu#6548 on Discord, or join the Ultrakill Discord server at where you can usually find us in the #ultramods channel. 
 
 
 # Credits

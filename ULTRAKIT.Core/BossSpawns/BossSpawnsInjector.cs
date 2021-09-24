@@ -26,12 +26,10 @@ namespace ULTRAKIT.Core.BossSpawns
             b.Data.ModName = "Bosses (internal)";
             b.Data.Author = "UltraKit";
             b.Data.ModDesc = "Contains Enemies that cannot be spawned by the spawner arm";
-
             b.Bundle = CoreContent.UIBundle;///SINCE EVERYTHING WILL BE REGISTERED OUTSIDE OF THE ADDON I'LL JUST USE THE UI BUNDLE
-
             b.Path = "Internal";
+            b.Enabled = true;
 
-            b.enabled = true;
 
             Loader.AddonLoader.registry.Add(b, new List<UKContent>());
             Loader.AddonLoader.registry[b].AddRange(Enemies());
@@ -69,9 +67,11 @@ namespace ULTRAKIT.Core.BossSpawns
 
             a.Icon = CoreContent.UIBundle.LoadAsset<Sprite>("V2Greed");
 
-            a.Prefab = GameObject.Instantiate(PrefabFind("V2"));
+            var v2Prefab = PrefabFind("V2");
+            v2Prefab.SetActive(false);
+            a.Prefab = GameObject.Instantiate(v2Prefab);
+            v2Prefab.SetActive(true);
             GameObject.DontDestroyOnLoad(a.Prefab);
-            a.Prefab.SetActive(false);
 
             var v2 = a.Prefab.GetComponent<V2>();
             var mch = a.Prefab.GetComponent<Machine>();
@@ -217,9 +217,9 @@ namespace ULTRAKIT.Core.BossSpawns
     [HarmonyPatch(typeof(V2))]
     public static class V2Patch
     {
-        [HarmonyPatch("BeginEscape")]
+        [HarmonyPatch("KnockedOut")]
         [HarmonyPrefix]
-        public static void BeginEscapePrefix(V2 __instance)
+        public static void KnockedOutPrefix(V2 __instance)
         {
             if (__instance.escapeTarget == null)
             {

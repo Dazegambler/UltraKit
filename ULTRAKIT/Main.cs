@@ -3,9 +3,11 @@ using System.IO;
 using System.Linq;
 using ULTRAKIT.Core;
 using ULTRAKIT.Loader;
+using ULTRAKIT.Loader.Injectors;
 using ULTRAKIT.Lua.API;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 namespace ULTRAKIT
 {
@@ -13,7 +15,7 @@ namespace ULTRAKIT
     public class Plugin : BaseUnityPlugin
     {
 
-        public static string BundlePath = Directory.GetCurrentDirectory() + "/AssetBundles";
+        public static string BundlePath = Directory.GetCurrentDirectory() + "/Addons";
 
         public void Start()
         {
@@ -24,7 +26,7 @@ namespace ULTRAKIT
 
         public void Update()
         {
-            if (Keyboard.current.f8Key.wasPressedThisFrame)
+            if (Keyboard.current.f8Key.wasPressedThisFrame && (AssistController.Instance?.cheatsEnabled ?? false))
             {
                 foreach(var addon in AddonLoader.registry.Keys)
                 {
@@ -41,6 +43,7 @@ namespace ULTRAKIT
                 AddonLoader.LoadAllAddons(BundlePath);
 
                 // This is expected to throw an error since there's not always a gunsetter present (eg. in menus)
+                // could we not just check if gs == null then?
                 try
                 {
                     var gs = MonoSingleton<GunSetter>.Instance;

@@ -21,7 +21,7 @@ namespace ULTRAKIT.Core.BossSpawns
             var diff = (newPos - playerCam.transform.position).normalized;
             var screenPos = playerCam.WorldToViewportPoint(newPos);
 
-            var isOnScreen = screenPos.x > 0 && screenPos.x < 1 && screenPos.y > 0 && screenPos.y < 1;
+            var isOnScreen = Vector3.Dot(diff, playerCam.transform.forward) > 0f;
 
             barObj.SetActive(isOnScreen);
             barObj.transform.position = new Vector3(screenPos.x * Screen.width, screenPos.y * Screen.height);
