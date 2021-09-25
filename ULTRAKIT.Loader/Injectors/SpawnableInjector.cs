@@ -20,6 +20,7 @@ namespace ULTRAKIT.Loader.Registries
             switch (item.type)
             {
                 case Type.Throwable:
+                    a.gameObject.layer = 22;
                     var b = a.gameObject.AddComponent<ItemIdentifier>();
                     b.pickUpSound = new GameObject();
                     b.putDownPosition = Vector3.zero;

@@ -9,6 +9,8 @@ namespace ULTRAKIT.Data.CSharp_scripts
 {
     class BasicWeapon : MonoBehaviour
     {
+        CSharpAssetDatabase
+            Database;
 
         GameObject
             Player;
@@ -38,57 +40,37 @@ namespace ULTRAKIT.Data.CSharp_scripts
             ProjBoostAlt,
             ProjBoost;
 
-        [Space]
-        [Header("UseDatabase FALSE")]
-        public GameObject
+        GameObject
             Projectile;
 
-        public GameObject
+        GameObject
             ProjectileAlt;
 
-        [Space]
-        [Header("UseDatabase TRUE")]
         public string
             ProjectileName;
 
         public string
             ProjectileNameAlt;
 
-        [Space]
-        public bool
-            UseDatabase,
-            UseDatabaseAlt;
-
-        #endregion
-        #region Input
-        [Space]
-        public KeyCode
-            Fire1,
-            Fire2;
         #endregion
 
         void Awake()
         {
-            Player = MonoSingleton<NewMovement>.Instance.gameObject;
-            if (UseDatabase)
-            {
-                Projectile = 
-            }
-            if (UseDatabaseAlt)
-            {
-                //ProjectileAlt =
-            }
+            Player = GameObject.Find("Player");
+            Database = new CSharpAssetDatabase();
+            Projectile = Database.Create(ProjectileName);
+            ProjectileAlt = Database.Create(ProjectileNameAlt);
         }
         void Update()
         {
-            if (Input.GetKeyDown(Fire1))
+            if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 for (int i = 0; i < Amount_to_shoot; i++)
                 {
                     Invoke("Shoot", Delay);
                 }
             }
-            if (Input.GetKeyDown(Fire2))
+            if (Input.GetKeyDown(KeyCode.Mouse1))
             {
                 for (int i = 0; i < Amount_to_shootAlt; i++)
                 {
