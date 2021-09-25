@@ -24,10 +24,6 @@ namespace ULTRAKIT.Data.CSharp_scripts
             Type = WepType.Hitscan;
 
         public float
-            Damage,
-            DamageAlt;
-
-        public float
             DelayAlt,
             Delay;
 
