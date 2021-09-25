@@ -131,7 +131,7 @@ namespace ULTRAKIT.Lua.API.Statics
         private static readonly Dictionary<string, AudioClip> AudioClipsDict = new Dictionary<string, AudioClip>();
         
         // Choice to use queue or dictionary
-        public static void LoadAudio(ScriptExecutionContext ctx, string path, string key = null)
+        public static void LoadClip(ScriptExecutionContext ctx, string path, string key = null)
         {
             var filePath = GetFullPath(ctx, path);
             
