@@ -4,7 +4,7 @@ using UnityEngine;
 using ULTRAKIT.Lua.API.Abstract;
 using MoonSharp.Interpreter;
 
-namespace ULTRAKIT.Data
+namespace ULTRAKIT.Lua.API.Statics
 {
     public class UKStaticAssetDatabase : UKStatic
     {

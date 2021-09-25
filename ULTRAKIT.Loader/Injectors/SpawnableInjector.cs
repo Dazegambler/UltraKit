@@ -17,6 +17,24 @@ namespace ULTRAKIT.Loader.Registries
             SpawnableObject a = new SpawnableObject();
 
             a.gameObject = item.Prefab;
+            switch (item.type)
+            {
+                case Type.Throwable:
+                    var b = a.gameObject.AddComponent<ItemIdentifier>();
+                    b.pickUpSound = new GameObject();
+                    b.putDownPosition = Vector3.zero;
+                    b.putDownRotation = Vector3.zero;
+                    b.putDownScale = item.Prefab.transform.localScale;                    
+                    break;
+                case Type.Explosive://WAIT FOR SANDBOX UPDATE
+                    break;
+                case Type.Enemy://WAIT FOR AI UPDATE(SOONtm)
+                    break;
+            }
+            if (item.type == Type.Throwable)
+            {
+
+            }
             foreach (var c in a.gameObject.GetComponentsInChildren<Renderer>(true))
             {
                 c.material.shader = Shader.Find(c.material.shader.name);
