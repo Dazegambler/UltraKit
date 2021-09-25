@@ -1,20 +1,25 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using MoonSharp.Interpreter;
 using ULTRAKIT.Lua.API.Abstract;
 using System.IO;
 using System.Runtime.Remoting.Contexts;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace ULTRAKIT.Lua.API.Statics
 {
     public class UKStaticFileLoader : UKStatic
     {
+
         public static readonly string AddonDataFolder = Directory.GetCurrentDirectory() + "\\Addons\\Resources";
         
         public override string name => "FileLoader";
 
         #region Helper methods
-        private static string GetPath(ScriptExecutionContext ctx, string path) 
+        private static string GetFullPath(ScriptExecutionContext ctx, string path) 
             => $@"{GetAddonFolder(ctx.OwnerScript)}\{path.Trim()}";
         
         private static string GetAddonFolder(Script script)
@@ -41,7 +46,7 @@ namespace ULTRAKIT.Lua.API.Statics
         private static bool ValidatePath(string path, Script script)
         {
             var addonFolder = new Uri(GetAddonFolder(script), UriKind.Absolute);
-            var pathToFile = new Uri(addonFolder, path);
+            var pathToFile = new Uri(addonFolder, path.Trim());
             var fileIsInAddonFolder = pathToFile.AbsolutePath.StartsWith(addonFolder.AbsolutePath);
             
             return fileIsInAddonFolder;
@@ -50,7 +55,7 @@ namespace ULTRAKIT.Lua.API.Statics
         #region Text loading
         public static string LoadText(ScriptExecutionContext ctx, string path)
         {
-            var filePath = GetPath(ctx, path);
+            var filePath = GetFullPath(ctx, path);
             
             if (!ValidatePath(path.Trim(), ctx.OwnerScript))
             {
@@ -73,9 +78,9 @@ namespace ULTRAKIT.Lua.API.Statics
         #region Image loading
         public static Texture2D LoadTexture(ScriptExecutionContext ctx, string path)
         {
-            var filePath = GetPath(ctx, path);
+            var filePath = GetFullPath(ctx, path);
             
-            if (!ValidatePath(path.Trim(), ctx.OwnerScript))
+            if (!ValidatePath(path, ctx.OwnerScript))
             {
                 ctx.LuaError(NoAccessException);
                 return null;
@@ -119,6 +124,62 @@ namespace ULTRAKIT.Lua.API.Statics
             var rect = new Rect(0, 0, img.width, img.height);
             return Sprite.Create(img, rect, Vector2.one/2);
         }
+        #endregion
+
+        #region Audio loading
+        private static readonly Queue<AudioClip> AudioClipsQueue = new Queue<AudioClip>();
+        private static readonly Dictionary<string, AudioClip> AudioClipsDict = new Dictionary<string, AudioClip>();
+        
+        // Choice to use queue or dictionary
+        public static void LoadClip(ScriptExecutionContext ctx, string path, string key = null)
+        {
+            var filePath = GetFullPath(ctx, path);
+            
+            if (!ValidatePath(path, ctx.OwnerScript))
+            {
+                ctx.LuaError(NoAccessException);
+            }
+
+            try
+            {
+                var req = UnityWebRequestMultimedia.GetAudioClip("file:///" + filePath, AudioType.WAV);
+                ctx.GetRuntime().StartCoroutine(GetAudioClip(req, key));
+            }
+            catch (Exception e)
+            {
+                ctx.LuaError(e);
+            }
+        }
+
+        public static AudioClip RetrieveClip(ScriptExecutionContext ctx, string key = null)
+        {
+            try
+            {
+                if (key == null) return AudioClipsQueue.Dequeue();
+                
+                var clip = AudioClipsDict[key];
+                AudioClipsDict.Remove(key);
+                return clip;
+            }
+            catch
+            {
+                // ignored
+            }
+
+            return null;
+        }
+
+        private static IEnumerator GetAudioClip(UnityWebRequest req, string key)
+        {
+            yield return req.SendWebRequest();
+            var clip = DownloadHandlerAudioClip.GetContent(req);
+
+            if (key == null)
+                AudioClipsQueue.Enqueue(clip);
+            else
+                AudioClipsDict[key] = clip;
+        }
+
         #endregion
     }
 }
