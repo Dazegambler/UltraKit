@@ -91,11 +91,11 @@ namespace ULTRAKIT.Data
         {
             try
             {
-                return GameObject.Instantiate(assetDict[name]);
+                return assetDict[name];
             }
             catch (KeyNotFoundException)
             {
-                Debug.LogWarning($"Could Not Find Asset {name}, please check the asset list");
+                Debug.LogWarning($"Could not find asset {name}. Please check the assets list.");
                 return new GameObject();
             }
         }

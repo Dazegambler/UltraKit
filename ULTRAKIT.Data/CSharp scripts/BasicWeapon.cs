@@ -83,10 +83,12 @@ namespace ULTRAKIT.Data.CSharp_scripts
             switch (Type)
             {
                 case WepType.Hitscan:
-                    Instantiate(Projectile, Muzzle.transform.position, Player.transform.rotation);
+                    var proj = Instantiate(Projectile, Muzzle.transform.position, Player.transform.rotation);
+                    proj.transform.forward = Muzzle.transform.forward;
                     break;
                 case WepType.Projectile:
                     var a = Instantiate(Projectile, Muzzle.transform.position, Player.transform.rotation);
+                    // Make this use muzzle.transform.forward too? I won't change it because I haven't tested it 
                     a.transform.forward = Player.transform.forward;
                     a.GetComponent<Rigidbody>().AddForce(a.transform.forward * ProjBoost, ForceMode.Impulse);
                     break;
