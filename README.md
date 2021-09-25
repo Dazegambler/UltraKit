@@ -16,11 +16,11 @@ OR
  <p align="center">
    <img alt="HOW TO INSTALL ULTRAKILL MODS WITH BEPINEX]" src="https://user-images.githubusercontent.com/27899907/132107380-d55c608f-c7d9-45ec-adce-3502734eae45.png" width=400/>
 </p>
-3. Take the contents of the ULTRAKIT.zip and drag them all into (Your Ultrakill directory)/BepInEx/Plugins/Ultrakit (you may have to create the last folder)
+2. Take the contents of the ULTRAKIT.zip and drag them all into (Your Ultrakill directory)/BepInEx/Plugins/Ultrakit (you may have to create the last folder)
 
-4 - Start the game once. Inside the ULTRAKILL directory there should now be an Addons folder. This is where you will place any .ukaddon files. If you wish to enable the console for debugging purposes, the config file is in /BepInEx/config/config.cfg
+3. Start the game once. Inside the ULTRAKILL directory there should now be an Addons folder. This is where you will place any .ukaddon files. If you wish to enable the console for debugging purposes, the config file is in /BepInEx/config/config.cfg
 
-5 - Place your choice of addons in the folder, and all should work! If not, feel free to DM or ping Heckteck#0512 or m1ksu#6548 on Discord.
+4. Place your choice of addons in the folder, and all should work! If not, feel free to DM or ping Heckteck#0512 or m1ksu#6548 on Discord.
 
 
 # Credits
