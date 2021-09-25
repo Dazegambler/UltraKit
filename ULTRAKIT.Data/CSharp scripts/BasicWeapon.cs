@@ -72,7 +72,7 @@ namespace ULTRAKIT.Data.CSharp_scripts
             Player = MonoSingleton<NewMovement>.Instance.gameObject;
             if (UseDatabase)
             {
-                //Projectile =
+                Projectile = 
             }
             if (UseDatabaseAlt)
             {
