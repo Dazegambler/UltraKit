@@ -16,7 +16,7 @@ namespace ULTRAKIT.Loader
             get => _enabled;
             set
             {
-                if (AddonLoader.registry.ContainsKey(this))
+                if (PersistentInjector.persistDict.ContainsKey(this))
                 {
                     var persistents = PersistentInjector.persistDict[this];
                     foreach (var pfb in persistents)

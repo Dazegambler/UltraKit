@@ -42,6 +42,7 @@ namespace ULTRAKIT
                     addon.Bundle.Unload(true);
                 }
 
+                PersistentInjector.persistDict.Clear();
                 UKStaticRegistry.addonData.Clear();
                 UKStaticRegistry.sharedData.Clear();
 
