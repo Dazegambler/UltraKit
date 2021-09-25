@@ -88,7 +88,10 @@ namespace ULTRAKIT.EditorScripts
 
             Directory.Delete(tempPath, true);
 
-            UnityEditor.AssetDatabase.Refresh();
+            if (outputPath.Contains("Assets/"))
+            {
+                UnityEditor.AssetDatabase.Refresh();
+            }
             Debug.Log($@"Mod export successful at {outputPath}");
             return true;
         }
