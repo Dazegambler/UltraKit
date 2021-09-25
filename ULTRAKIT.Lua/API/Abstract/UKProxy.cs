@@ -8,6 +8,7 @@ namespace ULTRAKIT.Lua.API.Proxies
         where T : class
     {
         protected T target;
+        public bool isValid => target != null;
 
         public UKProxy(T target)
         {
