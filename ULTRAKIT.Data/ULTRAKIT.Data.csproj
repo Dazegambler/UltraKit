@@ -89,6 +89,8 @@
   <ItemGroup>
     <Compile Include="Components\UKGlow.cs" />
     <Compile Include="Components\UKScript.cs" />
+    <Compile Include="CSharp scripts\BasicProjectile.cs" />
+    <Compile Include="CSharp scripts\BasicWeapon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScriptableObjects\Registry\UKContent.cs" />
     <Compile Include="ScriptableObjects\Registry\UKContentPersistent.cs" />
@@ -99,5 +101,6 @@
   <ItemGroup>
     <None Include="PreBuild.targets" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
