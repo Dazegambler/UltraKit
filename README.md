@@ -18,7 +18,7 @@ A toolkit that can be used to add custom content to ULTRAKILL, such as custom we
 
 4 - Start the game once. Inside the ULTRAKILL directory there should now be an Addons folder. This is where you will place any .ukaddon files.
 
-5 - Place your choice of addons in the folder, and all should work! If not, feel free to DM or ping Heckteck#0512 or m1ksu#6548 on Discord, or join the Ultrakill Discord server at where you can usually find us in the #ultramods channel. 
+5 - Place your choice of addons in the folder, and all should work! If not, feel free to DM or ping Heckteck#0512 or m1ksu#6548 on Discord.
 
 
 # Credits
