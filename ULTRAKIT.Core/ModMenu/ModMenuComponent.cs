@@ -36,7 +36,7 @@ namespace ULTRAKIT.Core.ModMenu
                 GUI.skin = CoreContent.UIBundle.LoadAsset<GUISkin>("UIUltraMod");
                 GUI.Window(0, guirect, AddonsMenu, "");
 
-                if (Selected != null)
+                if (Selected != null && AddonLoader.registry.ContainsKey(Selected))
                 {
                     GUI.Label(new Rect(addonMenuWidth + 25, 100, 1000, 30), $"{Selected.Data.ModName}");
                     GUI.Box(new Rect(addonMenuWidth+25,130,addonMenuWidth+10,110),"");
