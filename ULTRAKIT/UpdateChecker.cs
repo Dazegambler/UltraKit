@@ -26,12 +26,12 @@ namespace ULTRAKIT
                 }
 
                 var humanized = ghDllTime.Humanize();
-                Debug.Log($"Last published build on GitHub was: {humanized}", null, ConsoleColor.Green);
-                Debug.Log(
-                    DateTime.Compare(ghDllTime, lastWriteTime) > 0
+                Debug.Log($"The last published build on GitHub was {humanized}", null, ConsoleColor.Green);
+                var isOlder = DateTime.Compare(ghDllTime, lastWriteTime) > 0;
+                Debug.Log(isOlder 
                         ? $"The build on Main is {(ghDllTime - lastWriteTime).Humanize()} younger than yours. Consider updating."
                         : $"Your build is {(ghDllTime - lastWriteTime).Humanize()} newer than the published one.", null,
-                    ConsoleColor.Green);
+                    isOlder ? ConsoleColor.Red : ConsoleColor.Green);
             }
             else
             {

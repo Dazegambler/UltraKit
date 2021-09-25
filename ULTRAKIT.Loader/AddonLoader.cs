@@ -60,7 +60,7 @@ namespace ULTRAKIT.Loader
             // FilePath = addon folder (has folders for each addon inside)
             // Loop over all folders at FilePath
             // Call LoadAddon on every folder
-            Debug.Log("Loading addons...", null, ConsoleColor.Green);
+            Debug.Log("Loading addons...", null, ConsoleColor.Yellow);
             LoadAllAddons(filePath);
             Debug.Log("Finished loading addons!", null, ConsoleColor.Green);
 
@@ -80,7 +80,6 @@ namespace ULTRAKIT.Loader
             var files = Directory.GetFiles(filePath, "*.ukaddon", SearchOption.AllDirectories);
             foreach (string file in files)
             {
-                Debug.Log($"{file}", null, ConsoleColor.Green);
 
                 try
                 {
@@ -88,7 +87,7 @@ namespace ULTRAKIT.Loader
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError(e.Message);
+                    Debug.LogError($"Failed to load {Path.GetFileName(file)}: {e.Message}");
                 }
             }
         }
@@ -103,7 +102,7 @@ namespace ULTRAKIT.Loader
             a.Bundle = AssetBundle.LoadFromFile(filePath);
             a.Data = a.Bundle.LoadAllAssets<UKAddonData>()[0];
             
-            // Give addons a toggle bool button to decide this? 
+            // Maybe give addons a toggle to decide if they want this? 
             CreateAddonDataDirectory(a);
 
             a.Enabled = true;
@@ -113,6 +112,7 @@ namespace ULTRAKIT.Loader
             registry[a].AddRange(a.Bundle.LoadAllAssets<UKContentSpawnable>());
             registry[a].AddRange(a.Bundle.LoadAllAssets<UKContentPersistent>());
 
+            Debug.Log($"Loaded: {a.Data.ModName} by {a.Data.Author} ({Path.GetFileName(filePath)})");
             return a;
         }
 

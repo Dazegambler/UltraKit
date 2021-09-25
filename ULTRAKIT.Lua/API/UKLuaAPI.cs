@@ -11,6 +11,7 @@ using ULTRAKIT.Lua.API.Statics;
 using ULTRAKIT.Lua.Attributes;
 using ULTRAKIT.Lua.Components;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
@@ -117,6 +118,7 @@ namespace ULTRAKIT.Lua.API
             UserData.RegisterType<Sprite>();
             UserData.RegisterType<AudioSource>();
             UserData.RegisterType<AudioClip>();
+            UserData.RegisterType<NavMeshAgent>();
 
             // ULTRAKILL CLASSES.
             UserData.RegisterType<NewMovement>();

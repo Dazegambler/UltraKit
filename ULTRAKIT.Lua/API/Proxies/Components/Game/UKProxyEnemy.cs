@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AI;
+// ReSharper disable UnusedMember.Global
 
 namespace ULTRAKIT.Lua.API.Proxies.Components
 {
@@ -20,6 +22,11 @@ namespace ULTRAKIT.Lua.API.Proxies.Components
         public bool dead => target.dead;
         public float health => target.health;
         public string enemyType => target.enemyType.ToString();
+
+        public NavMeshAgent agent => 
+               target.GetComponent<NavMeshAgent>() 
+            ?? target.GetComponentInChildren<NavMeshAgent>() 
+            ?? target.GetComponentInParent<NavMeshAgent>();
         
         public void Damage(float damage) => target.DeliverDamage(target.gameObject, Vector3.zero, target.transform.position, damage, false);
         public void Damage(float damage, Vector3 force) => target.DeliverDamage(target.gameObject, force, target.transform.position, damage, false);
@@ -30,7 +37,7 @@ namespace ULTRAKIT.Lua.API.Proxies.Components
         public void ForceOff() => target.gce.ForceOff();
         public void ForceAir(Script s, bool forced)
         {
-            if(target.gce == null)
+            if (target.gce == null)
             {
                 return;
             }
@@ -40,7 +47,7 @@ namespace ULTRAKIT.Lua.API.Proxies.Components
                 airForcers.Add(target, new List<Script>());
             }
 
-            if(forced)
+            if (forced)
             {
                 if (!airForcers[target].Contains(s))
                 {
