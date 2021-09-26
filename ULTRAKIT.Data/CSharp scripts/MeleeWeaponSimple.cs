@@ -15,6 +15,9 @@ namespace ULTRAKIT.Data.CSharp_scripts
     /// </summary>
     class MeleeWeaponSimple : UKScript
     {
+        public bool
+            UseLua;
+
         public float
             AnimationSpeed,
             Radius,
