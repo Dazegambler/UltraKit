@@ -21,9 +21,6 @@ namespace ULTRAKIT.Data.CSharp_scripts
             Range,
             Damage;
 
-        public GameObject
-            Shield;
-
         GameObject
             Cc;
 
@@ -43,14 +40,6 @@ namespace ULTRAKIT.Data.CSharp_scripts
             {
                 Invoke("Hit", AnimationSpeed);
             }
-            if (Input.GetKeyDown(KeyCode.Mouse1))
-            {
-                Invoke("Block",AnimationSpeed);
-            }
-            else
-            {
-
-            }
         }
         void Hit()
         {
@@ -59,10 +48,6 @@ namespace ULTRAKIT.Data.CSharp_scripts
             {
                 HitEids.Add(Hit.transform);
             }
-        }
-        void Block()
-        {
-
         }
     }
 }
