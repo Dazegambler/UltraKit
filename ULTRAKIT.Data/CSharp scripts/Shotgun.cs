@@ -36,26 +36,15 @@ namespace ULTRAKIT.Data.CSharp_scripts
         public WepTypeAlt
             TypeAlt = WepTypeAlt.Hitscan;
 
-        [Serializable]
-        public class Spread
-        {
-            public float
-                SpreadX,
-                SpreadY,
-                SpreadZ,
-                SpreadW,
-                SpreadAltX,
-                SpreadAltY,
-                SpreadAltZ,
-                SpreadAltW;
-            public int
-                PelletCount,
-                PelletCountAlt;
+        public float
+            SpreadX,
+            SpreadY,
+            SpreadAltX,
+            SpreadAltY;
 
-        }
-        public Spread
-            Pellets;
-        [Space]
+        public int
+            PelletCount,
+            PelletCountAlt;
 
         public List<GameObject>
             BarrelsAlt,
@@ -100,13 +89,13 @@ namespace ULTRAKIT.Data.CSharp_scripts
                 case WepType.Hitscan:
                     foreach(var Barrel in Barrels)
                     {
-                        for (int i = 0; i < Pellets.PelletCount; i++)
+                        for (int i = 0; i < PelletCount; i++)
                         {
                             var proj = Database.Create(ProjectileName, Barrel.transform.position, new Quaternion(
-                                Cc.transform.rotation.x + UnityEngine.Random.Range(0, Pellets.SpreadX),
-                                Cc.transform.rotation.y + UnityEngine.Random.Range(0, Pellets.SpreadY),
-                                Cc.transform.rotation.z + UnityEngine.Random.Range(0, Pellets.SpreadZ),
-                                Cc.transform.rotation.w + UnityEngine.Random.Range(0, Pellets.SpreadW)
+                                Cc.transform.rotation.x + UnityEngine.Random.Range(-SpreadX, SpreadX),
+                                Cc.transform.rotation.y + UnityEngine.Random.Range(-SpreadY, SpreadY),
+                                Cc.transform.rotation.z,
+                                Cc.transform.rotation.w
                                 ));
                         }
                     }
@@ -114,13 +103,13 @@ namespace ULTRAKIT.Data.CSharp_scripts
                 case WepType.Projectile:
                     foreach (var Barrel in BarrelsAlt)
                     {
-                        for (int i = 0; i < Pellets.PelletCount; i++)
+                        for (int i = 0; i < PelletCount; i++)
                         {
                             var a = Database.Create(ProjectileName, Barrel.transform.position, new Quaternion(
-                                Cc.transform.rotation.x + UnityEngine.Random.Range(0, Pellets.SpreadX),
-                                Cc.transform.rotation.y + UnityEngine.Random.Range(0, Pellets.SpreadY),
-                                Cc.transform.rotation.z + UnityEngine.Random.Range(0, Pellets.SpreadZ),
-                                Cc.transform.rotation.w + UnityEngine.Random.Range(0, Pellets.SpreadW)
+                                Cc.transform.rotation.x + UnityEngine.Random.Range(-SpreadX, SpreadX),
+                                Cc.transform.rotation.y + UnityEngine.Random.Range(-SpreadY, SpreadY),
+                                Cc.transform.rotation.z,
+                                Cc.transform.rotation.w
                                 ));
                             a.transform.forward = Cc.transform.forward;
                             a.GetComponent<Rigidbody>().AddForce(a.transform.forward * ProjBoost, ForceMode.Impulse);
@@ -137,13 +126,13 @@ namespace ULTRAKIT.Data.CSharp_scripts
                 case WepTypeAlt.Hitscan:
                     foreach (var Barrel in Barrels)
                     {
-                        for (int i = 0; i < Pellets.PelletCountAlt; i++)
+                        for (int i = 0; i < PelletCountAlt; i++)
                         {
-                            var proj = Database.Create(ProjectileName, Barrel.transform.position, new Quaternion(
-                                Cc.transform.rotation.x + UnityEngine.Random.Range(0, Pellets.SpreadAltX),
-                                Cc.transform.rotation.y + UnityEngine.Random.Range(0, Pellets.SpreadAltY),
-                                Cc.transform.rotation.z + UnityEngine.Random.Range(0, Pellets.SpreadAltZ),
-                                Cc.transform.rotation.w + UnityEngine.Random.Range(0, Pellets.SpreadAltW)
+                            var proj = Database.Create(ProjectileNameAlt, Barrel.transform.position, new Quaternion(
+                                Cc.transform.rotation.x + UnityEngine.Random.Range(-SpreadAltX, SpreadAltX),
+                                Cc.transform.rotation.y + UnityEngine.Random.Range(-SpreadAltY, SpreadAltY),
+                                Cc.transform.rotation.z,
+                                Cc.transform.rotation.w
                                 ));
                         }
                     }
@@ -151,13 +140,13 @@ namespace ULTRAKIT.Data.CSharp_scripts
                 case WepTypeAlt.Projectile:
                     foreach (var Barrel in BarrelsAlt)
                     {
-                        for (int i = 0; i < Pellets.PelletCountAlt; i++)
+                        for (int i = 0; i < PelletCountAlt; i++)
                         {
-                            var a = Database.Create(ProjectileName, Barrel.transform.position, new Quaternion(
-                                Cc.transform.rotation.x + UnityEngine.Random.Range(0, Pellets.SpreadAltX),
-                                Cc.transform.rotation.y + UnityEngine.Random.Range(0, Pellets.SpreadAltY),
-                                Cc.transform.rotation.z + UnityEngine.Random.Range(0, Pellets.SpreadAltZ),
-                                Cc.transform.rotation.w + UnityEngine.Random.Range(0, Pellets.SpreadAltW)
+                            var a = Database.Create(ProjectileNameAlt, Barrel.transform.position, new Quaternion(
+                                Cc.transform.rotation.x + UnityEngine.Random.Range(-SpreadAltX, SpreadAltX),
+                                Cc.transform.rotation.y + UnityEngine.Random.Range(-SpreadAltX, SpreadAltY),
+                                Cc.transform.rotation.z,
+                                Cc.transform.rotation.w
                                 ));
                             a.transform.forward = Cc.transform.forward;
                             a.GetComponent<Rigidbody>().AddForce(a.transform.forward * ProjBoost, ForceMode.Impulse);
