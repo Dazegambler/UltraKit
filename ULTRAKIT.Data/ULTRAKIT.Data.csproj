@@ -91,6 +91,7 @@
     <Compile Include="Components\UKScript.cs" />
     <Compile Include="CSharp scripts\BasicProjectile.cs" />
     <Compile Include="CSharp scripts\BasicWeapon.cs" />
+    <Compile Include="CSharp scripts\Shotgun.cs" />
     <Compile Include="CSharpAssetDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScriptableObjects\Registry\UKContent.cs" />

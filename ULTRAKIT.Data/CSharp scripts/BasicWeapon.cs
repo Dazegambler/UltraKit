@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ULTRAKIT.Data.Components;
 using UnityEngine;
 
 namespace ULTRAKIT.Data.CSharp_scripts
 {
-    class BasicWeapon : MonoBehaviour
+    class BasicWeapon : UKScript
     {
         CSharpAssetDatabase
             Database;
 
         GameObject
-            Player;
+            Cc;
 
         #region Projectile
         public enum WepType
@@ -21,10 +22,25 @@ namespace ULTRAKIT.Data.CSharp_scripts
             Hitscan,
             Projectile,
         }
+        public enum WepTypeAlt
+        {
+            Hitscan,
+            Projectile,
+        }
 
         public WepType
             Type = WepType.Hitscan;
+        public WepTypeAlt
+            TypeAlt = WepTypeAlt.Hitscan;
 
+        [Header("LUA(Optional)")]
+        public bool
+            UseLua;
+
+        public UKScript
+            Script;
+
+        [Space]
         public float
             DelayAlt,
             Delay;
@@ -56,25 +72,25 @@ namespace ULTRAKIT.Data.CSharp_scripts
 
         void Awake()
         {
-            Player = GameObject.Find("Player");
+            Cc = GameObject.Find("Main Camera");
             Database = new CSharpAssetDatabase();
-            Projectile = Database.Create(ProjectileName);
-            ProjectileAlt = Database.Create(ProjectileNameAlt);
         }
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                for (int i = 0; i < Amount_to_shoot; i++)
+                Invoke("Shoot",0);
+                for (int i = 1; i < Amount_to_shoot; i++)
                 {
-                    Invoke("Shoot", Delay);
+                    Invoke("Shoot", (Delay/3)*i);
                 }
             }
             if (Input.GetKeyDown(KeyCode.Mouse1))
             {
-                for (int i = 0; i < Amount_to_shootAlt; i++)
+                Invoke("AltShoot",0);
+                for (int i = 1; i < Amount_to_shootAlt; i++)
                 {
-                    Invoke("AltShoot",DelayAlt);
+                    Invoke("AltShoot",(DelayAlt / 3) * i);
                 }
             }
         }
@@ -83,27 +99,27 @@ namespace ULTRAKIT.Data.CSharp_scripts
             switch (Type)
             {
                 case WepType.Hitscan:
-                    var proj = Instantiate(Projectile, Muzzle.transform.position, Player.transform.rotation);
-                    proj.transform.forward = Muzzle.transform.forward;
+                    var proj = Database.Create(ProjectileName, Muzzle.transform.position, Cc.transform.rotation);
+                    //proj.transform.forward = Muzzle.transform.forward;
                     break;
                 case WepType.Projectile:
-                    var a = Instantiate(Projectile, Muzzle.transform.position, Player.transform.rotation);
+                    var a = Database.Create(ProjectileName, Muzzle.transform.position, Cc.transform.rotation);
                     // Make this use muzzle.transform.forward too? I won't change it because I haven't tested it 
-                    a.transform.forward = Player.transform.forward;
+                    a.transform.forward = Cc.transform.forward;
                     a.GetComponent<Rigidbody>().AddForce(a.transform.forward * ProjBoost, ForceMode.Impulse);
                     break;
             }
         }
         void AltShoot()
         {
-            switch (Type)
+            switch (TypeAlt)
             {
-                case WepType.Hitscan:
-                    Instantiate(ProjectileAlt, Muzzle.transform.position, Player.transform.rotation);
+                case WepTypeAlt.Hitscan:
+                    var proj = Database.Create(ProjectileNameAlt, Muzzle.transform.position, Cc.transform.rotation);
                     break;
-                case WepType.Projectile:
-                    var a = Instantiate(ProjectileAlt, Muzzle.transform.position, Player.transform.rotation);
-                    a.transform.forward = Player.transform.forward;
+                case WepTypeAlt.Projectile:
+                    var a = Database.Create(ProjectileNameAlt, Muzzle.transform.position, Cc.transform.rotation);
+                    a.transform.forward = Cc.transform.forward;
                     a.GetComponent<Rigidbody>().AddForce(a.transform.forward*ProjBoostAlt,ForceMode.Impulse);
                     break;
             }

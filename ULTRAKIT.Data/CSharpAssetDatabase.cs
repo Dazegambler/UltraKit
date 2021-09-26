@@ -87,11 +87,12 @@ namespace ULTRAKIT.Data
             }
         }
 
-        public GameObject Create(string name)
+        public GameObject Create(string name,Vector3 pos,Quaternion Rotation)
         {
             try
             {
-                return assetDict[name];
+                return GameObject.Instantiate(assetDict[name],pos,Rotation); 
+                    
             }
             catch (KeyNotFoundException)
             {
