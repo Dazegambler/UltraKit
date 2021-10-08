@@ -42,6 +42,11 @@ namespace ULTRAKIT.Lua.API.Proxies.Components.Unity
             get => target.localPosition;
             set => target.localPosition = value;
         }
+        public Quaternion localRotation
+        {
+            get => target.localRotation;
+            set => target.localRotation = value;
+        }
         public Vector3 localScale
         {
             get => target.localScale;

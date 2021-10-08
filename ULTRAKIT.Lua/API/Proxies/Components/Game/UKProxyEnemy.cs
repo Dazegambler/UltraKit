@@ -32,6 +32,9 @@ namespace ULTRAKIT.Lua.API.Proxies.Components
         public void Damage(float damage, Vector3 force) => target.DeliverDamage(target.gameObject, force, target.transform.position, damage, false);
         public void Damage(float damage, Vector3 force, GameObject targetObj) => target.DeliverDamage(targetObj, force, targetObj.transform.position, damage, false);
         public void Damage(float damage, Vector3 point, Vector3 force, GameObject targetObj) => target.DeliverDamage(targetObj, force, point, damage, false);
+        public void Damage(float damage, Vector3 point, Vector3 force, bool explode) => target.DeliverDamage(target.gameObject, force, point, damage, explode);
+
+
         public void Explode() => target.Explode();
         public void Splatter() => target.Splatter();
         public void ForceOff() => target.gce.ForceOff();
