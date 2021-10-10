@@ -77,6 +77,9 @@ namespace ULTRAKIT.Data
             "ExplosionWaveEnemy",
             "ExplosionWaveSisyphus",
             "ExplosionWave",
+            "PhysicalShockwave",
+            "PhysicalShockwaveHarmless",
+            "PhysicalShockwavePlayer",
         };
 
 
