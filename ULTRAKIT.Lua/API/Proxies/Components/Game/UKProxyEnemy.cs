@@ -22,6 +22,9 @@ namespace ULTRAKIT.Lua.API.Proxies.Components
         public bool dead => target.dead;
         public float health => target.health;
         public string enemyType => target.enemyType.ToString();
+        public GameObject weakPoint => target.weakPoint;
+        public String[] weaknesses => target.weaknesses;
+        public Single[] weaknessMultipliers => target.weaknessMultipliers;
 
         public NavMeshAgent agent => 
                target.GetComponent<NavMeshAgent>() 
