@@ -28,6 +28,8 @@ namespace ULTRAKIT.Lua.API.Proxies
         public Component GetComponentInParent(string typeName) => target.GetComponentsInParent<Component>()?.Where(t => t.GetType().Name == typeName)?.FirstOrDefault();
         public Component GetComponentInChildren(string typeName) => target.GetComponentsInChildren<Component>()?.Where(t => t.GetType().Name == typeName)?.FirstOrDefault();
 
+        
+
         // Returns (Component, bool)
         public DynValue TryGetComponent(string typeName) {
             var component = target.GetComponents<Component>()?.Where(t => t.GetType().Name == typeName)?.FirstOrDefault();

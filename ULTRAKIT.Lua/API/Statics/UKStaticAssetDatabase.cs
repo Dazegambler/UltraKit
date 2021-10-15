@@ -89,6 +89,19 @@ namespace ULTRAKIT.Data
             }
         }
 
+        public GameObject Get(string name)
+        {
+            try
+            {
+                return assetDict[name];
+            }
+            catch (KeyNotFoundException)
+            {
+                Debug.LogWarning($"Could Not Find Asset {name}, please check the asset list");
+                return new GameObject();
+            }
+        }
+
         public GameObject Create(string name)
         {
             try

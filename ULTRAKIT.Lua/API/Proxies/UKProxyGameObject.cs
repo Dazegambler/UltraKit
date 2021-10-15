@@ -32,8 +32,11 @@ namespace ULTRAKIT.Lua.API.Proxies
         //TODO: AddComponent
         public bool CompareTag(string tag) => target.CompareTag(tag);
         public void SetActive(bool value) => target.SetActive(value);
-        
+
         // Copied from UKProxyComponent.cs
+
+        public Projectile AddProjComponent() => target.AddComponent<Projectile>();
+
         public Component GetComponent(string typeName) => target.GetComponent(typeName);
         public Component GetComponentInParent(string typeName) => target.GetComponentsInParent<Component>()?.Where(t => t.GetType().Name == typeName)?.FirstOrDefault();
         public Component GetComponentInChildren(string typeName) => target.GetComponentsInChildren<Component>()?.Where(t => t.GetType().Name == typeName)?.FirstOrDefault();
