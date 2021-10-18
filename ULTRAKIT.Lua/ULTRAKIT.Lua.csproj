@@ -105,6 +105,7 @@
     <Compile Include="API\Abstract\UKProxy.cs" />
     <Compile Include="API\Abstract\UKStatic.cs" />
     <Compile Include="API\Proxies\Components\Game\UKProxyCameraController.cs" />
+    <Compile Include="API\Proxies\Components\Game\UKProxyCheatsController.cs" />
     <Compile Include="API\Proxies\Components\Unity\UKProxyAnimator.cs" />
     <Compile Include="API\Proxies\Components\Unity\UKProxyAudioSource.cs" />
     <Compile Include="API\Proxies\Components\Game\UKProxyEnemy.cs" />
