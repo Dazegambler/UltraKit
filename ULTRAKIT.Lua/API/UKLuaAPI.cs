@@ -119,6 +119,7 @@ namespace ULTRAKIT.Lua.API
             UserData.RegisterType<AudioSource>();
             UserData.RegisterType<AudioClip>();
             UserData.RegisterType<NavMeshAgent>();
+            UserData.RegisterType<Text>();
 
             // ULTRAKILL CLASSES.
             UserData.RegisterType<NewMovement>();
