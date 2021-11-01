@@ -90,6 +90,7 @@
   <ItemGroup>
     <Compile Include="Addon.cs" />
     <Compile Include="AddonLoader.cs" />
+    <Compile Include="DazeExtensions.cs" />
     <Compile Include="Injectors\CyberGrindInjector.cs" />
     <Compile Include="Injectors\ShopInjector.cs" />
     <Compile Include="Injectors\PersistentInjector.cs" />

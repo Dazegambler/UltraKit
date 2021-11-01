@@ -67,6 +67,7 @@ namespace ULTRAKIT.Data
             "EnemyRevolverMuzzleSuper",
             //Explosions
             "Explosion",
+            "ExplosionHarmless",
             "ExplosionPrime",
             "ExplosionBig",
             "MindflayerExplosion",
@@ -83,6 +84,27 @@ namespace ULTRAKIT.Data
             "PhysicalShockwave",
             "PhysicalShockwaveHarmless",
             "PhysicalShockwavePlayer",
+            //Sounds
+            "CoinHit",
+            "HookArmHit",
+            "ShopSuccess",
+            "WickedHit",
+            "WarningBeep",
+            "HookArmThrow",
+            "RailcannonFire",
+            "HookArmPull",
+            "NailgunNoAmmo",
+            "ShopFail",
+            "RevolverClick",
+            "WeakHit",
+            "GrenadeLauncherSound",
+            "MindflayerWindup",
+            "HookArmCatch",
+            "CrashKill",
+            "ProtectorLose",
+            "ProtectorGet",
+            "CoinGet",
+            "WarningBeep",
         };
 
 

@@ -74,6 +74,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\UnityEngine.AnimationModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\UnityEngine.AudioModule.dll</HintPath>
@@ -132,6 +136,7 @@
     <Compile Include="AttributeHelper.cs" />
     <Compile Include="Attributes\UKScriptCallbacks.cs" />
     <Compile Include="CoolLogger.cs" />
+    <Compile Include="DazeExtensions.cs" />
     <Compile Include="ReflectionExtensions.cs" />
     <Compile Include="ScriptExtensions.cs" />
     <Compile Include="Components\UKScriptRuntime.cs" />
