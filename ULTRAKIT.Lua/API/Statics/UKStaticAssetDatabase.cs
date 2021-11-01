@@ -3,11 +3,14 @@ using System;
 using UnityEngine;
 using ULTRAKIT.Lua.API.Abstract;
 using MoonSharp.Interpreter;
+using General_Unity_Tools;
 
 namespace ULTRAKIT.Data
 {
     public class UKStaticAssetDatabase : UKStatic
     {
+        public static AssetBundle Common;
+
         public override string name => "AssetDatabase";
 
         private Dictionary<string, GameObject> assetDict = new Dictionary<string, GameObject>();
@@ -88,8 +91,16 @@ namespace ULTRAKIT.Data
         {
             foreach (string Name in assetNames)
             {
-                assetDict.Add(Name, AssetFind(Name));
+                try
+                {
+                    assetDict.Add(Name, AssetFind(Name));
+                }
+                catch
+                {
+                    assetDict.Add(Name, AssetFindInBundle(Name));
+                }
             }
+            Common = AssetBundle.LoadFromFile($@"{Application.productName}_Data\StreamingAssets\common");
         }
 
         public GameObject Create(string name)
@@ -125,5 +136,9 @@ namespace ULTRAKIT.Data
             return Original;
         }
 
+        private GameObject AssetFindInBundle(string name)
+        {
+            return Common.LoadAsset<GameObject>(name);
+        }
     }
 }
