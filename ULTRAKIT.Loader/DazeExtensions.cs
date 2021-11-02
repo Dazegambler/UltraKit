@@ -1,28 +1,29 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace General_Unity_Tools
+namespace ULTRAKIT.Loader.Extensions
 {
     public static class DazeExtensions
     {
 
-        public static T[] GetComponentsInArray<T>(this GameObject[] source)
+        public static T[] GetComponentsInArray<T>(this Component[] source)
         {
             List<T> a = new List<T>();
 
-            try
+            foreach (var obj in source)
             {
-                foreach (var obj in source)
+                try
                 {
                     a.Add(obj.GetComponent<T>());
                 }
-            }
-            catch
-            {
+                catch
+                {
+                }
             }
 
             try
@@ -35,34 +36,7 @@ namespace General_Unity_Tools
                 return new T[0];
             }
         }
-
-        public static T[] GetComponentsInArray<T>(this Transform[] source)
-        {
-            List<T> a = new List<T>();
-
-            try
-            {
-                foreach (var obj in source)
-                {
-                    a.Add(obj.GetComponent<T>());
-                }
-            }
-            catch
-            {
-            }
-
-            try
-            {
-                return a.ToArray();
-            }
-            catch
-            {
-                Debug.LogWarning($"DazeExtensions.GetComponentsInArray:Error Returning Array");
-                return new T[0];
-            }
-        }
-
-        public static T[] GetAllComponentsInArray<T>(this GameObject[] source)
+        public static T[] GetAllComponentsInArray<T>(this Component[] source)
         {
             List<T> a = new List<T>();
 
@@ -88,7 +62,6 @@ namespace General_Unity_Tools
                 }
 
             }
-
             try
             {
                 return a.ToArray();
@@ -100,45 +73,7 @@ namespace General_Unity_Tools
             }
         }
 
-        public static T[] GetAllComponentsInArray<T>(this Transform[] source)
-        {
-            List<T> a = new List<T>();
-
-            foreach (var obj in source)
-            {
-                try
-                {
-                    a.Add(obj.GetComponent<T>());
-                }
-                catch
-                {
-                }
-                foreach (var _obj in obj.ListChildren())
-                {
-                    try
-                    {
-                        a.Add(_obj.GetComponent<T>());
-                    }
-                    catch
-                    {
-
-                    }
-                }
-
-            }
-
-            try
-            {
-                return a.ToArray();
-            }
-            catch
-            {
-                Debug.LogWarning($"DazeExtensions.GetComponentsInArray:Error Returning Array");
-                return new T[0];
-            }
-        }
-
-        public static Transform[] ListChildren(this GameObject parent)
+        public static Transform[] ListChildren(this Component parent)
         {
             Transform[] a;
             a = parent.GetComponentsInChildren<Transform>(true);
@@ -153,32 +88,7 @@ namespace General_Unity_Tools
             }
         }
 
-        public static Transform[] ListChildren(this Transform parent)
-        {
-            Transform[] a;
-            a = parent.GetComponentsInChildren<Transform>(true);
-            try
-            {
-                return a;
-            }
-            catch
-            {
-                Debug.LogWarning($"DazeExtensions.ListChildren:COULD NOT LIST CHILDREN INSIDE {parent.name}");
-                return new Transform[0];
-            }
-        }
-
-        public static Transform FindInChildren(this Transform parent, string name)
-        {
-            Transform a = new GameObject().transform;
-            foreach (Transform obj in parent.GetComponentsInChildren<Transform>())
-            {
-                if (obj.name == name) a = obj;
-            }
-            return a;
-        }
-
-        public static Transform FindInChildren(this GameObject parent, string name)
+        public static Transform FindInChildren(this Component parent, string name)
         {
             Transform a = new GameObject().transform;
             foreach (Transform obj in parent.GetComponentsInChildren<Transform>())
@@ -195,8 +105,36 @@ namespace General_Unity_Tools
             {
                 if (obj.name == name) a = obj;
             }
-            Debug.LogWarning($"FOUND:{a.name}");
             return a;
+        }
+
+        public static GameObject PrefabFind(this AssetBundle bundle,string bundlename,string name)
+        {
+            if(bundle == null)
+            {
+                if (File.Exists($@"{Application.productName}_Data\StreamingAssets\{bundlename}"))
+                {
+                    var data = File.ReadAllBytes($@"{Application.productName}_Data\StreamingAssets\{bundlename}");
+                    bundle = AssetBundle.LoadFromMemory(data) ?? LoadFromLoaded(bundle,"common");
+                }
+                else
+                {
+                    Debug.LogWarning($"Could not find bundle {bundlename} or StreamingAssets file");
+                    return new GameObject();
+                }
+            }
+            return bundle.LoadAsset<GameObject>(name) ?? new GameObject();
+        }
+        private static AssetBundle LoadFromLoaded(this AssetBundle bundle, string name)
+        {
+            foreach (var bndl in AssetBundle.GetAllLoadedAssetBundles())
+            {
+                if (bndl.name == name)
+                {
+                    bundle = bndl;
+                }
+            }
+            return bundle ?? null;
         }
     }
 }

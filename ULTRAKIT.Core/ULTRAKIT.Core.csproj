@@ -84,6 +84,7 @@
     <Compile Include="BossSpawns\CustomHealthbarPos.cs" />
     <Compile Include="BossSpawns\BossSpawnsInjector.cs" />
     <Compile Include="CoreContent.cs" />
+    <Compile Include="DazeExtensions.cs" />
     <Compile Include="GUIUtil.cs" />
     <Compile Include="ModMenu\ModMenuInjector.cs" />
     <Compile Include="ModMenu\ModMenuComponent.cs" />

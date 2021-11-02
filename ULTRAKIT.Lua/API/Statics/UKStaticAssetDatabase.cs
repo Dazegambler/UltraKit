@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 using ULTRAKIT.Lua.API.Abstract;
 using MoonSharp.Interpreter;
-using General_Unity_Tools;
+using ULTRAKIT.Lua.Extensions;
 
 namespace ULTRAKIT.Data
 {
@@ -104,7 +104,6 @@ namespace ULTRAKIT.Data
             "ProtectorLose",
             "ProtectorGet",
             "CoinGet",
-            "WarningBeep",
         };
 
 
@@ -113,16 +112,8 @@ namespace ULTRAKIT.Data
         {
             foreach (string Name in assetNames)
             {
-                try
-                {
-                    assetDict.Add(Name, AssetFind(Name));
-                }
-                catch
-                {
-                    assetDict.Add(Name, AssetFindInBundle(Name));
-                }
+                assetDict.Add(Name, DazeExtensions.PrefabFind(Name) ?? Common.PrefabFind("common", Name));
             }
-            Common = AssetBundle.LoadFromFile($@"{Application.productName}_Data\StreamingAssets\common");
         }
 
         public GameObject Create(string name)
@@ -139,28 +130,5 @@ namespace ULTRAKIT.Data
         }
 
         //TODO: create asset position
-
-        private GameObject AssetFind(string name)
-        {
-            //Find set Object in the prefabs
-            GameObject[]
-                Pool = Resources.FindObjectsOfTypeAll<GameObject>();
-            GameObject
-                Original = new GameObject();
-
-            foreach (GameObject obj in Pool)
-            {
-                if (obj.gameObject.name == name)
-                {
-                    Original = obj;
-                }
-            }
-            return Original;
-        }
-
-        private GameObject AssetFindInBundle(string name)
-        {
-            return Common.LoadAsset<GameObject>(name);
-        }
     }
 }

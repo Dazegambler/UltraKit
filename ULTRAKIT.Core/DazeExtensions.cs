@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace ULTRAKIT.Lua.Extensions
+namespace ULTRAKIT.Core.Extensions
 {
     public static class DazeExtensions
     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ULTRAKIT.Data;
 using ULTRAKIT.Data.ScriptableObjects.Registry;
 using UnityEngine;
+using ULTRAKIT.Core.Extensions;
 
 namespace ULTRAKIT.Core.BossSpawns
 {
@@ -16,8 +17,13 @@ namespace ULTRAKIT.Core.BossSpawns
             "DroneFlesh",
             "DroneSkull Variant",
             "MinosBoss",
-            "Wicked"
+            "Wicked",
+            "Very Cancerous Rodent",
+            "Cancerous Rodent",
+            "Mandalore"
         };
+
+        static AssetBundle Common;
 
         public static void Initialize()
         {
@@ -54,7 +60,15 @@ namespace ULTRAKIT.Core.BossSpawns
             a.Name = Enemy;
             a.type = Data.ScriptableObjects.Registry.Type.Enemy;
 
-            a.Prefab = PrefabFind(Enemy);
+            try
+            {
+                a.Prefab = BossFind(Enemy);
+            }
+            catch
+            {
+               Common.PrefabFind("common", Enemy);
+            }
+
             a.Icon = CoreContent.UIBundle.LoadAsset<Sprite>($"{Enemy}");
             return a;
         }
@@ -68,7 +82,7 @@ namespace ULTRAKIT.Core.BossSpawns
 
             a.Icon = CoreContent.UIBundle.LoadAsset<Sprite>("V2Greed");
 
-            var v2Prefab = PrefabFind("V2");
+            var v2Prefab = BossFind("V2");
             v2Prefab.SetActive(false);
             a.Prefab = GameObject.Instantiate(v2Prefab);
             v2Prefab.SetActive(true);
@@ -102,7 +116,7 @@ namespace ULTRAKIT.Core.BossSpawns
 
             return a;
         }
-        public static GameObject PrefabFind(string name)
+        public static GameObject BossFind(string name)
         {
             //Find set Object in the prefabs
             GameObject[] Pool = Resources.FindObjectsOfTypeAll<GameObject>();
