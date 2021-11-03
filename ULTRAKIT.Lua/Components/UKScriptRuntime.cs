@@ -181,6 +181,10 @@ namespace ULTRAKIT.Lua.Components
         void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             FuzzyCall(runtime.Globals, "OnSceneLoaded", scene.name);
+            if (runtime.Globals.Get("CheatToRegister").IsNotNil())
+            {
+                CheatSetup();
+            }
         }
 
         public void Invoke(DynValue func, float delay)
@@ -192,6 +196,28 @@ namespace ULTRAKIT.Lua.Components
                 yield return new WaitForSeconds(delay);
                 func.Function.Call();
             }
+        }
+
+        void CheatSetup()
+        {
+            Closure EnableFunc = runtime.Globals.Get("EnableCheat").ToObject<Closure>();
+            Closure DisableFunc = runtime.Globals.Get("DisableCheat").ToObject<Closure>();
+            Closure UpdateFunc = runtime.Globals.Get("UpdateCheat").ToObject<Closure>();
+            string category = runtime.Globals.Get("Category").CastToString();
+            string whiteListed = runtime.Globals.Get("WhiteList").CastToBool().ToString();
+            Cheat cheat = new Cheat
+            {
+                LongName = runtime.Globals.Get("LongName").CastToString(),
+                Identifier = "ultrakit." + whiteListed + "." + runtime.Globals.Get("Identifier").CastToString(),
+                ButtonEnabledOverride = runtime.Globals.Get("ButtonEnabledOverride").CastToString(),
+                ButtonDisabledOverride = runtime.Globals.Get("ButtonDisabledOverride").CastToString(),
+                DefaultState = runtime.Globals.Get("DefaultState").CastToBool(),
+                PersistenceMode = StatePersistenceMode.NotPersistent,
+                EnableScript = EnableFunc,
+                DisableScript = DisableFunc,
+                UpdateScript = UpdateFunc,
+            };
+            CheatsManager.Instance.RegisterCheat(cheat, category);
         }
     }
 }
