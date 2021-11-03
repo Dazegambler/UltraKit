@@ -242,7 +242,7 @@ namespace ULTRAKIT.Loader.Registries
 
                     b.onClick.AddListener(delegate
                     {
-                        __instance.arm.PreviewObject(spawnable.GetAsSpawnable());
+                        __instance.arm.CreateHandPreview(spawnable.GetAsSpawnable());
                         __instance.gameObject.SetActive(false);
                     });
 
