@@ -95,7 +95,6 @@ namespace ULTRAKIT.Loader.Registries
         public static bool AwakePrefix(DebugArm __instance)
         {
             menus.Clear();
-
             dotAct.Enable();
             comAct.Enable();
 
@@ -128,6 +127,7 @@ namespace ULTRAKIT.Loader.Registries
             return false;
         }
 
+
         [HarmonyPatch("OnDestroy")]
         [HarmonyPrefix]
         public static void DestroyPrefix()
@@ -138,45 +138,9 @@ namespace ULTRAKIT.Loader.Registries
 
         [HarmonyPatch("Update")]
         [HarmonyPrefix]
-        public static bool UpdatePrefix(DebugArm __instance, AudioSource ___jabSound, Animator ___armAnimator, SpawnableObject ___currentObject, LayerMask ___raycastLayers, SpawnMenu ___menu)
+        public static void UpdatePrefix()
         {
-
-
-            if (Time.timeScale == 0f)
-            {
-                return false;
-            }
-            if (MonoSingleton<InputManager>.Instance.InputSource.Fire1.WasPerformedThisFrame)
-            {
-                if (___menu.gameObject.activeSelf || ___currentObject == null)
-                {
-                    return false;
-                }
-
-                __instance.StopAllCoroutines();
-                __instance.StartCoroutine("HandClosedAnimationThing");
-
-                ___jabSound.Play();
-                ___armAnimator.SetTrigger(Animator.StringToHash("Punch"));
-                RaycastHit raycastHit;
-                if (Physics.Raycast(__instance.cameraCtrl.transform.position, __instance.cameraCtrl.transform.forward, out raycastHit, 100f, ___raycastLayers))
-                {
-                    var goreZone = __instance.GetType().GetMethod("GetGoreZone", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(__instance, new object[] { }) as GoreZone;
-                    var go = GameObject.Instantiate<GameObject>(___currentObject.gameObject, raycastHit.point, Quaternion.identity, goreZone.transform);
-                    go.transform.forward = -MonoSingleton<NewMovement>.Instance.transform.forward;
-                    go.SetActive(true);
-                }
-            }
-            if (MonoSingleton<InputManager>.Instance.InputSource.Fire2.WasPerformedThisFrame)
-            {
-
-                ___menu.gameObject.SetActive(true);
-                MonoSingleton<OptionsManager>.Instance.Freeze();
-            }
-
-            __instance.SetPrivate("menu", menus.Keys.ToList()[curIndex]);
-
-            return false;
+            
         }
     }
 
@@ -242,7 +206,7 @@ namespace ULTRAKIT.Loader.Registries
 
                     b.onClick.AddListener(delegate
                     {
-                        __instance.arm.CreateHandPreview(spawnable.GetAsSpawnable());
+                        __instance.arm.SelectObject(spawnable.GetAsSpawnable());
                         __instance.gameObject.SetActive(false);
                     });
 
