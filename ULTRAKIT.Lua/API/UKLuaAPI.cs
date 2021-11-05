@@ -99,6 +99,8 @@ namespace ULTRAKIT.Lua.API
             RegisterUnityStruct<SpriteSortPoint>();
             RegisterUnityStruct<ForceMode>();
 
+            RegisterUnityStruct<HomingType>();
+
             // This is an interesting method
             // Doesn't exactly work but worth looking into if we want to ease the burden of component exposure (or exposure of anything else)
             //foreach (var type in AttributeHelper.GetDerivedTypes(typeof(Component)))
