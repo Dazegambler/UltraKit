@@ -20,7 +20,7 @@ namespace ULTRAKIT.Lua.API.Proxies.Components
         public void Zoom(float amount) => target.Zoom(amount);
         public void StopZoom() => target.StopZoom();
         public void StopShake() => target.StopShake();
-        public void ResetCamera(float degrees) => target.ResetCamera(degrees, true);
+        public void ResetCamera(float degrees) => target.ResetCamera(degrees);
         public void TrueStop(float length) => target.TrueStop(length);
     }
 }
