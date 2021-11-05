@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using ULTRAKIT.Lua.API.Abstract;
 using MoonSharp.Interpreter;
+using ULTRAKIT.Lua;
 using ULTRAKIT.Lua.Extensions;
 
 namespace ULTRAKIT.Data
@@ -124,7 +125,7 @@ namespace ULTRAKIT.Data
             }
             catch (KeyNotFoundException)
             {
-                Debug.LogWarning($"Could Not Find Asset {name}, please check the asset list");
+                UnityEngine.Debug.LogWarning($"Could Not Find Asset {name}, please check the asset list");
                 return new GameObject();
             }
         }
