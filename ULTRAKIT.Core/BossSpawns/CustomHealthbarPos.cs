@@ -17,6 +17,13 @@ namespace ULTRAKIT.Core.BossSpawns
 
         void Update()
         {
+            if(enemy == null)
+            {
+                this.enabled = false;
+                barObj.SetActive(false);
+                return;
+            }
+
             var newPos = enemy.transform.position + offset;
             var diff = (newPos - playerCam.transform.position).normalized;
             var screenPos = playerCam.WorldToViewportPoint(newPos);
