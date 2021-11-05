@@ -107,37 +107,13 @@ namespace ULTRAKIT.Lua.API.Proxies.Components
             set => target.playerBullet = value;
         }
 
-        public string homingType
+        public HomingType homingType
         {
-            get => target.homingType.ToString();
-            set => target.homingType = setHomingType(value);
+            get => target.homingType;
+            set => target.homingType = value;
         }
 
         public Rigidbody rigidbody => target.GetComponent<Rigidbody>();
 
-        public HomingType setHomingType(string type)
-        {
-            if (type == "Gradual")
-            {
-                return HomingType.Gradual;
-            }
-            if (type == "HorizontalOnly")
-            {
-                return HomingType.HorizontalOnly;
-            }
-            if (type == "Instant")
-            {
-                return HomingType.Instant;
-            }
-            if (type == "Loose")
-            {
-                return HomingType.Loose;
-            }
-            if (type == "None")
-            {
-                return HomingType.None;
-            }
-            return HomingType.None;
-        }
     }
 }
