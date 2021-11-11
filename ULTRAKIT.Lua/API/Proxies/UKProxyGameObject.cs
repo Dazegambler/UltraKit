@@ -36,6 +36,7 @@ namespace ULTRAKIT.Lua.API.Proxies
         // Copied from UKProxyComponent.cs
 
         public Projectile AddProjComponent() => target.AddComponent<Projectile>();
+        public FloatingPointErrorPreventer AddFloatingPointErrorPreventer() => target.AddComponent<FloatingPointErrorPreventer>();
 
         public Component GetComponent(string typeName) => target.GetComponent(typeName);
         public Component GetComponentInParent(string typeName) => target.GetComponentsInParent<Component>()?.Where(t => t.GetType().Name == typeName)?.FirstOrDefault();
