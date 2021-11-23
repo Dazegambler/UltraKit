@@ -36,7 +36,14 @@ namespace ULTRAKIT.Lua.API.Proxies
         // Copied from UKProxyComponent.cs
 
         public Projectile AddProjComponent() => target.AddComponent<Projectile>();
+        public Explosion AddExplosionComponent() => target.AddComponent<Explosion>();
         public FloatingPointErrorPreventer AddFloatingPointErrorPreventer() => target.AddComponent<FloatingPointErrorPreventer>();
+        public void RemoveOnTime(float _time = 10f, float _randomizer = 0f)
+        {
+            RemoveOnTime remover = target.AddComponent<RemoveOnTime>();
+            remover.time = _time;
+            remover.randomizer = _randomizer;
+        }
 
         public Component GetComponent(string typeName) => target.GetComponent(typeName);
         public Component GetComponentInParent(string typeName) => target.GetComponentsInParent<Component>()?.Where(t => t.GetType().Name == typeName)?.FirstOrDefault();
