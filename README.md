@@ -20,7 +20,7 @@ OR
 
 3. Start the game once. Inside the ULTRAKILL directory there should now be an Addons folder. This is where you will place any .ukaddon files. If you wish to enable the console for debugging purposes, the config file is in /BepInEx/config/config.cfg
 
-4. Place your choice of addons in the folder, and all should work! If not, feel free to DM or ping Heckteck#0512 or m1ksu#6548 on Discord.
+4. Place your choice of addons in the folder, and all should work! If not, feel free to DM or ping Heckteck#0512 or miksuczku#6548 on Discord.
 
 
 # Credits
