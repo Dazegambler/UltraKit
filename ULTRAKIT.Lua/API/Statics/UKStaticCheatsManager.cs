@@ -18,7 +18,7 @@ namespace ULTRAKIT.Lua.API.Statics
         private CheatsManager cheatsManager => MonoSingleton<CheatsManager>.Instance;
         private Dictionary<String, ICheat> cheats => MonoSingleton<CheatsManager>.Instance.GetPrivate<Dictionary<String, ICheat>>("idToCheat");
 
-        private string[] whiteList = new string[] {
+        private List<string> whiteList = new List<string> {
             "ultrakill.sandbox.rebuild-nav",
             "ultrakill.full-bright",
             "ultrakill.noclip",
@@ -44,7 +44,7 @@ namespace ULTRAKIT.Lua.API.Statics
         {
             if (cheats.ContainsKey(id))
             {
-                if (whiteList.Contains(id) || cheats[id].Identifier.Contains("ultrakit.True"))
+                if (whiteList.Contains(id))
                 {
                     cheatsManager.WrappedSetState(cheats[id], enabled);
                     cheatsManager.UpdateCheatState(cheats[id]);
@@ -73,6 +73,19 @@ namespace ULTRAKIT.Lua.API.Statics
             {
                 Debug.LogWarning("No cheat '" + id + "'exists");
                 return (false);
+            }
+        }
+
+        public void AddToWhitelist(string longName)
+        {
+            string id = "ultrakit." + longName;
+            if (!whiteList.Contains(id))
+            {
+                whiteList.Add(id);
+            }
+            else
+            {
+                Debug.LogWarning("No cheat '" + id + "'exists");
             }
         }
     }

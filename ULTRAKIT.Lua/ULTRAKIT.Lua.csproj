@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
-        <HintPath>..\lib\0Harmony.dll</HintPath>
+      <HintPath>..\lib\0Harmony.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">
@@ -110,6 +110,7 @@
     <Compile Include="API\Abstract\UKStatic.cs" />
     <Compile Include="API\Cheat.cs" />
     <Compile Include="API\Proxies\Components\Game\UKProxyCameraController.cs" />
+    <Compile Include="API\Proxies\Components\Game\UKProxyExplosion.cs" />
     <Compile Include="API\Proxies\Components\Unity\UKProxyAnimator.cs" />
     <Compile Include="API\Proxies\Components\Unity\UKProxyAudioSource.cs" />
     <Compile Include="API\Proxies\Components\Game\UKProxyEnemy.cs" />

@@ -204,11 +204,10 @@ namespace ULTRAKIT.Lua.Components
             Closure DisableFunc = runtime.Globals.Get("DisableCheat").ToObject<Closure>();
             Closure UpdateFunc = runtime.Globals.Get("UpdateCheat").ToObject<Closure>();
             string category = runtime.Globals.Get("Category").CastToString();
-            string whiteListed = runtime.Globals.Get("WhiteList").CastToBool().ToString();
             Cheat cheat = new Cheat
             {
                 LongName = runtime.Globals.Get("LongName").CastToString(),
-                Identifier = "ultrakit." + whiteListed + "." + runtime.Globals.Get("Identifier").CastToString(),
+                Identifier = "ultrakit." + runtime.Globals.Get("Identifier").CastToString(),
                 ButtonEnabledOverride = runtime.Globals.Get("ButtonEnabledOverride").CastToString(),
                 ButtonDisabledOverride = runtime.Globals.Get("ButtonDisabledOverride").CastToString(),
                 DefaultState = runtime.Globals.Get("DefaultState").CastToBool(),
